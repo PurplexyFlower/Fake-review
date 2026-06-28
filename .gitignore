@@ -1,0 +1,28 @@
+# --- environments / caches ---
+.venv/
+venv/
+unsloth_compiled_cache/
+__pycache__/
+*.pyc
+
+# --- SECRETS — never commit ---
+.env
+.env.*
+*.key
+
+# --- large model artifacts (mirrored on HF / regeneratable; GitHub rejects >100MB) ---
+*.safetensors
+*.pt
+*.pth
+*.bin
+*.ckpt
+model/
+outputs/
+outputs copy/
+results/**/adapter/
+results/**/ckpt/
+
+# --- training logs / temp ---
+results/queue_logs/
+results/*.log
+*_sanity_*.csv

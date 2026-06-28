@@ -1,0 +1,9 @@
+# Modern-fake study: real human (OR) vs DeepSeek-v4-pro fakes (CG).
+# Dataset pulled from HF (Flowerly/modern-fake-reviews) -> dataset/modern_reviews_deepseek.csv
+# Rs-QLoRA r64 x3 seeds (headline) + standard QLoRA r64 x3 (method ablation).
+--tag m1 --scaling rs --rank 64 --seed 1998 --data dataset/modern_reviews_deepseek.csv
+--tag m1 --scaling rs --rank 64 --seed 7 --data dataset/modern_reviews_deepseek.csv
+--tag m1 --scaling rs --rank 64 --seed 42 --data dataset/modern_reviews_deepseek.csv
+--tag m1s --scaling standard --rank 64 --seed 1998 --data dataset/modern_reviews_deepseek.csv
+--tag m1s --scaling standard --rank 64 --seed 7 --data dataset/modern_reviews_deepseek.csv
+--tag m1s --scaling standard --rank 64 --seed 42 --data dataset/modern_reviews_deepseek.csv

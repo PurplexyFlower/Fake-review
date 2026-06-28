@@ -1,0 +1,28 @@
+# Phase 1 / A1: scaling x rank x 3 seeds (alpha = 2*rank, set automatically)
+--tag a1 --scaling standard --rank 8 --seed 1998
+--tag a1 --scaling standard --rank 8 --seed 7
+--tag a1 --scaling standard --rank 8 --seed 42
+--tag a1 --scaling standard --rank 16 --seed 1998
+--tag a1 --scaling standard --rank 16 --seed 7
+--tag a1 --scaling standard --rank 16 --seed 42
+--tag a1 --scaling standard --rank 32 --seed 1998
+--tag a1 --scaling standard --rank 32 --seed 7
+--tag a1 --scaling standard --rank 32 --seed 42
+--tag a1 --scaling standard --rank 64 --seed 1998
+--tag a1 --scaling standard --rank 64 --seed 7
+--tag a1 --scaling standard --rank 64 --seed 42
+--tag a1 --scaling rs --rank 8 --seed 1998
+--tag a1 --scaling rs --rank 8 --seed 7
+--tag a1 --scaling rs --rank 8 --seed 42
+--tag a1 --scaling rs --rank 16 --seed 1998
+--tag a1 --scaling rs --rank 16 --seed 7
+--tag a1 --scaling rs --rank 16 --seed 42
+--tag a1 --scaling rs --rank 32 --seed 1998
+--tag a1 --scaling rs --rank 32 --seed 7
+--tag a1 --scaling rs --rank 32 --seed 42
+--tag a1 --scaling rs --rank 64 --seed 1998
+--tag a1 --scaling rs --rank 64 --seed 7
+--tag a1 --scaling rs --rank 64 --seed 42
+# Phase 1 / A2: headline cell to 5 seeds
+--tag a2 --scaling rs --rank 64 --seed 123
+--tag a2 --scaling rs --rank 64 --seed 2026

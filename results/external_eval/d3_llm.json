@@ -1,0 +1,13 @@
+{
+  "name": "d3_llm",
+  "csv": "dataset/llm_generated_reviews.csv",
+  "n": 3000,
+  "mean_p_CG": 0.047948876529582775,
+  "flag_rate_CG": 0.04,
+  "n_pos": 3000,
+  "n_neg": 0,
+  "accuracy": 0.04,
+  "f1_CG": 0.07692307692307693,
+  "recall_CG": 0.04,
+  "fpr": 0.0
+}

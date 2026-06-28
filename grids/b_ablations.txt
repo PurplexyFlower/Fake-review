@@ -1,0 +1,13 @@
+# Phase 2: single-factor ablations from the headline config (rs, r64)
+# B1: no restarts
+--tag b1 --scaling rs --rank 64 --seed 1998 --scheduler cosine
+--tag b1 --scaling rs --rank 64 --seed 7 --scheduler cosine
+--tag b1 --scaling rs --rank 64 --seed 42 --scheduler cosine
+# B2: linear schedule
+--tag b2 --scaling rs --rank 64 --seed 1998 --scheduler linear
+--tag b2 --scaling rs --rank 64 --seed 7 --scheduler linear
+--tag b2 --scaling rs --rank 64 --seed 42 --scheduler linear
+# B3: no label smoothing
+--tag b3 --scaling rs --rank 64 --seed 1998 --label-smoothing 0
+--tag b3 --scaling rs --rank 64 --seed 7 --label-smoothing 0
+--tag b3 --scaling rs --rank 64 --seed 42 --label-smoothing 0

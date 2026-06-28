@@ -1,0 +1,15 @@
+{
+  "tag": "a1",
+  "scaling": "standard",
+  "rank": 8,
+  "alpha": 16,
+  "seed": 42,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "notes": "",
+  "run_id": "a1_standard_r8_s42_06121822",
+  "split_seed": 1998,
+  "protocol": "frozen-v1",
+  "bf16": true
+}

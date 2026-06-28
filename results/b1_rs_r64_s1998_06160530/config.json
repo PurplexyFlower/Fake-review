@@ -1,0 +1,15 @@
+{
+  "tag": "b1",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 1998,
+  "scheduler": "cosine",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "notes": "",
+  "run_id": "b1_rs_r64_s1998_06160530",
+  "split_seed": 1998,
+  "protocol": "frozen-v1",
+  "bf16": true
+}

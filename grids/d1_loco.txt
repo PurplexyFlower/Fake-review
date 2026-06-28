@@ -1,0 +1,6 @@
+# Phase 4 / D1: leave-one-category-out (cross-category generalization).
+# Headline config (rs, r64), 1 seed each, 4 largest categories held out as test.
+--tag d1 --scaling rs --rank 64 --seed 1998 --holdout-category Kindle_Store_5
+--tag d1 --scaling rs --rank 64 --seed 1998 --holdout-category Books_5
+--tag d1 --scaling rs --rank 64 --seed 1998 --holdout-category Pet_Supplies_5
+--tag d1 --scaling rs --rank 64 --seed 1998 --holdout-category Home_and_Kitchen_5
