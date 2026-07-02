@@ -68,7 +68,7 @@ def print_matrix(title, mat, names):
 
 
 def tfidf_matrix(data, names):
-    models, te_fake_X = {}, {}
+    models = {}
     wv = {}; cv = {}
     for n in names:
         w = TfidfVectorizer(sublinear_tf=True, ngram_range=(1, 2), min_df=2)
@@ -78,12 +78,19 @@ def tfidf_matrix(data, names):
         models[n] = LogisticRegression(C=4.0, max_iter=2000).fit(X, data[n]["tr_y"])
         wv[n], cv[n] = w, c
     mat = np.zeros((len(names), len(names)))
+    fpr = {}
     for i, ni in enumerate(names):
         for j, nj in enumerate(names):
             Xj = hstack([wv[ni].transform(data[nj]["te_fake"]),
                          cv[ni].transform(data[nj]["te_fake"])]).tocsr()
             mat[i][j] = (models[ni].predict(Xj) == 1).mean()
+        # FPR anchor: recall alone is gameable (flag-everything = 100% recall).
+        Xor = hstack([wv[ni].transform(data[ni]["te_or"]),
+                      cv[ni].transform(data[ni]["te_or"])]).tocsr()
+        fpr[ni] = (models[ni].predict(Xor) == 1).mean()
     print_matrix("TF-IDF cross-generator detection recall", mat, names)
+    print("  detector FPR on its own human test set: "
+          + "  ".join(f"{n}={fpr[n]*100:.2f}%" for n in names))
     return mat
 
 
@@ -101,6 +108,18 @@ def neural_matrix(data, names):
             return None
         adapters[n] = sorted(cands)[-1] / "adapter"
     mat = np.zeros((len(names), len(names)))
+    fpr = {}
+
+    def flag_rate(model, tok, dev, texts):
+        flagged = 0
+        for k in range(0, len(texts), 64):
+            enc = tok(texts[k:k+64], truncation=True, max_length=512,
+                      padding=True, return_tensors="pt").to(dev)
+            with torch.no_grad():
+                p = torch.softmax(model(**enc).logits.float(), -1)[:, 1]
+            flagged += int((p >= 0.5).sum())
+        return flagged / max(len(texts), 1)
+
     for i, ni in enumerate(names):
         model, tok = FastModel.from_pretrained(
             model_name=str(adapters[ni]), auto_model=AutoModelForSequenceClassification,
@@ -109,16 +128,12 @@ def neural_matrix(data, names):
         FastModel.for_inference(model); model.eval()
         dev = next(model.parameters()).device
         for j, nj in enumerate(names):
-            texts = data[nj]["te_fake"]; flagged = 0
-            for k in range(0, len(texts), 64):
-                enc = tok(texts[k:k+64], truncation=True, max_length=512,
-                          padding=True, return_tensors="pt").to(dev)
-                with torch.no_grad():
-                    p = torch.softmax(model(**enc).logits.float(), -1)[:, 1]
-                flagged += int((p >= 0.5).sum())
-            mat[i][j] = flagged / max(len(texts), 1)
+            mat[i][j] = flag_rate(model, tok, dev, data[nj]["te_fake"])
+        fpr[ni] = flag_rate(model, tok, dev, data[ni]["te_or"])
         del model; torch.cuda.empty_cache()
     print_matrix("Rs-QLoRA cross-generator detection recall", mat, names)
+    print("  detector FPR on its own human test set: "
+          + "  ".join(f"{n}={fpr[n]*100:.2f}%" for n in names))
     return mat
 
 
