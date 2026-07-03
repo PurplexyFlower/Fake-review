@@ -58,9 +58,12 @@ step "Modern study: Rs-QLoRA r64 x3 + standard r64 x3 (m_modern grid)"
 $PY runs/run_queue.py grids/m_modern.txt --lanes "$LANES"
 
 # ---- 4x4 cross-generator matrix (the headline) ----
-step "Cross-gen: one detector per generator (xgen grid)"
+step "Cross-gen: one detector per generator x3 seeds (xgen grid)"
 $PY runs/run_queue.py grids/xgen.txt --lanes "$LANES"
-step "Cross-gen: TF-IDF vs Rs-QLoRA transfer matrix (+FPR)"
+step "Cross-gen LOGO: pooled 3-generator datasets + detectors"
+opt dataset/pooled_wo_glm.csv || $PY runs/build_pooled_dataset.py
+$PY runs/run_queue.py grids/logo.txt --lanes "$LANES"
+step "Cross-gen: transfer matrix + LOGO (TF-IDF and Rs-QLoRA, with FPR)"
 $PY runs/cross_gen_matrix.py
 
 # ---- supporting evidence on the modern set ----

@@ -46,12 +46,21 @@ def load_all():
         tr, te = split(csv_path)
         data[name] = {
             "tag": tag,
+            "key": csv_path.stem.split("_")[-1],   # gpt2 / lfm / deepseek / glm
             "tr_text": tr["text_"],
             "tr_y": np.array([1 if x == "CG" else 0 for x in tr["label"]]),
             "te_fake": [t for t, l in zip(te["text_"], te["label"]) if l == "CG"],
             "te_or": [t for t, l in zip(te["text_"], te["label"]) if l == "OR"],
         }
     return data
+
+
+def fit_tfidf(texts, y):
+    w = TfidfVectorizer(sublinear_tf=True, ngram_range=(1, 2), min_df=2)
+    c = TfidfVectorizer(sublinear_tf=True, analyzer="char_wb", ngram_range=(3, 5), min_df=2)
+    X = hstack([w.fit_transform(texts), c.fit_transform(texts)]).tocsr()
+    lr = LogisticRegression(C=4.0, max_iter=2000).fit(X, y)
+    return lambda t: (lr.predict(hstack([w.transform(t), c.transform(t)]).tocsr()) == 1).mean()
 
 
 def print_matrix(title, mat, names):
@@ -94,23 +103,24 @@ def tfidf_matrix(data, names):
     return mat
 
 
-def neural_matrix(data, names):
+def adapter_dirs(tag):
+    """All trained adapters for a tag, any seed (matrix averages across seeds)."""
+    return sorted(d / "adapter" for d in (ROOT / "results").glob(f"{tag}_rs_r64_s*")
+                  if (d / "adapter").exists())
+
+
+def neural_flagger(adapter):
     import torch
     from unsloth import FastModel
     from transformers import AutoModelForSequenceClassification
-    adapters = {}
-    for n in names:
-        cands = [d for d in (ROOT / "results").glob(f"{data[n]['tag']}_rs_r64_s1998_*")
-                 if (d / "adapter").exists()]
-        if not cands:
-            print(f"\n[neural skipped] no adapter for {n} "
-                  f"(results/{data[n]['tag']}_rs_r64_s1998_*/adapter) — run grids/xgen.txt")
-            return None
-        adapters[n] = sorted(cands)[-1] / "adapter"
-    mat = np.zeros((len(names), len(names)))
-    fpr = {}
+    model, tok = FastModel.from_pretrained(
+        model_name=str(adapter), auto_model=AutoModelForSequenceClassification,
+        max_seq_length=512, dtype=None, num_labels=2, load_in_4bit=True,
+        full_finetuning=False)
+    FastModel.for_inference(model); model.eval()
+    dev = next(model.parameters()).device
 
-    def flag_rate(model, tok, dev, texts):
+    def flag_rate(texts):
         flagged = 0
         for k in range(0, len(texts), 64):
             enc = tok(texts[k:k+64], truncation=True, max_length=512,
@@ -120,21 +130,82 @@ def neural_matrix(data, names):
             flagged += int((p >= 0.5).sum())
         return flagged / max(len(texts), 1)
 
+    def close():
+        import torch as _t
+        nonlocal model
+        del model
+        _t.cuda.empty_cache()
+    return flag_rate, close
+
+
+def neural_matrix(data, names):
+    adapters = {}
+    for n in names:
+        dirs = adapter_dirs(data[n]["tag"])
+        if not dirs:
+            print(f"\n[neural skipped] no adapter for {n} "
+                  f"(results/{data[n]['tag']}_rs_r64_s*/adapter) — run grids/xgen.txt")
+            return None
+        adapters[n] = dirs
+    n_seeds = {n: len(adapters[n]) for n in names}
+    mat = np.zeros((len(names), len(names)))
+    fpr = {}
     for i, ni in enumerate(names):
-        model, tok = FastModel.from_pretrained(
-            model_name=str(adapters[ni]), auto_model=AutoModelForSequenceClassification,
-            max_seq_length=512, dtype=None, num_labels=2, load_in_4bit=True,
-            full_finetuning=False)
-        FastModel.for_inference(model); model.eval()
-        dev = next(model.parameters()).device
-        for j, nj in enumerate(names):
-            mat[i][j] = flag_rate(model, tok, dev, data[nj]["te_fake"])
-        fpr[ni] = flag_rate(model, tok, dev, data[ni]["te_or"])
-        del model; torch.cuda.empty_cache()
-    print_matrix("Rs-QLoRA cross-generator detection recall", mat, names)
+        recalls = np.zeros((len(adapters[ni]), len(names)))
+        fprs = []
+        for s, ad in enumerate(adapters[ni]):
+            flag, close = neural_flagger(ad)
+            for j, nj in enumerate(names):
+                recalls[s][j] = flag(data[nj]["te_fake"])
+            fprs.append(flag(data[ni]["te_or"]))
+            close()
+        mat[i] = recalls.mean(axis=0)
+        fpr[ni] = float(np.mean(fprs))
+    print_matrix(f"Rs-QLoRA cross-generator detection recall "
+                 f"(mean over seeds: {n_seeds})", mat, names)
     print("  detector FPR on its own human test set: "
           + "  ".join(f"{n}={fpr[n]*100:.2f}%" for n in names))
     return mat
+
+
+def logo_tfidf(data, names):
+    """Leave-one-generator-out: TF-IDF trained on the pooled 3-generator set
+    (same 80% train protocol as train_run), tested on the held-out generator."""
+    rows = []
+    for n in names:
+        pooled = ROOT / "dataset" / f"pooled_wo_{data[n]['key']}.csv"
+        if not pooled.exists():
+            print(f"\n[LOGO skipped] {pooled.name} missing — run runs/build_pooled_dataset.py")
+            return
+        ds = load_dataset("csv", data_files=str(pooled))["train"]
+        tr = ds.train_test_split(test_size=0.2, seed=SPLIT_SEED)["train"]
+        y = np.array([1 if x == "CG" else 0 for x in tr["label"]])
+        predict = fit_tfidf(tr["text_"], y)
+        rows.append((n, predict(data[n]["te_fake"]), predict(data[n]["te_or"])))
+    print("\n== LOGO: TF-IDF trained on the OTHER 3 generators (pooled, budget-matched) ==")
+    for n, rec, f in rows:
+        print(f"  held-out {n:>9}: recall={rec*100:5.1f}%   FPR={f*100:.2f}%"
+              "   (note: human half is shared across sets by design)")
+
+
+def logo_neural(data, names):
+    print("\n== LOGO: Rs-QLoRA trained on the OTHER 3 generators ==")
+    any_found = False
+    for n in names:
+        dirs = adapter_dirs(f"pwo{data[n]['key']}")
+        if not dirs:
+            print(f"  held-out {n:>9}: no adapter (run grids/logo.txt)")
+            continue
+        any_found = True
+        recs, fprs = [], []
+        for ad in dirs:
+            flag, close = neural_flagger(ad)
+            recs.append(flag(data[n]["te_fake"]))
+            fprs.append(flag(data[n]["te_or"]))
+            close()
+        print(f"  held-out {n:>9}: recall={np.mean(recs)*100:5.1f}%   "
+              f"FPR={np.mean(fprs)*100:.2f}%   (seeds={len(dirs)})")
+    return any_found
 
 
 def main():
@@ -149,9 +220,11 @@ def main():
     print(f"generators: {names}  (fakes per held-out test set: "
           f"{[len(data[n]['te_fake']) for n in names]})")
     tfidf_matrix(data, names)
+    logo_tfidf(data, names)
     if not args.no_neural:
         try:
             neural_matrix(data, names)
+            logo_neural(data, names)
         except Exception as e:
             print(f"\n[neural skipped] {str(e)[:120]}")
 

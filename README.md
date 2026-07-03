@@ -69,7 +69,8 @@ single-hardware timings) and ordered by priority:
 |---|---|
 | datasets | fetch modern sets from HF, build GPT-2 set from Kaggle CSV |
 | `m_modern` grid | Rs-QLoRA r64 ×3 seeds + standard QLoRA ×3 on the DeepSeek set |
-| `xgen` grid + matrix | one detector per generator → **4×4 TF-IDF + Rs-QLoRA transfer matrix (with FPR)** |
+| `xgen` grid + matrix | one detector per generator ×3 seeds → **4×4 TF-IDF + Rs-QLoRA transfer matrix (with FPR, seed-averaged)** |
+| LOGO | leave-one-generator-out: train on the pooled other 3 (budget-matched), test on the held-out generator |
 | supporting | TF-IDF sanity baseline, by-length head-to-head, 3 transformer baselines |
 
 `SCOPE=all bash cloud/run_all.sh` appends the legacy reviewer-rebuttal suite

@@ -1,6 +1,14 @@
-# 3x3 cross-generator matrix: train Rs-QLoRA r64 on EACH generator's dataset.
-# cross_gen_matrix.py then tests each detector on every generator's held-out fakes.
+# Cross-generator matrix: train Rs-QLoRA r64 on EACH generator's dataset,
+# 3 seeds each (cross_gen_matrix.py averages recalls across available seeds).
 --tag xg --scaling rs --rank 64 --seed 1998 --data dataset/modern_reviews_gpt2.csv
 --tag xl --scaling rs --rank 64 --seed 1998 --data dataset/modern_reviews_lfm.csv
 --tag xd --scaling rs --rank 64 --seed 1998 --data dataset/modern_reviews_deepseek.csv
 --tag xglm --scaling rs --rank 64 --seed 1998 --data dataset/modern_reviews_glm.csv
+--tag xg --scaling rs --rank 64 --seed 7 --data dataset/modern_reviews_gpt2.csv
+--tag xl --scaling rs --rank 64 --seed 7 --data dataset/modern_reviews_lfm.csv
+--tag xd --scaling rs --rank 64 --seed 7 --data dataset/modern_reviews_deepseek.csv
+--tag xglm --scaling rs --rank 64 --seed 7 --data dataset/modern_reviews_glm.csv
+--tag xg --scaling rs --rank 64 --seed 42 --data dataset/modern_reviews_gpt2.csv
+--tag xl --scaling rs --rank 64 --seed 42 --data dataset/modern_reviews_lfm.csv
+--tag xd --scaling rs --rank 64 --seed 42 --data dataset/modern_reviews_deepseek.csv
+--tag xglm --scaling rs --rank 64 --seed 42 --data dataset/modern_reviews_glm.csv

@@ -159,6 +159,23 @@ Three regimes:
 (A small Rs-QLoRA cross-gen check, DeepSeek→LFM, gives 85.2% vs TF-IDF 82.7% — a
 modest model edge; the full neural matrix is the next experiment.)
 
+**Leave-one-generator-out (LOGO):** train on the pooled *other three* generators
+(balanced, budget-matched so diversity isn't confounded with data volume), test
+on the held-out one. TF-IDF recall / FPR:
+
+| held out | recall | FPR |
+|---|---|---|
+| GPT-2 | **0.9%** | 0.5% |
+| LFM | 87.0% | 2.3% |
+| DeepSeek | 92.4% | 1.7% |
+| GLM | 89.2% | 2.4% |
+
+Two additions to the story: (a) **generator diversity buys real unseen-generator
+coverage in the modern regime** (87–92% on a never-seen modern LLM) — but
+(b) **nothing breaches the old↔modern wall** (0.9% on GPT-2 even with three
+diverse modern generators), and a strong single frontier generator can beat the
+budget-matched pool (DeepSeek-only → GLM 95.1% vs pooled 89.2%).
+
 ### 6.5 The refined thesis
 Not the vague "detectors don't transfer," but the precise and defensible:
 > **Effective modern fake-review detection requires *current-frontier* training

@@ -1,0 +1,7 @@
+# LOGO (leave-one-generator-out): train Rs-QLoRA r64 on the pooled 3-generator
+# set, cross_gen_matrix.py evaluates on the held-out generator's test fakes.
+# Datasets built by runs/build_pooled_dataset.py.
+--tag pwogpt2 --scaling rs --rank 64 --seed 1998 --data dataset/pooled_wo_gpt2.csv
+--tag pwolfm --scaling rs --rank 64 --seed 1998 --data dataset/pooled_wo_lfm.csv
+--tag pwodeepseek --scaling rs --rank 64 --seed 1998 --data dataset/pooled_wo_deepseek.csv
+--tag pwoglm --scaling rs --rank 64 --seed 1998 --data dataset/pooled_wo_glm.csv
