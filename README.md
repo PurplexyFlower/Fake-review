@@ -10,10 +10,10 @@ detection **transfers** between them.
 
 | train \ test | GPT-2 | LFM | DeepSeek | GLM |
 |---|---|---|---|---|
-| **GPT-2**    | 94.1% | 1.1% | 1.4% | 1.2% |
-| **LFM**      | 0.7% | 99.3% | 38.0% | 33.0% |
-| **DeepSeek** | 0.7% | 82.1% | 98.7% | 95.4% |
-| **GLM**      | 0.5% | 89.0% | 96.1% | 98.5% |
+| **GPT-2**    | 94.1% | 1.1% | 1.4% | 0.6% |
+| **LFM**      | 0.7% | 99.3% | 38.0% | 32.5% |
+| **DeepSeek** | 0.7% | 82.1% | 98.7% | 95.1% |
+| **GLM**      | 0.6% | 88.1% | 96.1% | 98.4% |
 
 (Per-detector FPR on human reviews: 0.5–4.9%, so low recalls are genuine misses.)
 

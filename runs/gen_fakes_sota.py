@@ -113,7 +113,7 @@ def gen_one(model, src_idx, cat, rating, real_text, reasoning):
             f"product as if you were another genuine customer. Emphasise {angle}. "
             f"About {target_len} words. Natural, specific, casual. Do NOT copy "
             f"phrasing from the review above. Output only the review text.")
-        mt = (800 if reasoning else int(target_len * 3) + 80)
+        mt = (800 if reasoning else int(target_len * 4) + 100)
         try:
             r = client.chat.completions.create(
                 model=model,
@@ -123,7 +123,9 @@ def gen_one(model, src_idx, cat, rating, real_text, reasoning):
                 max_tokens=mt, timeout=240,
                 **({"extra_body": EXTRA_BODY} if EXTRA_BODY else {}))
             txt = extract_review(r.choices[0].message.content or "", reasoning)
-            if (3 <= len(txt.split()) <= 130
+            # length cap proportional to the ask: models overshoot "about N words"
+            # by ~20-30%; a flat cap of 130 permanently rejected every long source
+            if (3 <= len(txt.split()) <= max(130, int(target_len * 1.5))
                     and jaccard(txt, real_text) < 0.6):  # not a near-copy
                 return {"src_idx": src_idx, "category": cat, "rating": rating,
                         "label": "CG", "text_": txt, "gen_model": model}
