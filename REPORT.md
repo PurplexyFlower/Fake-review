@@ -90,6 +90,7 @@ one ASCII convention. (We *found* this the hard way — see §6.)
 **Public datasets (Hugging Face):**
 - `Flowerly/modern-fake-reviews` — real OR vs **DeepSeek-v4-pro**
 - `Flowerly/modern-fake-reviews-lfm` — real OR vs **LFM2.5-1.2B**
+- `Flowerly/modern-fake-reviews-glm` — real OR vs **GLM-5.2**
 
 ## 5. Methodology and rigor (why the numbers are trustworthy)
 

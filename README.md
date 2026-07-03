@@ -40,7 +40,7 @@ modern sets are also on the Hub:
 | `modern_reviews_gpt2.csv` | GPT-2-era (Kaggle CG) | repo (built from Kaggle CSV) |
 | `modern_reviews_lfm.csv` | LFM2.5-1.2B | repo + [`Flowerly/modern-fake-reviews-lfm`](https://huggingface.co/datasets/Flowerly/modern-fake-reviews-lfm) |
 | `modern_reviews_deepseek.csv` | DeepSeek-v4-pro | repo + [`Flowerly/modern-fake-reviews`](https://huggingface.co/datasets/Flowerly/modern-fake-reviews) |
-| `modern_reviews_glm.csv` | GLM-5.2 | repo |
+| `modern_reviews_glm.csv` | GLM-5.2 | repo + [`Flowerly/modern-fake-reviews-glm`](https://huggingface.co/datasets/Flowerly/modern-fake-reviews-glm) |
 
 ## Quickstart
 
