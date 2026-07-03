@@ -39,14 +39,17 @@ $PIP --no-deps --force-reinstall "torch==2.10.0" \
      --index-url https://download.pytorch.org/whl/cu128
 $PIP --no-deps --force-reinstall "transformers==4.56.2"
 
-# 6) verify
+# 6) verify — import unsloth FIRST (importing transformers/peft before it makes
+# unsloth warn that its optimizations may not apply; train_run.py orders it right).
+# NOTE: a torchao message like "Skipping import of cpp extensions ... torch >= 2.11"
+# is benign — torchao falls back to pure-python and unsloth works fine on 2.10.
 python - <<'PY'
+import unsloth  # noqa: F401  (before transformers/peft, mirrors training imports)
 import torch, transformers, peft, bitsandbytes as bnb
 print("torch       ", torch.__version__, "| cuda", torch.cuda.is_available(),
       "|", torch.cuda.get_device_name(0) if torch.cuda.is_available() else "no-gpu")
 print("transformers", transformers.__version__, "| peft", peft.__version__,
       "| bnb", bnb.__version__)
-import unsloth  # noqa: F401
 print("unsloth import OK")
 PY
 echo ">> setup complete. Next:  bash cloud/run_all.sh"

@@ -138,11 +138,13 @@ Train a detector on one generator, test on each generator's held-out fakes
 
 ```
 train\test   GPT2    LFM    DeepSeek   GLM
-GPT2         94.1%   1.1%   1.4%       1.0%
-LFM           0.7%  99.3%   38.0%     32.8%
-DeepSeek      0.7%  82.1%   98.7%     95.2%
-GLM           0.5%  87.9%   96.1%     98.8%
+GPT2         94.1%   1.1%   1.4%       1.2%
+LFM           0.7%  99.3%   38.0%     33.0%
+DeepSeek      0.7%  82.1%   98.7%     95.4%
+GLM           0.5%  89.0%   96.1%     98.5%
 ```
+Per-detector FPR on its own human test set: GPT2 4.9%, LFM 0.5%, DeepSeek 1.0%,
+GLM 1.3% — low recalls are genuine misses, not a flag-everything artifact.
 Three regimes:
 1. **Old ↔ modern = a hard wall (~1% both ways).** The Kaggle dataset is useless
    for modern fakes *and* vice-versa — the obsolescence result, shown symmetrically.
