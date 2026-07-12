@@ -1,0 +1,43 @@
+ Reviewer 2 | 15 May 2026 | 14:03#1
+The manuscript presents a timely and practically relevant study on detecting AI-generated fake product reviews using a small language model (SLM), Qwen 2.5-0.5B, fine-tuned with LoRA. The main contribution is the claim that strong performance can be achieved for detecting fake reviews also under limited computational resources. Indeed, the authors report 98.43% test accuracy, using 4 GB VRAM, and 4.3 hours of training on a single consumer-grade GPU, on a balanced kaggle Fake Reviews dataset consisting of 40k samples for genuine and generated reviews. The proposed methodology is well aligned with current state-of-the-art trends in fake-review and AI-generated text detection, particularly through its use of transformer models, efficient fine-tuning, quantization, and lightweight architectures. However, claims of state-of-the-art performance should be stated cautiously, since the evaluation is limited to one balanced dataset and lacks broader robustness tests, ablations, and fully comparable baselines.
+
+
+* Strengths *
+A major strength is the focus on computational efficiency. The authors use a SLM and parameter-efficient fine-tuning (PEFT) rather than relying on very large models. The use of 4-bit quantization, frozen base parameters, and LoRA adapters is technically appropriate for constrained hardware settings.
+The methodology is generally clear and well organized. The authors specify the model architecture and the adapter placement. Furthermore, they provide a detailed description of the fine-tuning configuration and optimization strategy.
+The reported results are strong and balanced. On the test set, the model achieves 98.43% accuracy for both genuine and AI-generated reviews.
+The manuscript is generally readable and well presented. The figures and tables help explain the architecture and the dataset composition.
+
+
+* Weaknesses *
+The main methodological concern is that the central claim about Rs-QLoRA is not sufficiently isolated experimentally. The authors argue that changing the LoRA scaling from α/r to α/√r stabilizes high-rank adaptation and enables the use of rank 64 without instability or overfitting. However, the current experiments do not clearly show whether the performance gain comes from rank stabilization, the higher rank itself, the learning-rate schedule, the adapter target modules, or other hyperparameter choices.
+The evaluation is limited to one balanced dataset. While the Kaggle Fake Reviews dataset is useful for benchmarking, real-world fake-review detection is usually imbalanced. The current in-distribution results may therefore overestimate real deployment performance.
+The comparison with state-of-the-art models should be strengthened. The baseline results appear to be taken from different studies that used different datasets, splits, and evaluation protocols. Therefore, unless the authors evaluate these baselines using the same data split and preprocessing pipeline, they should include internal comparisons with state-of-the-art models under the same experimental conditions.
+The resource-efficiency claim is promising but underdocumented. Because the practical contribution depends heavily on the claim that training can be performed with less than 4 GB of VRAM, the authors should report peak VRAM usage, throughput, inference latency, and inference memory usage.
+The statistical evaluation is also limited. The current results appear to be based on a single random seed, so the authors should evaluate the model across multiple seeds and report standard deviations. They should also include additional metrics, such as ROC-AUC and PR-AUC, which are more informative for binary classification problems.
+
+
+* Requests *
+- Compare standard LoRA/QLoRA scaling with Rs-QLoRA scaling across multiple ranks, such as 8, 16, 32, and 64. These experiments should use the same dataset split and training protocol. This is necessary to support the claim that rank stabilization, rather than another hyperparameter, is responsible for the improvement.
+- Add external validation on another dataset and perform out of distribution experiments.
+- Include baselines trained and evaluated on the same split and preprocessing pipeline. These should include transformer-based models such as RoBERTa, DeBERTa, etc.. as well as traditional lightweight baselines such as TF-IDF with logistic regression and SVM. This would make the comparison fairer.
+- Please report peak VRAM and GPU memory usage during both training and evaluation. The claim that the model requires less than 4 GB of VRAM is central to the paper's practical contribution and should be supported with reproducible measurements.
+- Report mean and standard deviation over multiple random seeds. Add ROC-AUC and PR-AUC, since this is a binary classification problem.
+
+Furthermore, I suggest organizing the Related Work section into clear subsections, as it currently covers several distinct research streams within a single continuous narrative. Adding subsections would make the progression of prior work clearer and improve the overall readability of the section. As possible suggestions/references: the section could first contextualize the broader fake-review detection landscape by referring to [1] 's survey on graph learning for fake review detection as well as [2] 's work on fake review identification. The literature should also be expanded to include classic works on opinion-spam and deceptive-review detection, such as [3], [4], and [5]. In addition, since some of the already cited studies address the related but distinct problem of fake-news detection, I recommend separating those works into a dedicated paragraph or subsection and complementing them with other relevant fake-news detection studies, such as [6], [7], and [8]. This structure would help clarify which prior works are directly related to fake-review detection and which are included for broader methodological context.
+
+[1] Yu et al. (2022), "Graph Learning for Fake Review Detection"
+[2] Choi et al. (2023), "Fake review identification and utility evaluation model using machine learning"
+[3] Jindal et al. (2008), "Opinion spam and analysis"
+[4] Ott et al. (2011), "Finding deceptive opinion spam by any stretch of the imagination"
+[5] Mukherjee et al. (2013), "Fake review detection: Classification and analysis of real and pseudo reviews"
+[6] Kuntur et al. (2024), "Fake News Detection: It's All in the Data!"
+[7] Mura et al. (2025), "Is it fake or not? A comprehensive approach for multimodal fake news detection"
+[8] Chen et al. (2025), "A self-learning multimodal approach for fake news detection"
+
+
+* Additional Details on Quality aspects (Q2-Q6)*
+- Are the statistical methods valid and correctly applied? Not fully; the paper lacks of multiple seeds run, standard deviations and other metrics like AUC
+- The methodological rigor is acceptable, although it should be strengthened by adding appropriate comparisons, baselines, and metrics.
+- The manuscript is generally readable, but several claims are overstated, such as "state-of-the-art" and "clearly demonstrate," especially given the limited evaluation on a single dataset and the absence of evaluation on out-of-distribution data. The Related Work section would benefit from clearer subsection separation.
+- The practical motivation of the manuscript is timely and valid, but the current contribution is limited to an in-distribution, balanced benchmark.

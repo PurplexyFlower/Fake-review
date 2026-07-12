@@ -1,0 +1,409 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Frontiers in Artificial Intelligence — Original Research Article
+% AI-Generated Fake Review Detection via SLMs using Qwen 2.5 and Rank-Stabilized QLoRA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[utf8]{FrontiersinHarvard}
+
+\usepackage{url,hyperref,lineno,microtype,subcaption}
+\usepackage[singlespacing]{setspace}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+\linenumbers
+
+\def\keyFont{\fontsize{8}{11}\helveticabold }
+\def\firstAuthorLast{Rhrissi {et~al.}}
+\def\Authors{Zhour Rhrissi\,$^{1,*}$, Sanaa El Fkihi\,$^{1}$ and Rdouan Faizi\,$^{1}$}
+\def\Address{$^{1}$National Higher School for Computer Science and Systems Analysis (ENSIAS), Mohammed V University in Rabat, Rabat, Morocco}
+\def\corrAuthor{Zhour Rhrissi}
+\def\corrEmail{zhour\_rhrissi@um5.ac.ma}
+
+
+\begin{document}
+\onecolumn
+\firstpage{1}
+
+\title[Fake Review Detection via Small Language Models]{AI-Generated Fake Review Detection via Small Language Models using Qwen 2.5 and Rank-Stabilized Quantized Low-Rank Adaptation}
+
+\author[\firstAuthorLast ]{\Authors}
+\address{}
+\correspondance{}
+\extraAuth{}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{abstract}
+\section{}
+\noindent\textit{Manuscript metrics: approximately 3{,}840 words; 8 figures; 5 tables.}\\[2pt]
+Although large language models (LLMs) have demonstrated strong capabilities in detecting fake reviews, their substantial computational requirements limit their practical implementation. In this work, we propose a computationally efficient alternative based on the Qwen 2.5-0.5B model, which we fine-tuned using Quantized Low-Rank Adaptation (QLoRA) with a Rank-Stabilized LoRA (Rs-QLoRA) variant. The proposed approach achieved a test accuracy of 98.43\% under constrained computational conditions, requiring less than 4\,GB of VRAM and approximately 4.3 hours of training on a single consumer-grade GPU. Evaluation on the Kaggle Fake Reviews dataset (40,432 samples) demonstrated high precision for both genuine and AI-generated fake reviews. These findings clearly demonstrate that domain-optimized, lightweight language models can be highly performant in automated fake review detection without extensive computational resources, thereby offering a scalable and practical solution for real-world applications.
+
+\tiny
+\keyFont{ \section{Keywords:} fake review detection, natural language processing, parameter-efficient fine-tuning, LoRA, rank-stabilized QLoRA, Qwen 2.5, small language models}
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1 INTRODUCTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+The rapid expansion of e-commerce and online platforms over the past decade has positioned user-generated reviews as a critical factor in consumer decision-making. Nevertheless, this ecosystem is increasingly being threatened by the growing proliferation of fake reviews. Such deceptive content affects market integrity, erodes customer trust, and is likely to negatively impact both individuals and institutions \citep{Cao2023}. Consequently, the automated detection of fake reviews using Natural Language Processing (NLP) and machine learning techniques has become an important research area.
+
+Initial approaches that were proposed to tackle automated fake review detection were mainly based on traditional machine learning algorithms \citep{PatelAnand2025}. These were often constrained due to their reliance on manual feature engineering. A major advancement occurred with the adoption of deep learning techniques \citep{WangZhenhua2025}, particularly transformer-based architectures \citep{Alsaad2024}. More recently, Large Language Models (LLMs) have established new performance benchmarks \citep{WangZhenhua2026}. Their ability to comprehend complex nuances and context in the text helps them capture sophisticated, human-like fake reviews that earlier models often failed to spot.
+
+However, the impressive performance of LLMs is inherently accompanied by substantial computational needs \citep{Refaeli2021, Zabeen2023}. With models often including hundreds of billions of parameters, the resources needed for fine-tuning and inference are quite large. This poses serious barriers to any practical and real-time deployment, especially on platforms that lack access to high-performance computing infrastructure \citep{Gambetti2023}. The balance between detection performance and computational costs seems to be a fundamental problem for the practical application of modern NLP for fake review detection.
+
+This paper addresses these computational constraints by proposing a novel strategy that focuses on Small Language Models (SLMs), which are a class of models that are designed to provide powerful performance in a compact and highly resource-efficient form. Our basic hypothesis is that an SLM that is fine-tuned effectively can achieve performance that is compatible with its larger models. To this end, we employ a Parameter-Efficient Fine-Tuning (PEFT) method, specifically Quantized Low-Rank Adaptation with Rank-Stabilized LoRA (Rs-QLoRA). By using a high-rank configuration (Rank = 64) and rank stabilization, we optimize the Qwen 2.5-0.5B model. The resulting approach achieves state-of-the-art accuracy of 98.43\% while keeping the memory footprint below 4\,GB. The rest of this paper is structured as follows. Section~2 reviews the related work. In Section~3, we describe our proposed methodology. Section~4 details the experimental setup, data, and evaluation metrics. In Section~5, the results are presented and discussed. Lastly, Section~6 concludes the paper and provides recommendations for future research.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 2 RELATED WORK
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Related Work}
+
+The field of automated fake review detection has evolved significantly in recent years to keep up with the growing amount of deceptive content. This section provides an overview of this progression from traditional machine learning algorithms that rely on manually engineered features to advanced deep learning architectures and, more recently, the integration of Large Language Models (LLMs). Our main purpose in this section is to examine the strengths and limitations of each of these methodologies in distinguishing genuine from deceptive reviews, with particular attention to the balance between accuracy, generalizability, and computational efficiency.
+
+Early research in fake review detection primarily employed supervised machine learning algorithms such as logistic regression and support vector machines (SVMs). However, their effectiveness was often constrained due to their heavy dependence on manual feature engineering and to their limited capacity to capture the deep semantic nuances of the human language. As a result, the performance of these algorithms generally plateaued at about 85\% accuracy on balanced datasets \citep{Salminen2022}.
+
+The shift from manual feature engineering to representation learning has been a major step towards improved ability in automated fake review detection. \citet{Li2017} proposed document representation approaches capable of automatically learning the semantic features for deceptive review detection. The findings of these authors have proven that automatic feature learning models do capture word- and sentence-order information more effectively than manually engineered features.
+
+\citet{Muhammad2019} proposed hybrid ensemble models integrating Principal Component Analysis (PCA) for dimensionality reduction with active learning strategies. Their study showed that selective sampling reduces labeling costs significantly and maintains competitive detection performance.
+
+\citet{Hajek2020} combined deep neural networks and emotion mining through a combination of word embeddings and lexicon-based emotion patterns analysis. Using Yelp datasets, they achieved an accuracy of 96.12\%, while experiments on Amazon datasets yielded an F1-score of 0.958. Their work highlighted ``emotional incoherence'' as a powerful discriminative signal of deceptive reviews.
+
+\citet{Refaeli2021} demonstrated that fine-tuned BERT models achieved 91\% accuracy on balanced crowdsourced datasets. Nevertheless, this accuracy drops to 73\% on imbalanced real-world Yelp data. This entails that class imbalance can operate as a persistent challenge, especially when fake reviews constitute a small minority.
+
+\citet{Zabeen2023} developed a robust fake review detection model using uncertainty-aware LSTM and BERT architectures that measure prediction confidence. Their model achieved approximately 91\% accuracy and F1-scores close to 90\%.
+
+In a comprehensive survey, \citet{Mohawesh2021} identified domain adaptation as a permanent challenge. In fact, they found that some features may be effective in one industry (e.g., electronics) but may not generalize well to other industries (e.g., hospitality).
+
+\citet{Salminen2022} optimized a RoBERTa model, named `fakeROBERTa', using the Kaggle Fake Reviews dataset together with transfer learning and fine-tuning approaches. They achieved accuracy scores between 96\% and 98\%. Their results further demonstrated the immense potential of pre-trained Transformer models in the classification of fraudulent reviews.
+
+\citet{Xu2022} proposed the GET framework, an evidence-aware detection approach based on Graph Neural Networks (GNNs). By modeling claims-evidence relationships as graph patterns, their approach captured fine-grained semantics more effectively than sequential architectures.
+
+\citet{Gambetti2023} constructed a large-scale synthetic dataset of fake restaurant reviews using GPT-3 and further fine-tuned GPT-Neo. The resulting model achieved an accuracy rate of 95.5\%, hence outperforming normal baselines and even human evaluation.
+
+\citet{Shukla2023} demonstrated the efficiency of few-shot and zero-shot techniques with GPT-3 for the classification of fraudulent physician reviews, especially in cold-start scenarios. Their findings entailed that fraudulent reviews contain domain-specific variations, which implies a need for domain-sensitive classifiers.
+
+\citet{LiH2025} introduced ``MARO,'' a multi-agent framework composed of multiple expert agents that analyze the content in different dimensions using automated decision rule optimization. Their proposed approach achieved important improvements over baseline methods and demonstrated better cross-domain generalization.
+
+\citet{Wani2024} proposed multi-view learning systems using stylistic entropy measurement and sentiment analysis using BiLSTM networks and Word2Vec embeddings. Their model attained 98.46\% accuracy with a precision of 0.98 and a recall of 0.97. The authors also concluded that AI writing has a ``flattened'' emotional distribution that represents a reliable signal for detection.
+
+In addition to the previous studies, the latest research patterns have gone beyond single model architectures towards hybrid systems, data augmentation strategies, and complex algorithmic frameworks. \citet{Lu2023} proposed BSTC, a hybrid framework combining BERT, Sentiment-Enhanced SKEP, and a CNN for local feature extraction. By fusing contextual and affective representations, their model achieved 93.44\% accuracy on the hotel review dataset.
+
+\citet{Liu2025} demonstrated the effectiveness of leveraging LLMs for data augmentation. Systems such as ChatGPT were used to generate synthetic reviews across multiple languages and domains, thus enriching training datasets. In their experiments, models trained on augmented datasets improved in accuracy by several percentage points.
+
+\citet{Ranjan2025} introduced a leakage-free multi-response model based on DeBERTa ensembles together with rigorous evaluation frameworks that control unintended memorization of test data. Their approach achieved 98.41\% AUC and 94.5\% accuracy in leakage-free tests through the discovery of semantic dissimilarity of LLM-generated intent and legitimate human experience as a key discriminative feature.
+
+\citet{Geetha2025} enhanced the DeBERTa architecture using the Monarch Butterfly Optimization (MBO) algorithm, a bio-inspired metaheuristic for intelligent feature selection. Their optimized model achieved state-of-the-art performance on large benchmark datasets, demonstrating that bio-inspired optimization techniques can significantly improve deep learning model performance.
+
+The Gen-Review dataset \citep{Demetrio2025} established a new standard for detecting AI-generated peer and consumer reviews. However, baseline evaluations revealed that it is quite difficult to distinguish between text written by humans and AI-generated content, with simple methods achieving only around 58.35\% accuracy, especially in high-technical domains. Nevertheless, this does not mean that only resource-intensive models can achieve state-of-the-art performance. \citet{AlQadi2025} demonstrated that lightweight models like DistilBERT can achieve near-perfect precision (97.25\%) when combined with a sophisticated pre-processing pipeline. This finding highlights an important trade-off between model size and computation efficiency.
+
+Based on the review above, it is obvious that though LLMs consistently demonstrate strong performance in fake review detection, their computational requirements pose major challenges for practical deployment. This limitation motivates the exploration of more efficient alternative approaches. To address this gap, our purpose in the present study is to adopt a highly efficient Small Language Model (SLM) together with a Parameter-Efficient Fine-Tuning (PEFT) method, termed Quantized Low-Rank Adaptation with Rank-Stabilized LoRA (Rs-QLoRA) \citep{Hu2021, Dettmers2023}. The proposed model seeks to balance detection performance and computational efficiency. The methodological details are presented in the section that follows.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 3 METHODOLOGY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Methodology}
+
+Our methodology builds on the hypothesis that a well-optimized Small Language Model (SLM) can rival the performance of significantly larger architectures for specific downstream tasks like fake review detection. To this end, we employ a combination of parameter-efficient fine-tuning (PEFT) techniques that prioritize both memory efficiency and training stability.
+
+\subsection{Model Architecture}
+
+We chose the Qwen 2.5-0.5B model, a decoder-only transformer with approximately 500 million parameters. This model serves as an effective backbone given its modern architectural design, which incorporates SwiGLU activation functions to enhance non-linearity and Rotary Positional Embeddings (RoPE) to improve contextual representation over long sequences. Unlike encoder-only models such as BERT, the decoder architecture of Qwen is pre-trained on large corpora for causal language modeling, allowing it to develop a richer semantic understanding of generative text patterns.
+
+Figure~\ref{fig:architecture} illustrates the high-level architecture of our fine-tuning approach. To adapt the model for sequence classification, we discarded the causal modeling head and attached a linear classification head to the final hidden state. Our approach freezes the pre-trained weights of the base model while introducing trainable quantized low-rank adaptation (QLoRA) modules into the transformer layers.
+
+Specifically, these adaptations are applied to all linear projection layers within the attention mechanism (\textit{q\_proj}, \textit{k\_proj}, \textit{v\_proj}, \textit{o\_proj}) and the feed-forward networks (\textit{gate\_proj}, \textit{up\_proj}, \textit{down\_proj}). By applying adaptation to both the MLP layers (gate/up/down) and the attention layers, we maximize the model's ability to re-align its internal feature representations for the specific task of distinguishing human-authored text from AI-generated text.
+
+\subsection{Fine-Tuning Strategy}
+
+To adapt this model under strict memory constraints ($<$4\,GB VRAM), we adopt Quantized Low-Rank Adaptation (QLoRA). The base model parameters were quantized to 4-bit precision and frozen. During the forward pass, these quantized weights were temporarily dequantized to bfloat16 during computation, while gradient updates are confined to the LoRA adapter parameters. In this way, the majority of the parameters in the network are preserved, and only a small subset is trainable, which forms a lightweight and low-rank subspace.
+
+A key component of our strategy is the use of Rank-Stabilized QLoRA (Rs-QLoRA). In standard LoRA, the contribution of the adapter is scaled by a factor of $\alpha/r$, which is likely to lead to instability or require careful learning rate tuning as the rank $r$ increases. Rs-QLoRA addresses this by modifying the scaling to $\alpha/\sqrt{r}$, which theoretically stabilizes the learning dynamics. This stabilization allowed us to use a significantly higher rank ($r = 64$) than is typical for models of this size. This increases the capacity of the trainable parameters to capture the subtle linguistic nuances that distinguish human-written text from machine-generated text without introducing overfitting.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 4 EXPERIMENTAL SETUP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Experimental Setup}
+
+In order to test the effectiveness of our proposed methodology, we conducted experiments with the Kaggle Fake Reviews corpus, with a carefully calibrated set of hyperparameters, aiming to optimize both stability and convergence rate.
+
+\subsection{Dataset and Preparation}
+
+For our study, we used the Kaggle Fake Reviews Dataset \citep{FakeReviewsDataset}. The dataset contains 40,432 product reviews taken from various e-commerce platforms, with a wide range of product categories such as Books, Electronics, and Home \& Kitchen products. The collection is ideally suited to the research at hand, in that the distribution of the two classes is close to perfect: 20,216 reviews that were actual reviews, which we call Original Reviews (OR), and 20,216 computer-generated (CG) fake reviews. The composition and statistical characteristics of the dataset are shown in Figures~\ref{fig:data_balance} and~\ref{fig:data_distribution}.
+
+This dataset has a near-perfect balance of authentic (49.9\%) and deceptive (50.1\%) reviews, which is a key feature that helps to reduce the risk of class imbalance issues during model training and evaluation. The distribution across categories is a fine representation of the reality of current e-commerce trends, with categories like Books and Pet Supplies being particularly well represented. There is also a rightward skew in the distribution of review lengths (the median review size is approximately 142 tokens). This indicates that although most reviews are short, they still provide enough information for proper classification. The 95th percentile of review size is 312 tokens, which justifies our decision to set an upper limit of 512 tokens for sequence length. This cut-off proves useful in obtaining more than 99\% coverage without truncating reviews.
+
+\subsection{Data Splitting and Preprocessing}
+
+To ensure a rigorous and reproducible experimental process, we used a clear strategy for partitioning and preprocessing the data. The dataset was divided into three separate subsets using stratified sampling to ensure that the class distribution, which is close to perfect, is preserved in each of the splits. The split statistics are shown in Table~\ref{tab:splits}.
+
+\begin{table}[htbp]
+\caption{Dataset split statistics.}\label{tab:splits}
+\centering
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Split} & \textbf{Total} & \textbf{OR} & \textbf{CG} & \textbf{OR Ratio} & \textbf{CG Ratio} \\
+\midrule
+Training   & 32,345 & 16,116 & 16,229 & 49.83\% & 50.17\% \\
+Validation &  2,426 &  1,202 &  1,224 & 49.55\% & 50.45\% \\
+Test       &  5,661 &  2,898 &  2,763 & 51.19\% & 48.81\% \\
+\midrule
+\textbf{Total} & \textbf{40,432} & \textbf{20,216} & \textbf{20,216} & \textbf{50.00\%} & \textbf{50.00\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the splitting process and for all the experiments that followed, a fixed random seed (1998) was used in order to guarantee the reproducibility of our results.
+
+The text preprocessing pipeline was kept minimal so as not to change the authentic linguistic characteristics of the reviews. The preprocessing steps involved tokenizing the raw reviews using the native Qwen 2.5 tokenizer with a maximum of 512 tokens, padding and truncating all sequences to a maximum length of 512 to have uniform input tensors for the model, and then encoding the labels of both classes numerically. No other text cleaning steps, such as stop word removal, stemming, or lemmatization, were utilized. This was decided to ensure that the model has access to the full and unedited text, so that it will be able to learn from all the linguistic features that are present in the original and generated reviews.
+
+\subsection{Model Selection and Optimization}
+
+To ensure the validity of the proposed Qwen-based model, we benchmarked it against two other modern approaches trained under the same experimental conditions: ModernBERT-Large and Gemma-3-270M.
+
+\begin{itemize}
+\item \textbf{ModernBERT-Large}: Though it represents a significant evolution in encoder-only models, our experiments showed it required higher memory overhead and achieved a lower convergence ceiling (96.63\% accuracy).
+
+\item \textbf{Gemma-3-270M}: This model experienced slower training throughput, required about 8.5 hours for the fine-tuning cycle, and consequently yielded lower accuracy (96.31\%).
+\end{itemize}
+
+Based on this comparative analysis, Qwen 2.5-0.5B was selected given its optimal balance between accuracy and computational efficiency. It demonstrated superior accuracy compared to Gemma-3 while reducing training time to approximately 4.3 hours.
+
+\subsection{Training Configuration}
+
+To train the model effectively, we implemented a structured fine-tuning framework designed to enhance feature representation and adaptability. Our fine-tuning strategy differs from standard configurations by using a higher rank and specific regularization to maximize feature learning. We chose a LoRA rank of 64 combined with an alpha value of 128. A high alpha value amplifies the effect of learned low-rank matrices and hence empowers the adapter to have a more pronounced impact on the model's outputs. A high rank provides enough capacity for learning complex and nuanced patterns embedded in the data. To address the instability that is likely to occur when using higher-rank adaptation, we introduced Rs-QLoRA (Rank-Stabilized QLoRA) to ensure numerical stability during the training process. Our adaptation scheme targets comprehensively all linear projection layers, including query, key, value, output, gate, and up/down projections. Memory efficiency is a priority with the use of an 8-bit AdamW optimizer so that the entire training pipeline runs comfortably within a limited VRAM budget. To reduce the risk of local minima, we used a cosine annealing scheduler with two restart cycles, which periodically resets the learning rate. Combined with a conservative learning rate of $5 \times 10^{-6}$, this ensures stable gradient updates for the high-rank configuration. Regularization techniques, such as label smoothing with a value of 0.01, help avoid overconfidence in predictions. A weight decay of 0.03 was also used to achieve stronger regularization. A warmup ratio of 0.06 was applied to gradually increase the learning rate at the start of training. In addition, early stopping, with a patience of eight evaluation checkpoints, was used to stop the training process when the validation accuracy did not improve. Training was conducted for 6 epochs with a per-device batch size of 32 and gradient accumulation steps of 2, yielding an effective batch size of 64 on a single Tesla T4 GPU. For a detailed overview of the Rs-QLoRA setup and all training parameters, see Table~\ref{tab:config}.
+
+\begin{table}[htbp]
+\caption{Rs-QLoRA and training configuration.}\label{tab:config}
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Justification} \\
+\midrule
+LoRA Rank ($r$) & 64 & Increased capacity for subtle semantic nuances \\
+LoRA Alpha & 128 & High scaling factor for strong adapter influence \\
+Rank Stabilization & Rs-QLoRA & Ensures stability at high rank ($r=64$) \\
+Target Modules & All Linear & q, k, v, o, gate, up, down projections \\
+Optimizer & AdamW 8-bit & Memory-efficient for limited VRAM \\
+Scheduler & Cosine (restarts) & 2 cycles to help escape local minima \\
+Learning Rate & $5 \times 10^{-6}$ & Lower rate for stable convergence with high rank \\
+Label Smoothing & 0.01 & Prevents model overconfidence and overfitting \\
+Warmup Ratio & 0.06 & Gradual learning rate warm-up \\
+Weight Decay & 0.03 & Stronger regularization to reduce overfitting \\
+Early Stopping & Patience = 8 & Stops if validation accuracy plateaus \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Evaluation Metrics}
+
+To evaluate the performance of our model, we used a standard set of performance metrics: Accuracy, Precision, Recall, and the F1-Score. For a more granular analysis, a Confusion Matrix was used to visualize error patterns. Furthermore, all metrics were reported for both Original Review (OR) and Computer-Generated (CG) classes separately to assess the balanced performance of the model across both categories.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 5 RESULTS AND DISCUSSION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Results and Discussion}
+
+In this section, we present a detailed performance analysis of the model, including a dynamics analysis of the training process, confusion matrix considerations, and a comparative study with state-of-the-art baselines.
+
+\subsection{Training Dynamics}
+
+The training process exhibited a fast and stable convergence profile, validating our choice of Rs-QLoRA and cosine restart scheduler. As visualized in Figure~\ref{fig:val_loss}, the validation loss decreased significantly in the first epoch and then continued decreasing. The use of restarts inside the learning rate scheduler ensured that the model was not getting stuck in a sub-optimal local minimum, as shown by the small fluctuations in the loss values, which were followed by improvements.
+
+Simultaneously, the validation accuracy shown in Figure~\ref{fig:val_accuracy} improved rapidly to over 98\% by the second epoch. The stability of the accuracy curve suggests that the model did not experience catastrophic forgetting or instability, which is common with high-rank adaptation of smaller models. The final model checkpoint was selected based on the lowest validation loss to achieve optimal generalization.
+
+\subsection{Overall Performance and Error Analysis}
+
+On the held-out test set, the fine-tuned Qwen 2.5-0.5B model achieved an overall accuracy of \textbf{98.43\%}. The breakdown of predictions is presented in Table~\ref{tab:confusion}.
+
+\begin{table}[htbp]
+\caption{Confusion matrix and class-wise metrics on the test set.}\label{tab:confusion}
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{OR (Genuine)} & \textbf{CG (Fake)} \\
+\midrule
+True Positive  & 2,861  & 2,711 \\
+False Negative & 37     & 52    \\
+Precision      & 98.21\% & 98.65\% \\
+Recall         & 98.72\% & 98.12\% \\
+F1-Score       & 98.47\% & 98.39\% \\
+\midrule
+\textbf{Overall Accuracy} & \multicolumn{2}{c}{\textbf{98.43\%}} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The results identify a significantly desirable asymmetric profile of errors. The recall for the model with genuine reviews was 98.72\%, as shown in Figure~\ref{fig:confusion_matrix}. This entails that the model rarely misclassifies a genuine user review as fake (only 37 instances). This is important when it comes to user trust because mistaken reports of false positives on authentic content can cause significant detriment to user trust in a platform. Conversely, the precision for fake reviews was 98.65\%, which means that the model was almost perfect when it flagged a review as fake. The handful of fake reviews that were missed (52 instances) must have been extremely advanced generations that accurately emulated human idiosyncrasies.
+
+\subsection{Comparative Analysis}
+
+\subsubsection{Internal Benchmarks}
+
+To assess the effectiveness of the proposed configuration, we conducted a comparative analysis against internal baselines and alternative architectures. We compared our optimized Qwen 2.5 model (Rank 64, Rs-QLoRA) against a standard fine-tuning of Qwen 2.5 (Rank 16), Gemma-3 (270M), and ModernBERT-Large. Table~\ref{tab:internal} and Figure~\ref{fig:efficiency} illustrate the performance and efficiency trade-offs.
+
+\begin{table}[htbp]
+\caption{Internal model comparison: optimization and efficiency.}\label{tab:internal}
+\centering
+\begin{tabular}{llccc}
+\toprule
+\textbf{Model} & \textbf{Configuration} & \textbf{Accuracy} & \textbf{Training Time} & \textbf{Efficiency Gain} \\
+\midrule
+ModernBERT-Large     & FP16 LoRA ($r$=32) & 96.63\% & $\sim$6.6\,h & Baseline \\
+Gemma-3 270M         & FP4 QLoRA ($r$=16) & 96.31\% & $\sim$8.5\,h & $-$28.8\% (Slower) \\
+Qwen2.5-0.5B         & FP4 QLoRA ($r$=16) & 97.47\% & $\sim$6.9\,h & $-$4.5\% (Slower) \\
+\textbf{Qwen2.5-0.5B (Ours)} & \textbf{Rs-QLoRA ($r$=64)} & \textbf{98.43\%} & $\sim$\textbf{4.3\,h} & \textbf{+34.8\% (Faster)} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As illustrated in Table~\ref{tab:internal}, although standard fine-tuning of Qwen and Gemma achieved slightly better accuracy results compared to baseline, the computational cost was substantially higher, requiring nearly twice the training time. Our optimized approach using Rs-QLoRA with a higher rank (64) and a cosine restart scheduler enabled the model to converge significantly faster (4.3\,h vs.\ approximately 8\,h) with almost no downgrade in predictive performance. Moreover, our SLM-based methodology outperformed the encoder-only ModernBERT-Large in terms of accuracy (+1.8\%) and training speed, thus confirming the superiority of generative architectures for this task.
+
+\subsubsection{Comparison with State-of-the-Art}
+
+To contextualize our findings, we compared our model with several benchmarks from the literature as well as with transformer-based models. The results are summarized in Table~\ref{tab:sota} and Figure~\ref{fig:comparative}.
+
+\begin{table}[htbp]
+\caption{Comparative analysis with state-of-the-art models.}\label{tab:sota}
+\centering
+\begin{tabular}{llcccc}
+\toprule
+\textbf{Study} & \textbf{Model} & \textbf{Accuracy} & \textbf{F1 Score} & \textbf{Recall} & \textbf{Precision} \\
+\midrule
+\citet{Salminen2022} & OpenAI (GPT-2 era)  & 83\%    & 82\%    & 82\%    & 83\% \\
+                      & NBSVM               & 95.82\% & 95\%    & 95\%    & 95\% \\
+                      & FakeRoberta         & 96.64\% & 97\%    & 97\%    & 97\% \\
+\citet{Shajalal2024}  & Ensemble ML         & 84.25\% & 90.14\% & --      & 91.47\% \\
+                      & XLNet               & 95.80\% & 97.79\% & 97\%    & 98.87\% \\
+                      & DistilBERT          & 95.92\% & 98.21\% & 97\%    & 99\% \\
+\citet{Geetha2025}    & DeBERTa (Baseline)  & 98\%    & 97\%    & 97\%    & 98\% \\
+                      & DeBERTa (Optimized) & 98\%    & 98\%    & 99\%    & 98\% \\
+\textbf{Ours}         & \textbf{Qwen 2.5 (Rs-QLoRA)} & \textbf{98.43\%} & \textbf{98.43\%} & \textbf{98.42\%} & \textbf{98.43\%} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The proposed Qwen 2.5-0.5B model outperforms nearly every baseline. It significantly surpasses previous-generation models like OpenAI (GPT-2 era) at 83\% and traditional ensemble models at 84.25\%. More importantly, it surpasses highly optimized models based on BERT architectures. For example, although DistilBERT achieves high precision (99\%), its overall accuracy (95.92\%) remains lower than that of our model. Likewise, our model achieves comparable or superior performance to the optimization-enhanced DeBERTa model, which is substantially larger and typically requires significantly greater computational resources for fine-tuning. Moreover, while fine-tuning of models such as DeBERTa or XLNet usually requires high-end GPUs with large amounts of VRAM, the proposed approach operates within less than 4\,GB of VRAM. These findings demonstrate that the combination of a modern small language model (Qwen 2.5) with a stable and efficient fine-tuning strategy (Rs-QLoRA) effectively bridges the gap between computational efficiency and state-of-the-art performance.
+
+The Qwen 2.5-0.5B model, despite its relatively small size, has been able to capture nuanced distinctions between human-written reviews and AI-generated fake reviews with high precision. Its superior performance compared to baselines such as FakeRoberta and DistilBERT can be attributed to the combination of a modern small language model architecture and the Rs-QLoRA fine-tuning strategy, which enabled the use of a higher rank (64) without inducing overfitting or training instability. More importantly, this performance was achieved in highly efficient computational conditions. The training process required less than 4\,GB of VRAM, making it feasible on entry-level GPUs or older hardware such as the Tesla T4, with a total training time of approximately 4.3 hours. This contrasts with full fine-tuning of larger models, which typically require greater computational resources and multi-GPU setups.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 6 CONCLUSION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusion}
+
+In this study, we proposed a computationally efficient system for detecting AI-generated fake reviews based on the Qwen 2.5-0.5B small language model. By using Rs-QLoRA with rank 64 and a cosine restart scheduler, the proposed model achieved a state-of-the-art classification accuracy of 98.43\%. This performance was obtained under constrained computational settings that required less than 4\,GB of VRAM and approximately 4.3 hours of training time. These findings support the conclusion that high-performing natural language processing systems can be developed without extensive computational resources.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DECLARATIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Conflict of Interest Statement}
+The authors declare that the research was conducted in the absence of any commercial or financial relationships that could be construed as a potential conflict of interest.
+
+\section*{Author Contributions}
+ZR conceived the study, designed the experiments, implemented the model, performed the analysis, and wrote the manuscript. SEF supervised the research and reviewed the manuscript. RF co-supervised and provided critical feedback. All authors approved the final version of the manuscript.
+
+\section*{Funding}
+This research received no specific grant from any funding agency in the public, commercial, or not-for-profit sectors.
+
+\section*{Acknowledgments}
+The authors acknowledge the curators of the publicly available Kaggle Fake Reviews Dataset, on which this study relies. No generative artificial intelligence (AI) tool was used to write, draft, or edit any portion of this manuscript; AI models are exclusively the object of study.
+
+\section*{Supplemental Data}
+Supplementary Material for this article includes additional figures on training dynamics, detailed dataset statistics, and the full list of hyperparameters used.
+
+\section*{Data Availability Statement}
+The dataset used in this study is publicly available on Kaggle: \url{https://www.kaggle.com/datasets/mexwell/fake-reviews-dataset}. The code and trained model weights will be made available upon publication.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{Frontiers-Harvard}
+\bibliography{references}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FIGURES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Figure Captions}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=14cm]{fig_architecture}
+\end{center}
+\caption{Architecture of the QLoRA-fine-tuned Qwen 2.5 model for binary classification. The base model weights (hatched) are frozen at 4-bit precision, while LoRA adapters (orange) and the classification head (green) are fully trainable. Adaptation is applied to all linear projections in both the self-attention and MLP layers across all 24 transformer blocks.}\label{fig:architecture}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=8cm]{fig_data_balance}
+\end{center}
+\caption{Overall dataset balance between Original Reviews (OR) and Computer-Generated (CG) classes, showing a near-perfect 50/50 split across 40,432 samples.}\label{fig:data_balance}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=12cm]{fig_data_distribution}
+\end{center}
+\caption{Category distribution of the dataset across ten product categories, with Kindle Store and Books being the most represented.}\label{fig:data_distribution}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=12cm]{fig_val_loss}
+\end{center}
+\caption{Validation loss over training steps. The loss decreases rapidly in the first epoch and converges to a minimum of 0.0852 at step 1000. Small fluctuations correspond to the cosine restart cycles.}\label{fig:val_loss}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=12cm]{fig_val_accuracy}
+\end{center}
+\caption{Validation accuracy progression over training steps. The model achieves its best accuracy of 98.39\% at step 1000 and maintains stable performance thereafter.}\label{fig:val_accuracy}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=14cm]{fig_confusion_matrix}
+\end{center}
+\caption{Confusion matrix of test set predictions (left) and class-wise performance metrics (right). The model achieves balanced high performance across both OR (Genuine) and CG (Fake) classes.}\label{fig:confusion_matrix}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=14cm]{fig_efficiency}
+\end{center}
+\caption{Training efficiency comparison across models. The proposed Qwen 2.5-0.5B with Rs-QLoRA (r=64) achieves the highest accuracy (98.43\%) with the shortest training time (4.3\,h), representing a 34.8\% efficiency gain over the ModernBERT-Large baseline.}\label{fig:efficiency}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=14cm]{fig_comparative}
+\end{center}
+\caption{Comparative analysis of fake review detection models across accuracy, F1-score, precision, and recall. Our Qwen 2.5-0.5B model with Rs-QLoRA (red bars) achieves competitive or superior performance across all metrics compared to state-of-the-art baselines.}\label{fig:comparative}
+\end{figure}
+
+\end{document}
