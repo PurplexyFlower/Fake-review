@@ -1,5 +1,12 @@
 # Detecting Modern AI-Generated Fake Reviews — Project Report
 
+> **Historical project report (superseded 2026-07-12).** This file preserves the
+> investigation as it evolved and therefore contains preliminary matrices and
+> “next steps” that have since been completed. Do not cite its numerical results
+> as final. Use [`PAPER_FINDINGS.md`](PAPER_FINDINGS.md) for the canonical study
+> results and [`DATA_PROVENANCE.md`](DATA_PROVENANCE.md) for exact dataset
+> generation records.
+
 ## TL;DR
 
 We started from a paper that detects the Kaggle "Fake Reviews" dataset's

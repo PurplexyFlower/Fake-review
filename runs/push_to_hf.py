@@ -7,12 +7,15 @@ with the frozen train/validation/test split (seed 1998), plus a dataset card.
 Token: --token, or HF_TOKEN in env / .env. Add --private for a private repo.
 """
 import argparse
+import hashlib
+import json
 import os
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPLIT_SEED = 1998
+PROVENANCE = ROOT / "dataset" / "provenance.json"
 
 
 def load_env(path=ROOT / ".env"):
@@ -60,6 +63,26 @@ Both halves are normalised to a single ASCII punctuation convention (smart
 quotes/em-dashes -> ASCII) so Unicode is not a spurious tell. Exact and
 cross-class duplicates removed; classes balanced 1:1.
 
+## Generation protocol and provenance
+Each generated review is grounded on the first 400 characters of a genuine
+review. Source order uses seed 1998, and the review angle uses an RNG seeded by
+the source-row index. Generation allows up to five attempts with temperatures
+0.85, 0.91, 0.97, 1.03, and 1.09; `top_p=0.95`. Accepted outputs contain at
+least three words, stay within the recorded proportional length ceiling, and
+have source/generated word-set Jaccard similarity below 0.6.
+
+No API decoding seed was supplied. Provider model aliases may be mutable, and
+some provider-side revisions were not recorded. The committed raw CSVs are the
+canonical artifacts. Exact system/user prompts, commands, artifact SHA-256
+values, generation history, and known unknowns are recorded in
+[`DATA_PROVENANCE.md`](https://github.com/PurplexyFlower/Fake-review/blob/main/DATA_PROVENANCE.md)
+and
+[`dataset/provenance.json`](https://github.com/PurplexyFlower/Fake-review/blob/main/dataset/provenance.json).
+
+### This artifact
+
+{provenance_block}
+
 ## Splits
 `train` / `validation` / `test` reproduce the frozen protocol split (seed 1998:
 80/20, then the 20% is split 30/70 into validation/test).
@@ -79,6 +102,55 @@ cross-class duplicates removed; classes balanced 1:1.
 """
 
 
+def sha256(path):
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def load_provenance(path=PROVENANCE):
+    return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def record_for_csv(csv_path, manifest):
+    """Require an exact assembled-artifact hash before publishing its card."""
+    actual = sha256(csv_path)
+    for key, record in manifest["datasets"].items():
+        if record["assembled"]["sha256"] == actual:
+            return key, record
+    raise RuntimeError(
+        f"{csv_path} ({actual}) has no exact record in {PROVENANCE}; "
+        "record its provenance before publishing")
+
+
+def provenance_block(record):
+    generator = record["generator"]
+    raw = record["raw"]
+    assembled = record["assembled"]
+    labels = assembled["label_counts"]
+    revision = generator.get("immutable_revision") or "not retained"
+    return "\n".join([
+        f"- Request model: `{generator['request_model']}`",
+        f"- Provider: {generator['provider']}",
+        f"- Provider endpoint: `{generator['base_url']}`",
+        f"- Immutable provider revision: {revision}",
+        f"- Raw artifact: `{raw['path']}` ({raw['rows']:,} rows)",
+        f"- Raw SHA-256: `{raw['sha256']}`",
+        f"- Final artifact: `{assembled['path']}` "
+        f"({assembled['rows']:,} rows; OR={labels['OR']:,}, CG={labels['CG']:,})",
+        f"- Final SHA-256: `{assembled['sha256']}`",
+        f"- Artifact commit: `{record['artifact_commit']}`",
+    ])
+
+
+def render_card(record):
+    return CARD.format(
+        generator=record["generator"]["display_name"],
+        provenance_block=provenance_block(record))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--repo", required=True, help="<user>/<dataset-name>")
@@ -94,6 +166,16 @@ def main():
         raise SystemExit("no HF token: pass --token or set HF_TOKEN (in env or .env)")
 
     from datasets import load_dataset
+    manifest = load_provenance()
+    _key, provenance = record_for_csv(args.csv, manifest)
+    if args.repo != provenance["hub"]["repo"]:
+        raise RuntimeError(
+            f"repo mismatch: --repo={args.repo}, provenance={provenance['hub']['repo']}")
+    if args.generator != provenance["generator"]["request_model"]:
+        raise RuntimeError(
+            f"generator mismatch: --generator={args.generator}, "
+            f"provenance={provenance['generator']['request_model']}")
+
     ds = load_dataset("csv", data_files=args.csv)["train"]
     sp = ds.train_test_split(test_size=0.2, seed=SPLIT_SEED)
     sp2 = sp["test"].train_test_split(test_size=0.7, seed=SPLIT_SEED)
@@ -106,7 +188,7 @@ def main():
 
     # dataset card
     from huggingface_hub import HfApi
-    card = CARD.format(generator=args.generator)
+    card = render_card(provenance)
     HfApi().upload_file(
         path_or_fileobj=card.encode("utf-8"), path_in_repo="README.md",
         repo_id=args.repo, repo_type="dataset", token=token)
