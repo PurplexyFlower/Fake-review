@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-07-12",
+  "repository": "https://github.com/PurplexyFlower/Fake-review",
+  "human_source": {
+    "path": "dataset/fake reviews dataset.csv",
+    "sha256": "d2581f5436ae92a8106885988fd5381ea562cc366a57dcffb942c1090761282a",
+    "selected_label": "OR",
+    "selected_rows": 20216,
+    "upstream_url": "https://www.kaggle.com/datasets/mexwell/fake-reviews-dataset"
+  },
+  "generation_protocol": {
+    "implementation": "runs/gen_fakes_sota.py",
+    "source_order_seed": 1998,
+    "api_decoding_seed": null,
+    "target_words": {
+      "source": "paired human review word count",
+      "minimum": 4,
+      "maximum": 120
+    },
+    "system_prompt": "You write realistic, concise Amazon-style customer product reviews. Output ONLY the review text — no preamble, no surrounding quotes, no title, no rating line, no markdown.",
+    "user_prompt_template": "Here is a real customer review of a product in the {category} category:\n\"{real_text_first_400_chars}\"\n\nWrite a NEW, different {rating}-star review for the SAME product as if you were another genuine customer. Emphasise {angle}. About {target_length} words. Natural, specific, casual. Do NOT copy phrasing from the review above. Output only the review text.",
+    "angles": [
+      "overall experience",
+      "a specific feature you liked or disliked",
+      "value for the price",
+      "how it compares to expectations",
+      "shipping/packaging and first impressions",
+      "durability after some use",
+      "who you'd recommend it to"
+    ],
+    "maximum_attempts": 5,
+    "temperature": {
+      "formula": "0.85 + 0.06 * attempt_index",
+      "values": [0.85, 0.91, 0.97, 1.03, 1.09]
+    },
+    "top_p": 0.95,
+    "plain_max_tokens_formula": "4 * target_words + 100",
+    "acceptance": {
+      "minimum_words": 3,
+      "maximum_words_formula_current": "max(130, floor(1.5 * target_words))",
+      "maximum_source_jaccard": 0.6
+    },
+    "known_unrecorded_fields": [
+      "per-attempt completion identifiers",
+      "per-attempt errors",
+      "provider-side immutable model revisions",
+      "request and response timestamps"
+    ]
+  },
+  "assembly_protocol": {
+    "implementation": "runs/build_modern_dataset.py",
+    "normalization": "smart punctuation map, Unicode NFKD, ASCII encoding, whitespace and punctuation cleanup",
+    "deduplication": "exact within generated class and exact cross-class after case folding",
+    "balance_seed": 1998,
+    "shuffle_seed": 1998,
+    "hub_split": {
+      "train_fraction": 0.8,
+      "validation_fraction": 0.06,
+      "test_fraction": 0.14,
+      "seed": 1998
+    }
+  },
+  "datasets": {
+    "lfm": {
+      "generator": {
+        "display_name": "LFM2.5-1.2B",
+        "request_model": "lfm2.5-1.2b-instruct",
+        "provider": "local LM Studio OpenAI-compatible server",
+        "base_url": "http://localhost:1234/v1",
+        "reasoning_disabled": false,
+        "immutable_revision": null,
+        "unrecorded": ["exact checkpoint repository", "quantization", "LM Studio version", "backend build"]
+      },
+      "raw": {
+        "path": "dataset/sota_fakes.csv",
+        "rows": 20216,
+        "sha256": "8bfe7eb10be6f815eabdf0e8169b35adac1db7c5e1df540b9ef7fd641b2a6270"
+      },
+      "assembled": {
+        "path": "dataset/modern_reviews_lfm.csv",
+        "rows": 40424,
+        "label_counts": {"OR": 20212, "CG": 20212},
+        "sha256": "6a0f516f0fee535f3c3fc31fc613dba484684e9f44f89db36b57655382c201e7"
+      },
+      "artifact_commit": "a1a77c419a59658f6cf06ea5c27e4f0bdab25229",
+      "hub": {
+        "repo": "Flowerly/modern-fake-reviews-lfm",
+        "public": true,
+        "viewer_valid": true,
+        "splits": ["train", "validation", "test"],
+        "rows": 40424
+      }
+    },
+    "deepseek": {
+      "generator": {
+        "display_name": "DeepSeek-v4-pro",
+        "request_model": "deepseek-v4-pro",
+        "provider": "DeepSeek API",
+        "base_url": "https://api.deepseek.com",
+        "reasoning_disabled": true,
+        "immutable_revision": null
+      },
+      "raw": {
+        "path": "dataset/sota_fakes_deepseek.csv",
+        "rows": 20216,
+        "sha256": "a47568d219a38f5cc16207269d9d855ae370405fd703ae5c7d27e2131a019cc1"
+      },
+      "assembled": {
+        "path": "dataset/modern_reviews_deepseek.csv",
+        "rows": 40424,
+        "label_counts": {"OR": 20212, "CG": 20212},
+        "sha256": "c21b3a596101d488954058f56d72f35512a34dac1526ef8cbbd3d307fb005783"
+      },
+      "artifact_commit": "a1a77c419a59658f6cf06ea5c27e4f0bdab25229",
+      "hub": {
+        "repo": "Flowerly/modern-fake-reviews",
+        "public": true,
+        "viewer_valid": true,
+        "splits": ["train", "validation", "test"],
+        "rows": 40424
+      }
+    },
+    "glm": {
+      "generator": {
+        "display_name": "GLM-5.2",
+        "request_model": "glm-5.2",
+        "provider": "Z.ai API",
+        "base_url": "https://api.z.ai/api/paas/v4/",
+        "reasoning_disabled": true,
+        "immutable_revision": null
+      },
+      "raw": {
+        "path": "dataset/sota_fakes_glm.csv",
+        "rows": 20216,
+        "sha256": "4d1b96580a2718e0602fe633a6c6b593da24880030772a87ec5c620c09048664"
+      },
+      "assembled": {
+        "path": "dataset/modern_reviews_glm.csv",
+        "rows": 40416,
+        "label_counts": {"OR": 20208, "CG": 20208},
+        "sha256": "1519dedd45a8bd2d04c12a201ad488b7c6a919122f2d9bc86d69955f49a2ae41"
+      },
+      "artifact_commit": "f728f090cd6436f161134915c64f8099f705b8b6",
+      "generation_history": [
+        "84826f1b6a0eff151cf06c2a6984f3168e94bbdc",
+        "f728f090cd6436f161134915c64f8099f705b8b6"
+      ],
+      "history_note": "Final 104 rows were recovered after replacing a flat 130-word acceptance cap with the current proportional cap; row-level attempt versions were not retained.",
+      "hub": {
+        "repo": "Flowerly/modern-fake-reviews-glm",
+        "public": true,
+        "viewer_valid": true,
+        "splits": ["train", "validation", "test"],
+        "rows": 40416
+      }
+    }
+  },
+  "reproducibility_boundary": {
+    "exact_artifacts": true,
+    "deterministic_assembly_from_raw": true,
+    "byte_identical_regeneration": false,
+    "reason": "API decoding was unseeded, provider aliases are mutable, and exact LFM serving details were not retained."
+  }
+}

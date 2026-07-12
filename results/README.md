@@ -42,6 +42,9 @@ The human-only balanced label-permutation control produces 49.31% accuracy and
 - `cross_gen_results.json`: structured transfer and LOGO matrices.
 - `adapter_manifest.json`: SHA-256 hashes for datasets and every adapter file.
 - `PAPER_FINDINGS.md`: paper-oriented interpretation and claim boundaries.
+- [Dataset generation provenance](https://github.com/PurplexyFlower/Fake-review/blob/main/DATA_PROVENANCE.md):
+  exact prompts, sampling settings, raw/final hashes, providers, and explicitly
+  unrecorded details.
 
 Historical configs created before dataset hashing was added may have no
 `data_sha256` field. The publication manifest preserves those configs unchanged

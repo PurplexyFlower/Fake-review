@@ -1,8 +1,9 @@
-"""Generate MODERN AI fake reviews with a SOTA local model (Qwen3.6-27B via the
-LM Studio OpenAI endpoint), distribution-matched to the dataset's real human
-reviews. New research direction: replace the obsolete GPT-2-era "computer-
-generated" half of the Kaggle set with genuinely modern LLM fakes, then train a
-SOTA detector on  real-human (OR)  vs  modern-AI-fake (CG).
+"""Generate modern AI reviews through any OpenAI-compatible endpoint.
+
+The published artifacts use LFM2.5-1.2B through LM Studio, DeepSeek-v4-pro, and
+GLM-5.2. Exact artifact hashes, provider records, prompts, parameters, and known
+unrecorded details are maintained in DATA_PROVENANCE.md and
+dataset/provenance.json.
 
 Each generated fake is conditioned on a REAL human review's (category, rating,
 word-length) so category/rating/length marginals match the genuine half exactly
@@ -10,7 +11,7 @@ and cannot be exploited as trivial shortcuts.
 
 Resumable: appends to dataset/sota_fakes.csv and skips src_idx already present.
 
-  python runs/gen_fakes_sota.py                 # all real-OR reviews
+  python runs/gen_fakes_sota.py                 # local OpenAI-compatible server
   python runs/gen_fakes_sota.py --limit 200     # quick subset
 """
 import argparse

@@ -139,3 +139,5 @@ recall is 84.26% for Rs-QLoRA versus 82.73% for TF-IDF.
 - `results/*/{config.json,metrics.json,test_probs.csv,val_probs.csv}`: per-run evidence.
 - `results/adapter_manifest.json`: dataset and adapter-file SHA-256 manifest.
 - `dataset/control_or_permutation_s1998.meta.json`: negative-control provenance.
+- `DATA_PROVENANCE.md` and `dataset/provenance.json`: exact modern-data
+  generation protocol, raw/final hashes, provider records, and known unknowns.

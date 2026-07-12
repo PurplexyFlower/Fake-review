@@ -17,6 +17,9 @@ Modern datasets are fetched automatically from HF:
 - `Flowerly/modern-fake-reviews-lfm` — real OR vs **LFM2.5-1.2B** fakes (cross-gen)
 
 (Override repo ids with `MODERN_REPO` / `MODERN_LFM_REPO` if you forked them.)
+Exact generation prompts, sampling settings, artifact hashes, provider records,
+and known unknowns are maintained in `DATA_PROVENANCE.md` and
+`dataset/provenance.json`.
 
 ## 1. Setup
 
