@@ -50,7 +50,7 @@ The supported claim is therefore not a universal AI-text detector. The evidence
 supports a transferable modern-generator signal plus a separate GPT-2-era
 fingerprint.
 
-## Finding 3: pooled modern training generalizes to unseen modern generators
+## Finding 3: pooled modern training transfers to held-out modern generators
 
 | Held-out generator | Rs-QLoRA recall | Human false-positive rate | TF-IDF recall | TF-IDF FPR |
 |---|---:|---:|---:|---:|
@@ -59,10 +59,20 @@ fingerprint.
 | DeepSeek | 95.1% | 2.13% | 92.3% | 5.60% |
 | GLM | 96.7% | 2.01% | 90.4% | 6.02% |
 
-For an unseen modern generator, pooled Rs-QLoRA training delivers 91–97% recall
+For a held-out modern generator, pooled Rs-QLoRA training delivers 91–97% recall
 at approximately 2% human FPR and consistently improves on TF-IDF. Neither model
-generalizes from the three modern generators to GPT-2. LOGO uses one seed, so
+transfers from the three modern generators to GPT-2. LOGO uses one seed, so
 uncertainty across training seeds remains to be measured.
+
+This is a generator holdout, not a joint generator-and-prompt-source holdout.
+Modern generators were grounded on the same source-review pool. An audit that
+joins normalized generations back to their retained raw `src_idx` values finds
+69.3–81.5% pairwise source overlap between another generator's training split
+and a target generator's test split. The pooled-other-generators overlap is
+94.3–94.5%. Therefore the supported interpretation is transfer to a held-out
+generator under shared grounded-source support, not fully out-of-distribution
+generalization. The large directional asymmetries remain informative because
+opposite transfer directions have nearly identical source-overlap rates.
 
 ## Finding 4: the negative control behaves exactly as required
 
@@ -138,6 +148,9 @@ recall is 84.26% for Rs-QLoRA versus 82.73% for TF-IDF.
 - `results/head_to_head.log`: canonical neural-versus-TF-IDF slice comparison.
 - `results/*/{config.json,metrics.json,test_probs.csv,val_probs.csv}`: per-run evidence.
 - `results/adapter_manifest.json`: dataset and adapter-file SHA-256 manifest.
+- `results/source_overlap.json`: source-review overlap audit for modern transfer.
 - `dataset/control_or_permutation_s1998.meta.json`: negative-control provenance.
 - `DATA_PROVENANCE.md` and `dataset/provenance.json`: exact modern-data
   generation protocol, raw/final hashes, provider records, and known unknowns.
+- `runs/analyze_source_overlap.py`: reproducible join from raw `src_idx` records
+  to frozen validation/test artifacts.

@@ -1,0 +1,82 @@
+{
+  "scope": "modern generators only; GPT-2 raw data has no source index",
+  "interpretation": "Generator identity is held out, but prompt-source identity is not. The experiment is not a joint generator-and-source OOD test.",
+  "split_sizes": {
+    "LFM": {
+      "train_sources": 16172,
+      "test_sources": 2802
+    },
+    "DeepSeek": {
+      "train_sources": 16172,
+      "test_sources": 2802
+    },
+    "GLM": {
+      "train_sources": 16135,
+      "test_sources": 2819
+    }
+  },
+  "pairwise": [
+    {
+      "train_generator": "DeepSeek",
+      "test_generator": "LFM",
+      "overlap": 1955,
+      "test_sources": 2802,
+      "fraction": 0.6977159172019985
+    },
+    {
+      "train_generator": "GLM",
+      "test_generator": "LFM",
+      "overlap": 2283,
+      "test_sources": 2802,
+      "fraction": 0.8147751605995718
+    },
+    {
+      "train_generator": "LFM",
+      "test_generator": "DeepSeek",
+      "overlap": 1941,
+      "test_sources": 2802,
+      "fraction": 0.6927194860813705
+    },
+    {
+      "train_generator": "GLM",
+      "test_generator": "DeepSeek",
+      "overlap": 2265,
+      "test_sources": 2802,
+      "fraction": 0.8083511777301927
+    },
+    {
+      "train_generator": "LFM",
+      "test_generator": "GLM",
+      "overlap": 2278,
+      "test_sources": 2819,
+      "fraction": 0.808087974459028
+    },
+    {
+      "train_generator": "DeepSeek",
+      "test_generator": "GLM",
+      "overlap": 2260,
+      "test_sources": 2819,
+      "fraction": 0.8017027314650585
+    }
+  ],
+  "pooled_other_generators": [
+    {
+      "test_generator": "LFM",
+      "overlap": 2649,
+      "test_sources": 2802,
+      "fraction": 0.9453961456102784
+    },
+    {
+      "test_generator": "DeepSeek",
+      "overlap": 2649,
+      "test_sources": 2802,
+      "fraction": 0.9453961456102784
+    },
+    {
+      "test_generator": "GLM",
+      "overlap": 2657,
+      "test_sources": 2819,
+      "fraction": 0.9428875487761617
+    }
+  ]
+}

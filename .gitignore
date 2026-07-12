@@ -4,6 +4,17 @@ venv/
 unsloth_compiled_cache/
 __pycache__/
 *.pyc
+.tools/
+
+# --- local LaTeX build intermediates (keep rendered PDFs) ---
+paper/**/*.aux
+paper/**/*.bbl
+paper/**/*.blg
+paper/**/*.log
+paper/**/*.out
+paper/**/*.xdv
+paper/**/*.synctex.gz
+paper/v2/rendered/
 
 # --- SECRETS — never commit ---
 .env

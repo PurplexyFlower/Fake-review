@@ -155,6 +155,22 @@ Hub publication uses an 80%/6%/14% train/validation/test split. It first applies
 `train_test_split(test_size=0.2, seed=1998)` and then splits that 20% remainder
 with `test_size=0.7, seed=1998`.
 
+### Grounding-source dependence in transfer evaluation
+
+Raw modern-generation files retain `src_idx`, but final four-column training
+CSVs do not group the split by this source ID. Exact review text is deduplicated,
+yet the human source and its generated counterpart can occur in different row
+partitions. Moreover, all three modern generators were grounded on the same
+source-review pool. A target generator's test source may therefore be represented
+by another generator's training example.
+
+The reproducible audit in `runs/analyze_source_overlap.py` reports pairwise source
+overlap of 69.3–81.5% and pooled-other-generators overlap of 94.3–94.5%; structured
+results are in `results/source_overlap.json`. Consequently, current LOGO results
+hold out generator identity and exact target human texts, but not prompt-source
+identity. They must be described as generator-held-out transfer under shared
+source support, not a joint generator-and-source out-of-distribution test.
+
 ## Reproduction levels
 
 - **Exact artifacts:** clone the recorded Git commits or verify the SHA-256
