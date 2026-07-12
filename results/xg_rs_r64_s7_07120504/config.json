@@ -1,0 +1,17 @@
+{
+  "tag": "xg",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 7,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/modern_reviews_gpt2.csv",
+  "notes": "",
+  "run_id": "xg_rs_r64_s7_07120504",
+  "split_seed": 1998,
+  "protocol": "frozen-v1",
+  "bf16": true,
+  "data_sha256": "2a33ef8843fccbc8ab5afa5b536253935c8f8945fa4e94e4f22cb3f4115162e1"
+}

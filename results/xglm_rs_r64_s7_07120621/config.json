@@ -1,0 +1,17 @@
+{
+  "tag": "xglm",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 7,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/modern_reviews_glm.csv",
+  "notes": "",
+  "run_id": "xglm_rs_r64_s7_07120621",
+  "split_seed": 1998,
+  "protocol": "frozen-v1",
+  "bf16": true,
+  "data_sha256": "c0ed6ea564f8be6fbd718dedc7ea918588f234e70316a544c8024c64d2f63e53"
+}

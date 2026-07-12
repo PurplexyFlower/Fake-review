@@ -40,10 +40,16 @@ bash cloud/run_all.sh            # 1 GPU lane
 LANES=2 bash cloud/run_all.sh    # 2 concurrent training lanes
 ```
 
+For a rented instance where the SSH session may disconnect, install
+`cloud/fake-review-supervisor.conf` under `/etc/supervisor/conf.d/`; its wrapper
+keeps the process managed and mirrors the full console output to
+`results/run_all.log`.
+
 ### Modern study (primary)
 | step | output |
 |---|---|
 | fetch `modern-fake-reviews` → CSV | `dataset/modern_reviews_deepseek.csv` |
+| human-only label-permutation negative control ×1 | `results/runs.csv` (`ctrl_orperm`) |
 | Rs-QLoRA r64 ×3 seeds + **standard QLoRA r64 ×3** (`grids/m_modern.txt`) | `results/runs.csv` |
 | TF-IDF sanity baseline | `results/baselines.csv` |
 | transformer baselines (RoBERTa / DeBERTa-v3 / ModernBERT-large) | `results/baselines_transformer.csv` |
@@ -59,9 +65,10 @@ analyses, efficiency (VRAM/latency). All resumable (skip what's already in the
 ledger); a failing phase never aborts the rest.
 
 ## Budget
-Modern study: ~6 LoRA runs (rs+standard ×3) ≈ minutes each on H100, plus 3
-transformer baselines. The full rebuttal adds ~40 LoRA + baseline runs. Whole
-thing is a few hours on one H100; less on H200 or with `LANES=2`.
+Default modern scope: 23 LoRA runs (one human-only control, 6 modern-study,
+12 cross-generator, 4 LOGO) plus 3 transformer baselines. The full rebuttal adds
+~40 LoRA + baseline runs. Whole thing is a few hours on one H100; less on H200
+or with `LANES=2`.
 
 ## Individual pieces
 ```bash

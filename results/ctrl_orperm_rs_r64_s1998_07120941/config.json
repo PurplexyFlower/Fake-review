@@ -1,0 +1,17 @@
+{
+  "tag": "ctrl_orperm",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 1998,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/control_or_permutation_s1998.csv",
+  "notes": "human-only_label-permutation_seed-1998",
+  "run_id": "ctrl_orperm_rs_r64_s1998_07120941",
+  "split_seed": 1998,
+  "protocol": "frozen-v1",
+  "bf16": true,
+  "data_sha256": "d697f05096fc0b44401915628c4d3693390aaba1cf8aa68cbdcbfd1334f78195"
+}

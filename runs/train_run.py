@@ -12,6 +12,7 @@ import pyarrow  # noqa: F401  must precede unsloth/torch on Windows (DLL init cr
 
 import argparse
 import csv
+import hashlib
 import json
 import shutil
 import time
@@ -53,6 +54,8 @@ def parse_args():
 
 def main():
     args = parse_args()
+    data_path = Path(args.data).resolve()
+    data_sha256 = hashlib.sha256(data_path.read_bytes()).hexdigest()
     alpha = args.alpha if args.alpha is not None else 2 * args.rank
     run_id = (f"{args.tag}_{args.scaling}_r{args.rank}_s{args.seed}"
               + (f"_loco-{args.holdout_category}" if args.holdout_category else "")
@@ -190,6 +193,12 @@ def main():
     val_m = dump_probs(val_tok, val_ds, "val")
     test_m = dump_probs(test_tok, test_ds, "test")
 
+    end_data_sha256 = hashlib.sha256(data_path.read_bytes()).hexdigest()
+    if end_data_sha256 != data_sha256:
+        raise RuntimeError(
+            f"dataset changed during training: {data_path} "
+            f"({data_sha256} -> {end_data_sha256})")
+
     model.save_pretrained(str(run_dir / "adapter"))
     tokenizer.save_pretrained(str(run_dir / "adapter"))
     state_src = Path(trainer.state.best_model_checkpoint or ckpt_dir)
@@ -199,7 +208,8 @@ def main():
 
     config = vars(args) | {"alpha": alpha, "run_id": run_id,
                            "split_seed": SPLIT_SEED, "protocol": "frozen-v1",
-                           "bf16": is_bfloat16_supported()}
+                           "bf16": is_bfloat16_supported(),
+                           "data_sha256": data_sha256}
     (run_dir / "config.json").write_text(json.dumps(config, indent=2))
     metrics = {"val": val_m, "test": test_m, "best_step": best_step,
                "train_runtime_s": runtime,

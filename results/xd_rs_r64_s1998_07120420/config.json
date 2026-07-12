@@ -1,0 +1,16 @@
+{
+  "tag": "xd",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 1998,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/modern_reviews_deepseek.csv",
+  "notes": "",
+  "run_id": "xd_rs_r64_s1998_07120420",
+  "split_seed": 1998,
+  "protocol": "frozen-v1",
+  "bf16": true
+}
