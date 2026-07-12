@@ -25,9 +25,18 @@ source .venv/bin/activate
 PY=python
 LANES="${LANES:-1}"
 SCOPE="${SCOPE:-modern}"
+FAILURES=0
 
 step(){ echo; echo "============================ $* ============================"; }
 opt(){ [ -f "$1" ]; }   # file-exists guard
+required(){
+  "$@" || {
+    rc=$?
+    echo "[required FAIL rc=$rc] $*"
+    FAILURES=$((FAILURES + 1))
+    return 0
+  }
+}
 
 echo "SCOPE=$SCOPE  LANES=$LANES   (SCOPE=all adds the legacy rebuttal suite)"
 
@@ -53,43 +62,49 @@ opt dataset/modern_reviews_glm.csv || { opt dataset/sota_fakes_glm.csv && \
   $PY runs/build_modern_dataset.py --fakes dataset/sota_fakes_glm.csv \
       --out dataset/modern_reviews_glm.csv; }
 
+# Human-only control data (the queued neural run stays behind the headline work).
+CONTROL=dataset/control_or_permutation_s1998.csv
+opt "$CONTROL" || $PY runs/build_or_permutation_control.py --out "$CONTROL"
+
 # ---- modern study: Rs-QLoRA + standard QLoRA on the DeepSeek set ----
 step "Modern study: Rs-QLoRA r64 x3 + standard r64 x3 (m_modern grid)"
-$PY runs/run_queue.py grids/m_modern.txt --lanes "$LANES"
+required $PY runs/run_queue.py grids/m_modern.txt --lanes "$LANES" --require-adapter
 
 # ---- 4x4 cross-generator matrix (the headline) ----
 step "Cross-gen: one detector per generator x3 seeds (xgen grid)"
-$PY runs/run_queue.py grids/xgen.txt --lanes "$LANES"
+required $PY runs/run_queue.py grids/xgen.txt --lanes "$LANES" --require-adapter
 step "Cross-gen LOGO: pooled 3-generator datasets + detectors"
-opt dataset/pooled_wo_glm.csv || $PY runs/build_pooled_dataset.py
-$PY runs/run_queue.py grids/logo.txt --lanes "$LANES"
+# Cheap and deterministic; always rebuild so split/exclusion logic cannot leave
+# stale pooled artifacts from an older checkout.
+required $PY runs/build_pooled_dataset.py
+required $PY runs/run_queue.py grids/logo.txt --lanes "$LANES" --require-adapter
 step "Cross-gen: transfer matrix + LOGO (TF-IDF and Rs-QLoRA, with FPR)"
-$PY runs/cross_gen_matrix.py
+required $PY runs/cross_gen_matrix.py
 
 # ---- supporting evidence on the modern set ----
+step "Negative control: human OR only with balanced random pseudo-labels"
+required $PY runs/run_queue.py grids/control_or_permutation.txt --lanes 1 --require-adapter
 step "Modern study: TF-IDF sanity baseline"
 grep -q "tfidf_logreg_ds" results/baselines.csv 2>/dev/null || \
-  $PY runs/baseline_tfidf.py --data "$MOD" --tag _ds
+  required $PY runs/baseline_tfidf.py --data "$MOD" --tag _ds
 step "Modern study: head-to-head (by-length + cross-generator recall)"
-$PY runs/head_to_head.py || true
+required $PY runs/head_to_head.py
 step "Modern study: transformer baselines (RoBERTa/DeBERTa/ModernBERT)"
-if ! grep -q "_modern" results/baselines_transformer.csv 2>/dev/null; then
-  for m in roberta-base microsoft/deberta-v3-base answerdotai/ModernBERT-large; do
-    $PY runs/baseline_transformer.py --model "$m" --data "$MOD" --tag _modern \
-        --lr 2e-5 --seed 1998 --batch 16
-  done
-fi
+for m in roberta-base microsoft/deberta-v3-base answerdotai/ModernBERT-large; do
+  required $PY runs/baseline_transformer.py --model "$m" --data "$MOD" --tag _modern \
+      --lr 2e-5 --seed 1998 --batch 16
+done
 
 # ======================= LEGACY REBUTTAL SUITE (SCOPE=all) ==================
 if [ "$SCOPE" = "all" ]; then
   step "Legacy Phase 1  A1/A2 grid"
-  $PY runs/run_queue.py grids/a1_grid.txt --lanes "$LANES"
+  required $PY runs/run_queue.py grids/a1_grid.txt --lanes "$LANES"
   step "Legacy Phase 2  B ablations"
-  $PY runs/run_queue.py grids/b_ablations.txt --lanes "$LANES"
+  required $PY runs/run_queue.py grids/b_ablations.txt --lanes "$LANES"
   step "Legacy Phase 4  D1 LOCO"
-  $PY runs/run_queue.py grids/d1_loco.txt --lanes "$LANES"
+  required $PY runs/run_queue.py grids/d1_loco.txt --lanes "$LANES"
   step "Legacy Phase 3  baselines (TF-IDF + 4 transformers, LR x seed sweep)"
-  $PY runs/run_baselines.py
+  required $PY runs/run_baselines.py
   step "Legacy analyses  summary / error+imbalance / overfitting"
   $PY runs/summarize_ledger.py
   $PY runs/reviewer_analysis.py
@@ -109,5 +124,9 @@ else
   echo; echo "[scope] legacy rebuttal suite skipped (run with SCOPE=all to include)"
 fi
 
+if [ "$FAILURES" -ne 0 ]; then
+  step "INCOMPLETE — $FAILURES required command(s) failed; inspect logs above"
+  exit 1
+fi
 step "DONE — results/ (runs.csv, baselines*.csv, a1_summary.csv, external_eval/)
       Headline: the cross-gen matrix printed above (also rerun: python runs/cross_gen_matrix.py)"

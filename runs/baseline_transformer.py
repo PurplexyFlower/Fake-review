@@ -13,6 +13,8 @@ Usage:
 import pyarrow  # noqa: F401
 import argparse
 import csv
+import hashlib
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,16 +46,43 @@ def main():
     from datasets import load_dataset
     from transformers import (AutoModelForSequenceClassification, AutoTokenizer,
                               DataCollatorWithPadding, EarlyStoppingCallback,
-                              Trainer, TrainingArguments, set_seed,
-                              is_torch_bf16_gpu_available)
+                              Trainer, TrainingArguments, set_seed)
     from sklearn.metrics import (accuracy_score, average_precision_score,
                                  f1_score, roc_auc_score)
 
     set_seed(args.seed)
     short = args.model.split("/")[-1] + args.tag
     tag = f"{short}@lr{args.lr:g}"
-    run_dir = RESULTS / f"baseline_{short}_lr{args.lr:g}_s{args.seed}"
+    data_path = Path(args.data).resolve()
+    data_sha256 = hashlib.sha256(data_path.read_bytes()).hexdigest()
+    config = vars(args) | {
+        "data": str(data_path),
+        "data_sha256": data_sha256,
+        "split_seed": SPLIT_SEED,
+        "protocol": "transformer-baseline-v1",
+    }
+    run_dir = RESULTS / (f"baseline_{short}_lr{args.lr:g}_s{args.seed}_"
+                         f"{data_sha256[:12]}")
     run_dir.mkdir(parents=True, exist_ok=True)
+    config_path = run_dir / "config.json"
+
+    # Per-model resumability: run_all invokes this script once for each model.
+    # Re-running the pipeline must not skip missing models merely because another
+    # model already wrote the shared ledger.
+    if (LEDGER.exists() and (run_dir / "test_probs.csv").exists()
+            and config_path.exists()):
+        saved_config = json.loads(config_path.read_text(encoding="utf-8"))
+        with LEDGER.open(newline="", encoding="utf-8") as f:
+            done = any(
+                row["model"] == short
+                and row["lr"] == f"{args.lr:g}"
+                and int(row["seed"]) == args.seed
+                for row in csv.DictReader(f)
+            )
+        if done and saved_config == config:
+            print(f"[{tag} s{args.seed}] already complete; skipping")
+            return
+    config_path.write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
 
     full = load_dataset("csv", data_files=args.data)["train"]
     full = full.add_column("orig_idx", list(range(len(full))))
@@ -84,7 +113,9 @@ def main():
         p = torch.softmax(torch.from_numpy(logits).float(), -1)[:, 1].numpy()
         return {"accuracy": accuracy_score(labels, (p >= 0.5).astype(int))}
 
-    bf16 = is_torch_bf16_gpu_available()
+    # transformers 4.56 no longer exports is_torch_bf16_gpu_available from its
+    # top-level package. PyTorch provides the hardware check directly.
+    bf16 = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
     trainer = Trainer(
         model=model, processing_class=tok,
         train_dataset=train_tok, eval_dataset=val_tok,
@@ -110,10 +141,22 @@ def main():
     p_cg = torch.softmax(torch.from_numpy(out.predictions).float(), -1)[:, 1].numpy()
     y = np.asarray(out.label_ids)
     pred = (p_cg >= 0.5).astype(int)
+    end_data_sha256 = hashlib.sha256(data_path.read_bytes()).hexdigest()
+    if end_data_sha256 != data_sha256:
+        raise RuntimeError(
+            f"dataset changed during training: {data_path} "
+            f"({data_sha256} -> {end_data_sha256})")
 
-    excl = {int(r["orig_idx"]) for r in
-            csv.DictReader(open(RESULTS / "test_exclusions.csv", encoding="utf-8"))}
-    keep = np.array([oi not in excl for oi in test_ds["orig_idx"]])
+    # Leakage exclusions were audited for the original Kaggle row indices only.
+    # Applying those integers to a rebuilt modern dataset would remove unrelated
+    # rows and produce a meaningless "cleaned" score.
+    excl_path = RESULTS / "test_exclusions.csv"
+    if Path(args.data).resolve() == DATA.resolve() and excl_path.exists():
+        with excl_path.open(encoding="utf-8") as f:
+            excl = {int(r["orig_idx"]) for r in csv.DictReader(f)}
+        keep = np.array([oi not in excl for oi in test_ds["orig_idx"]])
+    else:
+        keep = np.ones(len(test_ds), dtype=bool)
 
     with open(run_dir / "test_probs.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f); w.writerow(["row", "true", "p_CG", "category", "rating"])

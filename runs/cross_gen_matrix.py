@@ -1,4 +1,4 @@
-"""3x3 cross-generator matrix: train a detector on each generator's fakes, test it
+"""4x4 cross-generator matrix: train a detector on each generator's fakes, test it
 on every generator's held-out fakes. The realistic robustness question — does a
 detector trained on yesterday's generator catch tomorrow's?
 
@@ -7,8 +7,9 @@ all normalised the same way):
   GPT2     dataset/modern_reviews_gpt2.csv      (Kaggle GPT-2-era CG)
   LFM      dataset/modern_reviews_lfm.csv       (LFM2.5-1.2B)
   DeepSeek dataset/modern_reviews_deepseek.csv  (DeepSeek-v4-pro)
+  GLM      dataset/modern_reviews_glm.csv       (GLM-5.2)
 
-Reports, for TF-IDF and (if the adapters exist) Rs-QLoRA, a 3x3 matrix of
+Reports, for TF-IDF and Rs-QLoRA, a 4x4 matrix of
 DETECTION RECALL = fraction of generator-j fakes the i-trained detector flags.
 Diagonal = in-distribution; off-diagonal = cross-generator transfer.
 
@@ -16,6 +17,9 @@ Diagonal = in-distribution; off-diagonal = cross-generator transfer.
   python runs/cross_gen_matrix.py --no-neural
 """
 import argparse
+import csv
+import hashlib
+import json
 import numpy as np
 from pathlib import Path
 from datasets import load_dataset
@@ -100,13 +104,43 @@ def tfidf_matrix(data, names):
     print_matrix("TF-IDF cross-generator detection recall", mat, names)
     print("  detector FPR on its own human test set: "
           + "  ".join(f"{n}={fpr[n]*100:.2f}%" for n in names))
-    return mat
+    return mat, fpr
 
 
-def adapter_dirs(tag):
-    """All trained adapters for a tag, any seed (matrix averages across seeds)."""
-    return sorted(d / "adapter" for d in (ROOT / "results").glob(f"{tag}_rs_r64_s*")
-                  if (d / "adapter").exists())
+def adapter_dirs(tag, expected_seeds, data_path=None):
+    """One completed adapter for every expected seed; fail on partial matrices."""
+    ledger = ROOT / "results" / "runs.csv"
+    if not ledger.exists():
+        raise RuntimeError("results/runs.csv is missing")
+    with ledger.open(newline="", encoding="utf-8") as f:
+        completed = {row["run_id"] for row in csv.DictReader(f)}
+
+    by_seed = {}
+    expected_hash = (hashlib.sha256(Path(data_path).read_bytes()).hexdigest()
+                     if data_path is not None else None)
+    for run_dir in sorted((ROOT / "results").glob(f"{tag}_rs_r64_s*")):
+        adapter = run_dir / "adapter"
+        config_path = run_dir / "config.json"
+        metrics_path = run_dir / "metrics.json"
+        if (run_dir.name not in completed or not adapter.exists()
+                or not config_path.exists() or not metrics_path.exists()):
+            continue
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+        if (config.get("tag") != tag or config.get("scaling") != "rs"
+                or int(config.get("rank", -1)) != 64):
+            continue
+        if expected_hash is not None and config.get("data_sha256") != expected_hash:
+            continue
+        seed = int(config["seed"])
+        if seed in expected_seeds:
+            by_seed[seed] = adapter  # sorted timestamps: keep the latest rerun
+
+    missing = [seed for seed in expected_seeds if seed not in by_seed]
+    if missing:
+        raise RuntimeError(
+            f"incomplete adapters for tag={tag}: missing seeds {missing}; "
+            f"expected {list(expected_seeds)}")
+    return [by_seed[seed] for seed in expected_seeds]
 
 
 def neural_flagger(adapter):
@@ -141,12 +175,7 @@ def neural_flagger(adapter):
 def neural_matrix(data, names):
     adapters = {}
     for n in names:
-        dirs = adapter_dirs(data[n]["tag"])
-        if not dirs:
-            print(f"\n[neural skipped] no adapter for {n} "
-                  f"(results/{data[n]['tag']}_rs_r64_s*/adapter) — run grids/xgen.txt")
-            return None
-        adapters[n] = dirs
+        adapters[n] = adapter_dirs(data[n]["tag"], (1998, 7, 42))
     n_seeds = {n: len(adapters[n]) for n in names}
     mat = np.zeros((len(names), len(names)))
     fpr = {}
@@ -165,7 +194,8 @@ def neural_matrix(data, names):
                  f"(mean over seeds: {n_seeds})", mat, names)
     print("  detector FPR on its own human test set: "
           + "  ".join(f"{n}={fpr[n]*100:.2f}%" for n in names))
-    return mat
+    run_ids = {n: [adapter.parent.name for adapter in adapters[n]] for n in names}
+    return mat, fpr, n_seeds, run_ids
 
 
 def logo_tfidf(data, names):
@@ -176,27 +206,36 @@ def logo_tfidf(data, names):
         pooled = ROOT / "dataset" / f"pooled_wo_{data[n]['key']}.csv"
         if not pooled.exists():
             print(f"\n[LOGO skipped] {pooled.name} missing — run runs/build_pooled_dataset.py")
-            return
+            raise RuntimeError(
+                f"{pooled.name} missing — run runs/build_pooled_dataset.py")
         ds = load_dataset("csv", data_files=str(pooled))["train"]
+        pooled_or = {t.strip().casefold() for t, label in
+                     zip(ds["text_"], ds["label"]) if label == "OR"}
+        heldout_or = {t.strip().casefold() for t in data[n]["te_or"]}
+        overlap = pooled_or & heldout_or
+        if overlap:
+            raise RuntimeError(
+                f"{pooled.name} leaks {len(overlap)} held-out human texts; "
+                "rebuild it with: python runs/build_pooled_dataset.py")
         tr = ds.train_test_split(test_size=0.2, seed=SPLIT_SEED)["train"]
         y = np.array([1 if x == "CG" else 0 for x in tr["label"]])
         predict = fit_tfidf(tr["text_"], y)
         rows.append((n, predict(data[n]["te_fake"]), predict(data[n]["te_or"])))
-    print("\n== LOGO: TF-IDF trained on the OTHER 3 generators (pooled, budget-matched) ==")
+    print("\n== LOGO: TF-IDF trained on the OTHER 3 generators "
+          "(balanced; held-out humans excluded) ==")
     for n, rec, f in rows:
         print(f"  held-out {n:>9}: recall={rec*100:5.1f}%   FPR={f*100:.2f}%"
-              "   (note: human half is shared across sets by design)")
+              "   (held-out human texts excluded from pooled data)")
+    return [{"held_out": n, "recall": float(rec), "fpr": float(f)}
+            for n, rec, f in rows]
 
 
 def logo_neural(data, names):
     print("\n== LOGO: Rs-QLoRA trained on the OTHER 3 generators ==")
-    any_found = False
+    rows = []
     for n in names:
-        dirs = adapter_dirs(f"pwo{data[n]['key']}")
-        if not dirs:
-            print(f"  held-out {n:>9}: no adapter (run grids/logo.txt)")
-            continue
-        any_found = True
+        pooled = ROOT / "dataset" / f"pooled_wo_{data[n]['key']}.csv"
+        dirs = adapter_dirs(f"pwo{data[n]['key']}", (1998,), pooled)
         recs, fprs = [], []
         for ad in dirs:
             flag, close = neural_flagger(ad)
@@ -205,7 +244,10 @@ def logo_neural(data, names):
             close()
         print(f"  held-out {n:>9}: recall={np.mean(recs)*100:5.1f}%   "
               f"FPR={np.mean(fprs)*100:.2f}%   (seeds={len(dirs)})")
-    return any_found
+        rows.append({"held_out": n, "recall": float(np.mean(recs)),
+                     "fpr": float(np.mean(fprs)),
+                     "run_ids": [adapter.parent.name for adapter in dirs]})
+    return rows
 
 
 def main():
@@ -219,14 +261,32 @@ def main():
     data = load_all()
     print(f"generators: {names}  (fakes per held-out test set: "
           f"{[len(data[n]['te_fake']) for n in names]})")
-    tfidf_matrix(data, names)
-    logo_tfidf(data, names)
+    tfidf_mat, tfidf_fpr = tfidf_matrix(data, names)
+    logo_tfidf_rows = logo_tfidf(data, names)
+    result = {
+        "generators": names,
+        "dataset_sha256": {
+            name: hashlib.sha256(path.read_bytes()).hexdigest()
+            for name, path, _tag in GENERATORS
+        },
+        "tfidf": {
+            "recall_matrix": tfidf_mat.tolist(),
+            "fpr": {name: float(tfidf_fpr[name]) for name in names},
+        },
+        "logo_tfidf": logo_tfidf_rows,
+    }
     if not args.no_neural:
-        try:
-            neural_matrix(data, names)
-            logo_neural(data, names)
-        except Exception as e:
-            print(f"\n[neural skipped] {str(e)[:120]}")
+        neural_mat, neural_fpr, n_seeds, run_ids = neural_matrix(data, names)
+        result["rs_qlora"] = {
+            "recall_matrix": neural_mat.tolist(),
+            "fpr": {name: float(neural_fpr[name]) for name in names},
+            "seed_counts": n_seeds,
+            "run_ids": run_ids,
+        }
+        result["logo_rs_qlora"] = logo_neural(data, names)
+    out = ROOT / "results" / "cross_gen_results.json"
+    out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    print(f"\nstructured results -> {out}")
 
 
 if __name__ == "__main__":

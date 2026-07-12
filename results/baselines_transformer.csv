@@ -1,0 +1,4 @@
+model,lr,seed,val_acc,test_acc,test_f1_OR,test_f1_CG,test_roc_auc,test_pr_auc,test_acc_cleaned
+roberta-base_modern,2e-05,1998,0.994227,0.994346,0.994382,0.994310,0.999820,0.999797,0.994346
+deberta-v3-base_modern,2e-05,1998,0.995876,0.998057,0.998075,0.998038,0.999955,0.999954,0.998057
+ModernBERT-large_modern,2e-05,1998,0.995052,0.996996,0.997023,0.996969,0.999963,0.999962,0.996996

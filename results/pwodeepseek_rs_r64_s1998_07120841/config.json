@@ -1,0 +1,17 @@
+{
+  "tag": "pwodeepseek",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 1998,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/pooled_wo_deepseek.csv",
+  "notes": "",
+  "run_id": "pwodeepseek_rs_r64_s1998_07120841",
+  "split_seed": 1998,
+  "protocol": "frozen-v1",
+  "bf16": true,
+  "data_sha256": "ca55f25b931e196d904d6888dcffa728a0394d70608dc64cbfb8df4599082bf0"
+}

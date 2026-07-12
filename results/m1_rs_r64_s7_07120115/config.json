@@ -1,0 +1,16 @@
+{
+  "tag": "m1",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 7,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/modern_reviews_deepseek.csv",
+  "notes": "",
+  "run_id": "m1_rs_r64_s7_07120115",
+  "split_seed": 1998,
+  "protocol": "frozen-v1",
+  "bf16": true
+}

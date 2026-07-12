@@ -1,0 +1,13 @@
+{
+  "model": "microsoft/deberta-v3-base",
+  "seed": 1998,
+  "lr": 2e-05,
+  "epochs": 3,
+  "batch": 16,
+  "max_seq": 512,
+  "data": "/workspace/Fake-review/dataset/modern_reviews_deepseek.csv",
+  "tag": "_modern",
+  "data_sha256": "e775ad7b897e294494378f66fb28d5cf3979c18864ad1037ec7c62211ba5e24d",
+  "split_seed": 1998,
+  "protocol": "transformer-baseline-v1"
+}

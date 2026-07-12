@@ -1,0 +1,4 @@
+# Human-only negative control: all texts are genuine OR reviews. The builder
+# assigns balanced random OR/CG pseudo-labels so the binary pipeline is expected
+# to remain at chance. One neural seed is sufficient for this end-to-end check.
+--tag ctrl_orperm --scaling rs --rank 64 --seed 1998 --data dataset/control_or_permutation_s1998.csv --notes=human-only_label-permutation_seed-1998

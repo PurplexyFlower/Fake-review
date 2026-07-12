@@ -1,0 +1,17 @@
+{
+  "tag": "pwogpt2",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 1998,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/pooled_wo_gpt2.csv",
+  "notes": "",
+  "run_id": "pwogpt2_rs_r64_s1998_07120757",
+  "split_seed": 1998,
+  "protocol": "frozen-v1",
+  "bf16": true,
+  "data_sha256": "b8f5d4be2d7685fcb3724494fd9aa7ba5735e29b683a3fa3bc107c3b30c0d785"
+}

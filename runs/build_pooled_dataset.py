@@ -1,8 +1,10 @@
 """Build leave-one-generator-out (LOGO) pooled training sets.
 
 For each held-out generator G, pool the TRAIN splits of the other three
-generators' datasets into one balanced, budget-matched training set:
-  - OR (human) half: deduped union (the same humans appear in all datasets)
+generators' datasets into one balanced, approximately budget-matched set:
+  - OR (human) half: deduped union, excluding every human text in G's held-out
+    test split. The same humans appear in all generator datasets under different
+    row orders, so this exclusion is required for an honest LOGO FPR.
   - CG (fake) half: equal share from each of the 3 generators, subsampled so
     total fakes == total humans (balanced) and the dataset size matches a
     single-generator set — isolating the effect of generator DIVERSITY from
@@ -34,10 +36,20 @@ def train_split(csv_path):
     return ds.train_test_split(test_size=0.2, seed=SPLIT_SEED)["train"]
 
 
+def test_or_texts(csv_path):
+    """Human texts in the exact 14% test split used by cross_gen_matrix.py."""
+    ds = load_dataset("csv", data_files=str(csv_path))["train"]
+    outer = ds.train_test_split(test_size=0.2, seed=SPLIT_SEED)
+    test = outer["test"].train_test_split(test_size=0.7, seed=SPLIT_SEED)["test"]
+    return {t.strip().casefold() for t, label in zip(test["text_"], test["label"])
+            if label == "OR"}
+
+
 def main():
     splits = {name: train_split(p) for name, p in GENS.items()}
     for holdout in GENS:
         sources = [n for n in GENS if n != holdout]
+        heldout_or = test_or_texts(GENS[holdout])
         # OR half: deduped union of the three train splits' humans
         or_rows, seen = [], set()
         cg_by_src = {n: [] for n in sources}
@@ -45,8 +57,8 @@ def main():
             tr = splits[n]
             for c, r, l, t in zip(tr["category"], tr["rating"], tr["label"], tr["text_"]):
                 if l == "OR":
-                    k = t.lower()
-                    if k not in seen:
+                    k = t.strip().casefold()
+                    if k not in heldout_or and k not in seen:
                         seen.add(k)
                         or_rows.append({"category": c, "rating": r, "label": l, "text_": t})
                 else:
@@ -67,8 +79,14 @@ def main():
             w = csv.DictWriter(f, fieldnames=COLS)
             w.writeheader(); w.writerows(rows)
         n_or = sum(1 for r in rows if r["label"] == "OR")
+        overlap = sum(1 for r in rows
+                      if r["label"] == "OR"
+                      and r["text_"].strip().casefold() in heldout_or)
+        if overlap:
+            raise RuntimeError(
+                f"pooled_wo_{holdout} leaks {overlap} held-out human texts")
         print(f"pooled_wo_{holdout}: {len(rows)} rows  (OR={n_or}, CG={len(rows)-n_or}, "
-              f"{share}/generator from {sources})")
+              f"{share}/generator from {sources}, held-out OR overlap={overlap})")
 
 
 if __name__ == "__main__":
