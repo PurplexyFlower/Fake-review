@@ -158,7 +158,7 @@ def row_level(root):
     rows, y, p = load_probs(os.path.join(rdir, "m1_rs_r64_s1998_07121622", "test_probs.csv"))
     res["errors_canonical"] = error_analysis(rows, y, p)
 
-    # historical rank x scaling grid on the GPT-2-era corpus
+    # rank x scaling grid on the original GPT-2-era release
     grid = {}
     for scaling in ("standard", "rs"):
         for rank in (8, 16, 32, 64):
