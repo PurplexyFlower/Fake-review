@@ -302,7 +302,7 @@ def fig_rank(N, out):
     a.set_xticks(ranks, [str(r) for r in ranks])
     a.set_xlabel("LoRA rank r (α = 2r)")
     a.set_ylabel("Test accuracy (%)")
-    a.set_title("(a) Joint rank–scaling grid, GPT-2-era corpus", loc="left", fontsize=8.6)
+    a.set_title("(a) Joint grid, original GPT-2-era release", loc="left", fontsize=8.6)
     a.legend(loc="lower right")
     keys = ["r16_a64", "r36_a96", "r64_a128"]
     rr = [FR[k]["rank"] for k in keys]
@@ -329,7 +329,7 @@ def fig_memory(N, out):
     fig, ax = plt.subplots(figsize=(5.6, 3.0))
     ranks = [8, 16, 32, 64]
     mg = [G[f"rs_r{r}"]["peak_alloc_gib"]["mean"] for r in ranks]
-    ax.plot(ranks, mg, "-o", color=BLUE, ms=5, label="Joint grid (α = 2r), GPT-2-era corpus, RTX 5090 Laptop")
+    ax.plot(ranks, mg, "-o", color=BLUE, ms=5, label="Joint grid (α = 2r), original GPT-2-era release, RTX 5090 Laptop")
     keys = ["r16_a64", "r36_a96", "r64_a128"]
     rr = [FR[k]["rank"] for k in keys]
     mf = [FR[k]["summary"]["peak_alloc_gib"]["mean"] for k in keys]
