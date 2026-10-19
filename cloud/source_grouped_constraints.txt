@@ -1,0 +1,8 @@
+# Frozen core stack for the 27-run source-grouped experiment.
+torch==2.10.0
+transformers==4.56.2
+peft==0.19.1
+bitsandbytes==0.49.2
+trl==0.22.2
+unsloth==2026.6.3
+unsloth_zoo==2026.6.3

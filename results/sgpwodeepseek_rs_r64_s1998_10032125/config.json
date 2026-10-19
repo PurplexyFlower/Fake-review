@@ -1,0 +1,23 @@
+{
+  "tag": "sgpwodeepseek",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 1998,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/source_grouped/pooled_wo_deepseek.csv",
+  "predefined_splits": true,
+  "notes": "",
+  "run_id": "sgpwodeepseek_rs_r64_s1998_10032125",
+  "split_seed": 1998,
+  "protocol": "source-grouped-contemporary-v1",
+  "split_counts": {
+    "train": 32320,
+    "validation": 2422,
+    "test": 5658
+  },
+  "bf16": true,
+  "data_sha256": "45e7ba880523ee1bc5fa6a3a9ca0814cb36af657167ac8bcaaa44b8b0bbf020b"
+}

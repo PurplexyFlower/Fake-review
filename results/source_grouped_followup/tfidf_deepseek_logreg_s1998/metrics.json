@@ -1,0 +1,42 @@
+{
+  "resources": {
+    "fit_and_vectorization_runtime_s": 12.87372478377074,
+    "features": 307267
+  },
+  "score_kind": "probability",
+  "seed_note": "lbfgs logistic fitting is deterministic; random_state need not change the solution",
+  "val": {
+    "n": 2422,
+    "n_OR": 1211,
+    "n_CG": 1211,
+    "TN": 1191,
+    "FP": 20,
+    "FN": 14,
+    "TP": 1197,
+    "accuracy": 0.985962014863749,
+    "precision_CG": 0.9835661462612982,
+    "recall_CG": 0.9884393063583815,
+    "fpr_OR": 0.016515276630883566,
+    "f1_OR": 0.9859271523178808,
+    "f1_CG": 0.985996705107084,
+    "roc_auc": 0.9989969458330293,
+    "average_precision": 0.9989888533650838
+  },
+  "test": {
+    "n": 5658,
+    "n_OR": 2829,
+    "n_CG": 2829,
+    "TN": 2797,
+    "FP": 32,
+    "FN": 32,
+    "TP": 2797,
+    "accuracy": 0.9886885825379993,
+    "precision_CG": 0.9886885825379993,
+    "recall_CG": 0.9886885825379993,
+    "fpr_OR": 0.011311417462000707,
+    "f1_OR": 0.9886885825379993,
+    "f1_CG": 0.9886885825379993,
+    "roc_auc": 0.9993545115035272,
+    "average_precision": 0.9993765147205678
+  }
+}

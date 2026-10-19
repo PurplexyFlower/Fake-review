@@ -1,0 +1,50 @@
+{
+  "config": {
+    "protocol": "source-grouped-followup-v1",
+    "job": {
+      "shard": 1,
+      "seed": 1998,
+      "data": "dataset/source_grouped/pooled_wo_deepseek.csv",
+      "target": "deepseek",
+      "id": "tfidf_deepseek_holdout_linsvm_s1998",
+      "kind": "tfidf",
+      "evaluation": "logo",
+      "estimator": "linsvm",
+      "word_features": 200000,
+      "char_features": 200000,
+      "min_df": 2,
+      "C": 0.5,
+      "max_iter": 5000
+    },
+    "plan_sha256": "b7c7444e4ccb5ca8196f4fedc596c3bfea3b622bb28f7ffe3b25a05275bdc8cc",
+    "source_manifest_sha256": "de78619f05026e71a86fac3f57d74f5af041183e8c07cd0e70b12884d64de6f9",
+    "training_data_sha256": "45e7ba880523ee1bc5fa6a3a9ca0814cb36af657167ac8bcaaa44b8b0bbf020b",
+    "target_data_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644"
+  },
+  "files": {
+    "config.json": {
+      "bytes": 784,
+      "sha256": "a0b5dd8623287539762e8888cc55ba1cf1c69e1912c2b52001d947083b4ea9df"
+    },
+    "metrics.json": {
+      "bytes": 1100,
+      "sha256": "f3ec7f7a4803ca5e58c7d7e0e34fc2ab13083f9056ba21114ea564e5f6083148"
+    },
+    "model.joblib": {
+      "bytes": 13347813,
+      "sha256": "83200448d980628ac90f99953a4189b7e2bab1720965c5b52bf154d349b25531"
+    },
+    "runtime_environment.json": {
+      "bytes": 633,
+      "sha256": "b665d441f0cacedcfba07768dca3bb9e0ef570ca65513b086773231801a7885a"
+    },
+    "test_probs.csv": {
+      "bytes": 2414627,
+      "sha256": "8180467a790d388bc673ebf6ea4e81aca147c34d7b88b46d7cad5b6dc69bc401"
+    },
+    "val_probs.csv": {
+      "bytes": 985648,
+      "sha256": "e4019387ffc0a026009b30a765c4922d29fc46b15d483c780eeb350dfe03304e"
+    }
+  }
+}

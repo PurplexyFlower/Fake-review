@@ -1,0 +1,14 @@
+# Optional controlled rank study on source-grouped DeepSeek.
+# For Rs-LoRA, alpha/sqrt(rank) is exactly 16 in every cell:
+#   64/sqrt(16)=16, 96/sqrt(36)=16, 128/sqrt(64)=16.
+# All nine cells are rerun on the new cloud series so rank is not confounded
+# with the hardware used for the historical grid.
+--tag sgfr --scaling rs --rank 16 --alpha 64 --seed 1998 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgfr --scaling rs --rank 16 --alpha 64 --seed 7 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgfr --scaling rs --rank 16 --alpha 64 --seed 42 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgfr --scaling rs --rank 36 --alpha 96 --seed 1998 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgfr --scaling rs --rank 36 --alpha 96 --seed 7 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgfr --scaling rs --rank 36 --alpha 96 --seed 42 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgfr --scaling rs --rank 64 --alpha 128 --seed 1998 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgfr --scaling rs --rank 64 --alpha 128 --seed 7 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgfr --scaling rs --rank 64 --alpha 128 --seed 42 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits

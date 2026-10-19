@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "protocol": "fixed_scale_rank",
+  "run_id": "sgfr_rs_r36_s7_10032255",
+  "tag": "sgfr",
+  "seed": 7,
+  "train_generator": "deepseek",
+  "held_out_generator": null,
+  "rank": 36,
+  "alpha": 96,
+  "effective_rs_scale": 16.0,
+  "training_data": "dataset/source_grouped/modern_reviews_deepseek.csv",
+  "training_data_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644",
+  "threshold": 0.5,
+  "targets": {
+    "deepseek": {
+      "dataset": "dataset/source_grouped/modern_reviews_deepseek.csv",
+      "dataset_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644",
+      "probabilities": "source_grouped_eval_deepseek.csv",
+      "source_isolation": {
+        "training_source_groups": 16159,
+        "target_test_source_groups": 2829,
+        "overlapping_source_groups": 0
+      },
+      "metrics": {
+        "n": 5658,
+        "n_OR": 2829,
+        "n_CG": 2829,
+        "accuracy": 0.9957582184517497,
+        "precision_CG": 0.9940119760479041,
+        "recall_CG": 0.9975256274301874,
+        "f1_OR": 0.9957507082152974,
+        "f1_CG": 0.9957657021877205,
+        "fpr_OR": 0.006009190526687876,
+        "roc_auc": 0.9992955978709126,
+        "pr_auc": 0.9988257420559629
+      }
+    }
+  }
+}

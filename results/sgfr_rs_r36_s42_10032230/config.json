@@ -1,0 +1,23 @@
+{
+  "tag": "sgfr",
+  "scaling": "rs",
+  "rank": 36,
+  "alpha": 96,
+  "seed": 42,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/source_grouped/modern_reviews_deepseek.csv",
+  "predefined_splits": true,
+  "notes": "",
+  "run_id": "sgfr_rs_r36_s42_10032230",
+  "split_seed": 1998,
+  "protocol": "source-grouped-contemporary-v1",
+  "split_counts": {
+    "train": 32320,
+    "validation": 2422,
+    "test": 5658
+  },
+  "bf16": true,
+  "data_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644"
+}

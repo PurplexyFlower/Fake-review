@@ -1,0 +1,20 @@
+{
+  "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+  "platform": "Linux-6.8.0-40-generic-x86_64-with-glibc2.39",
+  "packages": {
+    "torch": "2.10.0+cu128",
+    "transformers": "4.56.2",
+    "datasets": "4.3.0",
+    "scikit-learn": "1.9.1",
+    "peft": "0.19.1",
+    "bitsandbytes": "0.49.2",
+    "unsloth": "2026.6.3",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pyarrow": "25.0.1"
+  },
+  "gpu": "NVIDIA H100 80GB HBM3, GPU-6022fc81-d1a8-699e-2a02-ab05358477e6, 555.58.02, 81559 MiB",
+  "cuda_visible_devices": "0",
+  "vast_instance_id": "54769179",
+  "captured_at_utc": "2026-10-08T03:47:49.408024+00:00"
+}

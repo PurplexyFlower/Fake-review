@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "protocol": "logo",
+  "run_id": "sgpwodeepseek_rs_r64_s7_10032126",
+  "tag": "sgpwodeepseek",
+  "seed": 7,
+  "train_generator": null,
+  "held_out_generator": "deepseek",
+  "rank": 64,
+  "alpha": 128,
+  "effective_rs_scale": 16.0,
+  "training_data": "dataset/source_grouped/pooled_wo_deepseek.csv",
+  "training_data_sha256": "45e7ba880523ee1bc5fa6a3a9ca0814cb36af657167ac8bcaaa44b8b0bbf020b",
+  "threshold": 0.5,
+  "targets": {
+    "deepseek": {
+      "dataset": "dataset/source_grouped/modern_reviews_deepseek.csv",
+      "dataset_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644",
+      "probabilities": "source_grouped_eval_deepseek.csv",
+      "source_isolation": {
+        "training_source_groups": 16159,
+        "target_test_source_groups": 2829,
+        "overlapping_source_groups": 0
+      },
+      "metrics": {
+        "n": 5658,
+        "n_OR": 2829,
+        "n_CG": 2829,
+        "accuracy": 0.9846235418875928,
+        "precision_CG": 0.9956616052060737,
+        "recall_CG": 0.9734888653234358,
+        "f1_OR": 0.9847928683796539,
+        "f1_CG": 0.9844504021447721,
+        "fpr_OR": 0.0042417815482502655,
+        "roc_auc": 0.9969374906990806,
+        "pr_auc": 0.9977037854566643
+      }
+    }
+  }
+}

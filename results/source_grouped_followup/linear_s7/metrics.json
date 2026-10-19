@@ -1,0 +1,46 @@
+{
+  "resources": {
+    "best_step": 1200,
+    "train_runtime_s": 1264.7204070091248,
+    "steps_per_s": 2.397,
+    "peak_alloc_gb": 2.0523581504821777,
+    "peak_reserved_gb": 2.244140625,
+    "saved_adapter_parameter_count": 35194624
+  },
+  "raw_run_directory": "results/sgreblinear_rs_r64_s7_10080512",
+  "evaluation_note": "reloaded selected adapter; matched unseen-source DeepSeek test",
+  "val": {
+    "n": 2422,
+    "n_OR": 1211,
+    "n_CG": 1211,
+    "TN": 1206,
+    "FP": 5,
+    "FN": 4,
+    "TP": 1207,
+    "accuracy": 0.9962840627580511,
+    "precision_CG": 0.9958745874587459,
+    "recall_CG": 0.9966969446738233,
+    "fpr_OR": 0.004128819157720892,
+    "f1_OR": 0.9962825278810409,
+    "f1_CG": 0.9962855963681386,
+    "roc_auc": 0.9984142743267911,
+    "average_precision": 0.9983995882947546
+  },
+  "test": {
+    "n": 5658,
+    "n_OR": 2829,
+    "n_CG": 2829,
+    "TN": 2818,
+    "FP": 11,
+    "FN": 10,
+    "TP": 2819,
+    "accuracy": 0.996288441145281,
+    "precision_CG": 0.996113074204947,
+    "recall_CG": 0.9964651820431247,
+    "fpr_OR": 0.003888299752562743,
+    "f1_OR": 0.9962877850450769,
+    "f1_CG": 0.9962890970136067,
+    "roc_auc": 0.9998720518350004,
+    "average_precision": 0.9998760844422645
+  }
+}

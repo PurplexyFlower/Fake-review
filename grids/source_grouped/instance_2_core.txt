@@ -1,0 +1,7 @@
+# Instance 2: required source-grouped directional + LOGO runs (6).
+--tag sgxl --scaling rs --rank 64 --seed 7 --data dataset/source_grouped/modern_reviews_lfm.csv --predefined-splits
+--tag sgxd --scaling rs --rank 64 --seed 42 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgxglm --scaling rs --rank 64 --seed 1998 --data dataset/source_grouped/modern_reviews_glm.csv --predefined-splits
+--tag sgpwolfm --scaling rs --rank 64 --seed 1998 --data dataset/source_grouped/pooled_wo_lfm.csv --predefined-splits
+--tag sgpwodeepseek --scaling rs --rank 64 --seed 7 --data dataset/source_grouped/pooled_wo_deepseek.csv --predefined-splits
+--tag sgpwoglm --scaling rs --rank 64 --seed 42 --data dataset/source_grouped/pooled_wo_glm.csv --predefined-splits

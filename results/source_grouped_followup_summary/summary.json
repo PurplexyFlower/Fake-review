@@ -1,0 +1,1193 @@
+{
+  "schema_version": 1,
+  "protocol": "source-grouped-followup-v1",
+  "training_seeds": [
+    1998,
+    7,
+    42
+  ],
+  "split_seed": 1998,
+  "job_count": 48,
+  "gpu_training_runs": 24,
+  "cpu_fits": 24,
+  "job_ids": [
+    "cosine_s1998",
+    "cosine_s42",
+    "cosine_s7",
+    "deberta_s1998",
+    "deberta_s42",
+    "deberta_s7",
+    "linear_s1998",
+    "linear_s42",
+    "linear_s7",
+    "modernbert_s1998",
+    "modernbert_s42",
+    "modernbert_s7",
+    "no_smoothing_s1998",
+    "no_smoothing_s42",
+    "no_smoothing_s7",
+    "pair_rs_s1998",
+    "pair_rs_s42",
+    "pair_rs_s7",
+    "pair_standard_s1998",
+    "pair_standard_s42",
+    "pair_standard_s7",
+    "roberta_s1998",
+    "roberta_s42",
+    "roberta_s7",
+    "tfidf_deepseek_holdout_linsvm_s1998",
+    "tfidf_deepseek_holdout_linsvm_s42",
+    "tfidf_deepseek_holdout_linsvm_s7",
+    "tfidf_deepseek_holdout_logreg_s1998",
+    "tfidf_deepseek_holdout_logreg_s42",
+    "tfidf_deepseek_holdout_logreg_s7",
+    "tfidf_deepseek_linsvm_s1998",
+    "tfidf_deepseek_linsvm_s42",
+    "tfidf_deepseek_linsvm_s7",
+    "tfidf_deepseek_logreg_s1998",
+    "tfidf_deepseek_logreg_s42",
+    "tfidf_deepseek_logreg_s7",
+    "tfidf_glm_linsvm_s1998",
+    "tfidf_glm_linsvm_s42",
+    "tfidf_glm_linsvm_s7",
+    "tfidf_glm_logreg_s1998",
+    "tfidf_glm_logreg_s42",
+    "tfidf_glm_logreg_s7",
+    "tfidf_lfm_linsvm_s1998",
+    "tfidf_lfm_linsvm_s42",
+    "tfidf_lfm_linsvm_s7",
+    "tfidf_lfm_logreg_s1998",
+    "tfidf_lfm_logreg_s42",
+    "tfidf_lfm_logreg_s7"
+  ],
+  "sample_sd_ddof": 1,
+  "metric_units": "fractions except runtime_minutes/steps/bytes/parameters",
+  "groups": {
+    "cosine": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9953458230234477,
+        "sd": 0.0008163312395753166
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9953458136028762,
+        "sd": 0.0008163384944829394
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9953415340657171,
+        "sd": 0.0008183650572921759
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9953500931400354,
+        "sd": 0.0008143611884325241
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9944743514177752,
+        "sd": 0.0016527792620134895
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9962295275126665,
+        "sd": 0.0013382604797455553
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.00553788146577118,
+        "sd": 0.0016704897936559236
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9994061572472118,
+        "sd": 0.00044314284640354073
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9988827079263105,
+        "sd": 0.0013458650163970735
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 24.73738058540556,
+        "sd": 8.565400781746147
+      },
+      "best_step": {
+        "n": 3,
+        "mean": 1000.0,
+        "sd": 624.4997998398399
+      },
+      "executed_steps": {
+        "n": 3,
+        "mean": 1800.0,
+        "sd": 624.4997998398399
+      },
+      "actual_executed_steps_per_s": {
+        "n": 3,
+        "mean": 1.2648736577195325,
+        "sd": 0.3726522945199788
+      },
+      "peak_allocated_gib": {
+        "n": 3,
+        "mean": 2.051030000050863,
+        "sd": 0.0023273175753357076
+      },
+      "peak_reserved_gib": {
+        "n": 3,
+        "mean": 2.2298177083333335,
+        "sd": 0.012556836928376244
+      },
+      "trainable_parameters": {
+        "n": 3,
+        "mean": 35194624.0,
+        "sd": 0.0
+      }
+    },
+    "deberta": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9957582184517498,
+        "sd": 0.0007703957128916131
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9957581968942529,
+        "sd": 0.0007704164205455814
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9957520326709576,
+        "sd": 0.0007777394647614713
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9957643611175483,
+        "sd": 0.0007631490609012897
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9944836048600832,
+        "sd": 0.0026257959832623056
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9970543183692707,
+        "sd": 0.001743684292087729
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.00553788146577118,
+        "sd": 0.0026530765286197017
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9999118273875963,
+        "sd": 2.088340530218118e-05
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9999131847436331,
+        "sd": 2.0449105025063428e-05
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 3.9573689012891715,
+        "sd": 0.9494888215375664
+      },
+      "best_step": {
+        "n": 3,
+        "mean": 1066.6666666666667,
+        "sd": 416.33319989322655
+      },
+      "executed_steps": {
+        "n": 3,
+        "mean": 1666.6666666666667,
+        "sd": 416.33319989322655
+      },
+      "actual_executed_steps_per_s": {
+        "n": 3,
+        "mean": 7.00517148397213,
+        "sd": 0.129335505671145
+      },
+      "peak_allocated_gib": {
+        "n": 3,
+        "mean": 13.296205838521322,
+        "sd": 0.01089377876553677
+      },
+      "peak_reserved_gib": {
+        "n": 3,
+        "mean": 17.136067708333332,
+        "sd": 1.7299289478565765
+      },
+      "trainable_parameters": {
+        "n": 3,
+        "mean": 184423682.0,
+        "sd": 0.0
+      }
+    },
+    "linear": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9958171320843644,
+        "sd": 0.0008163312395753166
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9958170967958528,
+        "sd": 0.0008163873407506757
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9958077983297652,
+        "sd": 0.0008279503036174421
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9958263952619406,
+        "sd": 0.0008048291225284818
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9939053791444848,
+        "sd": 0.002961722793131651
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9977612819606456,
+        "sd": 0.0014285796692568018
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.00612701779191705,
+        "sd": 0.003006327517891617
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9996002869337559,
+        "sd": 0.000421810508009457
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.999437270125811,
+        "sd": 0.0006965671933812699
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 22.150287218888604,
+        "sd": 4.006299262212111
+      },
+      "best_step": {
+        "n": 3,
+        "mean": 1200.0,
+        "sd": 400.0
+      },
+      "executed_steps": {
+        "n": 3,
+        "mean": 2000.0,
+        "sd": 400.0
+      },
+      "actual_executed_steps_per_s": {
+        "n": 3,
+        "mean": 1.501787389468159,
+        "sd": 0.08108385061560619
+      },
+      "peak_allocated_gib": {
+        "n": 3,
+        "mean": 2.051976521809896,
+        "sd": 0.0034588289825294677
+      },
+      "peak_reserved_gib": {
+        "n": 3,
+        "mean": 2.236328125,
+        "sd": 0.013531646934131853
+      },
+      "trainable_parameters": {
+        "n": 3,
+        "mean": 35194624.0,
+        "sd": 0.0
+      }
+    },
+    "modernbert": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9961706138800519,
+        "sd": 0.0011362849959930504
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9961706070764181,
+        "sd": 0.0011362958149960774
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9961735121618936,
+        "sd": 0.0011304380843981659
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9961677019909425,
+        "sd": 0.0011421573996920895
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9966977368197556,
+        "sd": 0.0005359655809494584
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9956403911865207,
+        "sd": 0.0023535977795968283
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.003299163426416873,
+        "sd": 0.0005399523618423282
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9998865459630668,
+        "sd": 8.335343538139738e-05
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9998926835354491,
+        "sd": 6.768970966175548e-05
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 4.356199368438683,
+        "sd": 0.7258652050170412
+      },
+      "best_step": {
+        "n": 3,
+        "mean": 1400.0,
+        "sd": 721.1102550927978
+      },
+      "executed_steps": {
+        "n": 3,
+        "mean": 2000.0,
+        "sd": 721.1102550927978
+      },
+      "actual_executed_steps_per_s": {
+        "n": 3,
+        "mean": 8.045990508565064,
+        "sd": 4.207022871939202
+      },
+      "peak_allocated_gib": {
+        "n": 3,
+        "mean": 15.622294902801514,
+        "sd": 0.009550945150015708
+      },
+      "peak_reserved_gib": {
+        "n": 3,
+        "mean": 22.705078125,
+        "sd": 3.989758254450397
+      },
+      "trainable_parameters": {
+        "n": 3,
+        "mean": 395833346.0,
+        "sd": 0.0
+      }
+    },
+    "no_smoothing": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9965240956757393,
+        "sd": 0.0004447881722205065
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9965240897554629,
+        "sd": 0.0004447896874221855
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.99651974775577,
+        "sd": 0.00044571093986137426
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9965284317551558,
+        "sd": 0.0004438738719921109
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9952989127292796,
+        "sd": 0.0007305279183951815
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9977612819606456,
+        "sd": 0.0005399523618423017
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.004713090609166961,
+        "sd": 0.0007358310355129492
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9998900237208068,
+        "sd": 0.00011298793086871434
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9998302547721091,
+        "sd": 0.00021635992898842357
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 19.592201145490012,
+        "sd": 2.4415628439183203
+      },
+      "best_step": {
+        "n": 3,
+        "mean": 966.6666666666666,
+        "sd": 115.47005383792515
+      },
+      "executed_steps": {
+        "n": 3,
+        "mean": 1766.6666666666667,
+        "sd": 115.47005383792515
+      },
+      "actual_executed_steps_per_s": {
+        "n": 3,
+        "mean": 1.5098940433071106,
+        "sd": 0.08527022202873992
+      },
+      "peak_allocated_gib": {
+        "n": 3,
+        "mean": 2.051030000050863,
+        "sd": 0.0023273175753357076
+      },
+      "peak_reserved_gib": {
+        "n": 3,
+        "mean": 2.2311197916666665,
+        "sd": 0.013004547106405064
+      },
+      "trainable_parameters": {
+        "n": 3,
+        "mean": 35194624.0,
+        "sd": 0.0
+      }
+    },
+    "pair_rs": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9952279957582185,
+        "sd": 0.0009183726445221911
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9952279580886408,
+        "sd": 0.0009184003474156228
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.99521518189839,
+        "sd": 0.0009254881535088634
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9952407342788919,
+        "sd": 0.0009113125413223182
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9927345390664363,
+        "sd": 0.002016913071186538
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9977612819606456,
+        "sd": 0.00020408280989381314
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.00730529044420879,
+        "sd": 0.002040828098938232
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9995198195331118,
+        "sd": 0.0002908842562920176
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9989480363397515,
+        "sd": 0.0007675174491244793
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 23.144715278678472,
+        "sd": 9.045146083499144
+      },
+      "best_step": {
+        "n": 3,
+        "mean": 833.3333333333334,
+        "sd": 416.33319989322655
+      },
+      "executed_steps": {
+        "n": 3,
+        "mean": 1633.3333333333333,
+        "sd": 416.33319989322655
+      },
+      "actual_executed_steps_per_s": {
+        "n": 3,
+        "mean": 1.2751179219985822,
+        "sd": 0.43407402707461096
+      },
+      "peak_allocated_gib": {
+        "n": 3,
+        "mean": 2.050195852915446,
+        "sd": 0.002355341104919281
+      },
+      "peak_reserved_gib": {
+        "n": 3,
+        "mean": 2.2233072916666665,
+        "sd": 0.0022552744890219755
+      },
+      "trainable_parameters": {
+        "n": 3,
+        "mean": 35194624.0,
+        "sd": 0.0
+      }
+    },
+    "pair_standard": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9944032049016142,
+        "sd": 0.0004447881722205065
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9944031966772693,
+        "sd": 0.0004447886139814606
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9943969387835315,
+        "sd": 0.0004450321103130231
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9944094545710067,
+        "sd": 0.00044456860271055464
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9932992564317159,
+        "sd": 0.0006992099443976598
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9955225639212913,
+        "sd": 0.0007358310355129129
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.00671615411806292,
+        "sd": 0.0007069635913750441
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9995629062442745,
+        "sd": 0.00014802803097315606
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9992934651782311,
+        "sd": 0.0004142787489525155
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 39.54614782730739,
+        "sd": 17.56563701013568
+      },
+      "best_step": {
+        "n": 3,
+        "mean": 1933.3333333333333,
+        "sd": 378.59388972001824
+      },
+      "executed_steps": {
+        "n": 3,
+        "mean": 2733.3333333333335,
+        "sd": 378.59388972001824
+      },
+      "actual_executed_steps_per_s": {
+        "n": 3,
+        "mean": 1.257581931582711,
+        "sd": 0.36014804291798413
+      },
+      "peak_allocated_gib": {
+        "n": 3,
+        "mean": 2.04923423131307,
+        "sd": 0.002649231739240536
+      },
+      "peak_reserved_gib": {
+        "n": 3,
+        "mean": 2.2298177083333335,
+        "sd": 0.009021097956087902
+      },
+      "trainable_parameters": {
+        "n": 3,
+        "mean": 35194624.0,
+        "sd": 0.0
+      }
+    },
+    "roberta": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9942264640037705,
+        "sd": 0.0025015757918654463
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9942263118209512,
+        "sd": 0.002501837694490821
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9942066728452018,
+        "sd": 0.002539143233865771
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9942459507967009,
+        "sd": 0.0024645333662157687
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9921790264827751,
+        "sd": 0.006805633816299205
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9963473547778956,
+        "sd": 0.0019468259269303683
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.00789442677035466,
+        "sd": 0.006938815536389987
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.999831359986952,
+        "sd": 0.00011535051616118335
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9998250350148595,
+        "sd": 0.00012495097601801234
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 1.977833043283317,
+        "sd": 0.710499563489565
+      },
+      "best_step": {
+        "n": 3,
+        "mean": 1466.6666666666667,
+        "sd": 757.1877794400365
+      },
+      "executed_steps": {
+        "n": 3,
+        "mean": 2066.6666666666665,
+        "sd": 757.1877794400365
+      },
+      "actual_executed_steps_per_s": {
+        "n": 3,
+        "mean": 17.388916193662872,
+        "sd": 0.5912278845495135
+      },
+      "peak_allocated_gib": {
+        "n": 3,
+        "mean": 8.063177744547525,
+        "sd": 0.0032651499644500708
+      },
+      "peak_reserved_gib": {
+        "n": 3,
+        "mean": 11.335286458333334,
+        "sd": 1.5863227063233398
+      },
+      "trainable_parameters": {
+        "n": 3,
+        "mean": 124647170.0,
+        "sd": 0.0
+      }
+    },
+    "tfidf_deepseek_holdout_linsvm": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9676564156945918,
+        "sd": 0.0
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.967643048588615,
+        "sd": 0.0
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9683007102026676,
+        "sd": 0.0
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9669853869745625,
+        "sd": 0.0
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9874723655121592,
+        "sd": 0.0
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9473312124425592,
+        "sd": 0.0
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.012018381053375752,
+        "sd": 0.0
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9967398207801065,
+        "sd": 0.0
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9967749664581254,
+        "sd": 0.0
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 0.2130220303648255,
+        "sd": 0.06495992300762275
+      }
+    },
+    "tfidf_deepseek_holdout_logreg": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9618239660657476,
+        "sd": 0.0
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9618012422360249,
+        "sd": 0.0
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9627329192546584,
+        "sd": 0.0
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9608695652173913,
+        "sd": 0.0
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9855072463768116,
+        "sd": 0.0
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9374337221633086,
+        "sd": 0.0
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.013785790031813362,
+        "sd": 0.0
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.995732478879494,
+        "sd": 0.0
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9957242523804773,
+        "sd": 0.0
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 0.24423621555712693,
+        "sd": 0.07828587311495142
+      }
+    },
+    "tfidf_deepseek_linsvm": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9908094733121245,
+        "sd": 0.0
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9908094721637738,
+        "sd": 0.0
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9908062234794907,
+        "sd": 0.0
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9908127208480565,
+        "sd": 0.0
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9904627340162486,
+        "sd": 0.0
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9911629551078119,
+        "sd": 0.0
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.009544008483563097,
+        "sd": 0.0
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9995276913440443,
+        "sd": 0.0
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.999551173338655,
+        "sd": 0.0
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 0.22480088041047566,
+        "sd": 0.052294264568538064
+      }
+    },
+    "tfidf_deepseek_logreg": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9886885825379993,
+        "sd": 0.0
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9886885825379993,
+        "sd": 0.0
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9886885825379993,
+        "sd": 0.0
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9886885825379993,
+        "sd": 0.0
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9886885825379993,
+        "sd": 0.0
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9886885825379993,
+        "sd": 0.0
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.011311417462000707,
+        "sd": 0.0
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9993545115035273,
+        "sd": 0.0
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9993765147205678,
+        "sd": 0.0
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 0.23307209647609853,
+        "sd": 0.02680702399716276
+      }
+    },
+    "tfidf_glm_linsvm": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9747260516083421,
+        "sd": 0.0
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9747192214549819,
+        "sd": 0.0
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.975134759172318,
+        "sd": 0.0
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.974303683737646,
+        "sd": 0.0
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9908625730994153,
+        "sd": 0.0
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9582891481088724,
+        "sd": 0.0
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.008837044892188053,
+        "sd": 0.0
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9978171343334532,
+        "sd": 0.0
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9977202665532344,
+        "sd": 0.0
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 0.21885252073342498,
+        "sd": 0.047599728304549664
+      }
+    },
+    "tfidf_glm_logreg": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9662424885118416,
+        "sd": 0.0
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9662312976654374,
+        "sd": 0.0
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9668460336747092,
+        "sd": 0.0
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9656165616561655,
+        "sd": 0.0
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9838591342626559,
+        "sd": 0.0
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.9480381760339341,
+        "sd": 0.0
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.015553199010250972,
+        "sd": 0.0
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9964508128644383,
+        "sd": 0.0
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9962986398826986,
+        "sd": 0.0
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 0.21035656134287517,
+        "sd": 0.0517589897322978
+      }
+    },
+    "tfidf_lfm_linsvm": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9404383174266525,
+        "sd": 0.0
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9402993290059453,
+        "sd": 0.0
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9431799022087338,
+        "sd": 0.0
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9374187558031569,
+        "sd": 0.0
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9874804381846637,
+        "sd": 0.0
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.8921880523153057,
+        "sd": 0.0
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.011311417462000707,
+        "sd": 0.0
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9929413596316792,
+        "sd": 0.0
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.9931904455549517,
+        "sd": 0.0
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 0.21574165132866863,
+        "sd": 0.05100824841908677
+      }
+    },
+    "tfidf_lfm_logreg": {
+      "accuracy": {
+        "n": 3,
+        "mean": 0.9423824673029338,
+        "sd": 0.0
+      },
+      "macro_f1": {
+        "n": 3,
+        "mean": 0.9422715581697988,
+        "sd": 0.0
+      },
+      "f1_OR": {
+        "n": 3,
+        "mean": 0.9448018963765662,
+        "sd": 0.0
+      },
+      "f1_CG": {
+        "n": 3,
+        "mean": 0.9397412199630314,
+        "sd": 0.0
+      },
+      "precision_CG": {
+        "n": 3,
+        "mean": 0.9848895776830687,
+        "sd": 0.0
+      },
+      "recall_CG": {
+        "n": 3,
+        "mean": 0.8985507246376812,
+        "sd": 0.0
+      },
+      "fpr_OR": {
+        "n": 3,
+        "mean": 0.013785790031813362,
+        "sd": 0.0
+      },
+      "roc_auc": {
+        "n": 3,
+        "mean": 0.9923209859605627,
+        "sd": 0.0
+      },
+      "average_precision": {
+        "n": 3,
+        "mean": 0.99255500811782,
+        "sd": 0.0
+      },
+      "runtime_minutes": {
+        "n": 3,
+        "mean": 0.24891025343677028,
+        "sd": 0.058526343519582254
+      }
+    }
+  },
+  "paired_by_seed": [
+    {
+      "seed": 1998,
+      "host_instance_id": 54769280,
+      "accuracy_difference_pp": 0.03534817956876157,
+      "runtime_reduction_percent": 57.964969269064156,
+      "runtime_ratio_standard_over_rs": 2.378968166815318,
+      "executed_step_reduction_percent": 55.172413793103445
+    },
+    {
+      "seed": 7,
+      "host_instance_id": 54769179,
+      "accuracy_difference_pp": 0.2297631671968947,
+      "runtime_reduction_percent": 10.341265107010189,
+      "runtime_ratio_standard_over_rs": 1.1153402969532502,
+      "executed_step_reduction_percent": 8.695652173913048
+    },
+    {
+      "seed": 42,
+      "host_instance_id": 54769289,
+      "accuracy_difference_pp": -0.017674089784369684,
+      "runtime_reduction_percent": 45.48685265185798,
+      "runtime_ratio_standard_over_rs": 1.834419857678761,
+      "executed_step_reduction_percent": 50.0
+    }
+  ],
+  "paired_summary": {
+    "accuracy_difference_pp": {
+      "n": 3,
+      "mean": 0.08247908566042887,
+      "sd": 0.13027774471247666
+    },
+    "runtime_reduction_percent": {
+      "n": 3,
+      "mean": 37.93102900931078,
+      "sd": 24.69457739498017
+    },
+    "runtime_ratio_standard_over_rs": {
+      "n": 3,
+      "mean": 1.7762427738157764,
+      "sd": 0.6338195943548426
+    },
+    "executed_step_reduction_percent": {
+      "n": 3,
+      "mean": 37.9560219890055,
+      "sd": 25.471855005059048
+    }
+  },
+  "resource_definition": "Elapsed trainer.train call, with in-training validation/checkpoint work; no initial model loading or final prediction/evaluation",
+  "throughput_caveat": "Adapter HF steps_per_s uses planned 3030 steps despite early stopping; use full log maximum step divided by elapsed train runtime",
+  "cosine_s42_provenance": "Original selected adapter trained on 54769289; evaluated only on replacement 54837930, original training resources retained",
+  "claim_boundary": "Internal source-independent evaluation; no independent external benchmark, LR sweep, deployment validation or universal superiority claim",
+  "lexical_seed_caveat": "Lexical methods have identical reported test metrics across the three recorded seeds on one fixed source partition; these repeats are not independent partition replications",
+  "unmatched_resource_caveat": "Some encoder and ablation jobs migrated hosts; report observed allocations/times, not causal cross-host speedups"
+}

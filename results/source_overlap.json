@@ -1,82 +1,1095 @@
 {
-  "scope": "modern generators only; GPT-2 raw data has no source index",
-  "interpretation": "Generator identity is held out, but prompt-source identity is not. The experiment is not a joint generator-and-source OOD test.",
-  "split_sizes": {
-    "LFM": {
-      "train_sources": 16172,
-      "test_sources": 2802
+  "schema_version": 3,
+  "scope": "Source-support results target LFM, DeepSeek, and GLM because GPT-2 CG rows have no src_idx; the matched exact-text split audit covers GPT-2 and all three modern datasets.",
+  "interpretation": {
+    "headline": "LOGO holds out generator identity, but its actual neural training rows retain substantial shared grounding support. It is not a joint generator-and-source OOD test.",
+    "direct_cg_source_overlap": "A target CG test row's src_idx also occurs on a modern CG row in the reconstructed actual pooled LOGO training split.",
+    "exact_grounding_or_text_in_train": "The normalized human review used to ground the target CG test row occurs verbatim as an OR row in the reconstructed actual pooled LOGO training split.",
+    "pairwise": "Pairwise values compare each other modern generator's recovered actual outer-80% matched-run training sources with the target's CG test sources.",
+    "non_training_upper_bound": "The approximately 94% values union the other modern generators' pre-pooling candidate train sources. They precede balanced subsampling and the LOGO run's own 80/20 split, so they are not overlap with rows seen by the neural model.",
+    "matched_exact_text_split_audit": "Every assembled dataset has exactly one duplicated literal OR text pair. Both occurrences are confined to its reconstructed training multiset, so no literal text is shared across its frozen train, validation, and test splits."
+  },
+  "artifacts": {
+    "human_source_data": "dataset/fake reviews dataset.csv",
+    "gpt2_assembled_data": "dataset/modern_reviews_gpt2.csv",
+    "matched_split_datasets": {
+      "GPT-2": {
+        "assembled_data": "dataset/modern_reviews_gpt2.csv",
+        "matched_run": "results/xg_rs_r64_s7_07120504",
+        "config": "results/xg_rs_r64_s7_07120504/config.json",
+        "val_probs": "results/xg_rs_r64_s7_07120504/val_probs.csv",
+        "test_probs": "results/xg_rs_r64_s7_07120504/test_probs.csv"
+      },
+      "LFM": {
+        "assembled_data": "dataset/modern_reviews_lfm.csv",
+        "matched_run": "results/xl_rs_r64_s7_07120532",
+        "config": "results/xl_rs_r64_s7_07120532/config.json",
+        "val_probs": "results/xl_rs_r64_s7_07120532/val_probs.csv",
+        "test_probs": "results/xl_rs_r64_s7_07120532/test_probs.csv"
+      },
+      "DeepSeek": {
+        "assembled_data": "dataset/modern_reviews_deepseek.csv",
+        "matched_run": "results/xd_rs_r64_s7_07120556",
+        "config": "results/xd_rs_r64_s7_07120556/config.json",
+        "val_probs": "results/xd_rs_r64_s7_07120556/val_probs.csv",
+        "test_probs": "results/xd_rs_r64_s7_07120556/test_probs.csv"
+      },
+      "GLM": {
+        "assembled_data": "dataset/modern_reviews_glm.csv",
+        "matched_run": "results/xglm_rs_r64_s7_07120621",
+        "config": "results/xglm_rs_r64_s7_07120621/config.json",
+        "val_probs": "results/xglm_rs_r64_s7_07120621/val_probs.csv",
+        "test_probs": "results/xglm_rs_r64_s7_07120621/test_probs.csv"
+      }
     },
-    "DeepSeek": {
-      "train_sources": 16172,
-      "test_sources": 2802
-    },
-    "GLM": {
-      "train_sources": 16135,
-      "test_sources": 2819
+    "targets": {
+      "LFM": {
+        "raw_generation_data": "dataset/sota_fakes.csv",
+        "assembled_data": "dataset/modern_reviews_lfm.csv",
+        "matched_split_run": "results/xl_rs_r64_s7_07120532",
+        "matched_val_probs": "results/xl_rs_r64_s7_07120532/val_probs.csv",
+        "matched_test_probs": "results/xl_rs_r64_s7_07120532/test_probs.csv",
+        "logo_pooled_data": "dataset/pooled_wo_lfm.csv",
+        "logo_neural_run": "results/pwolfm_rs_r64_s1998_07120820",
+        "logo_val_probs": "results/pwolfm_rs_r64_s1998_07120820/val_probs.csv",
+        "logo_test_probs": "results/pwolfm_rs_r64_s1998_07120820/test_probs.csv"
+      },
+      "DeepSeek": {
+        "raw_generation_data": "dataset/sota_fakes_deepseek.csv",
+        "assembled_data": "dataset/modern_reviews_deepseek.csv",
+        "matched_split_run": "results/xd_rs_r64_s7_07120556",
+        "matched_val_probs": "results/xd_rs_r64_s7_07120556/val_probs.csv",
+        "matched_test_probs": "results/xd_rs_r64_s7_07120556/test_probs.csv",
+        "logo_pooled_data": "dataset/pooled_wo_deepseek.csv",
+        "logo_neural_run": "results/pwodeepseek_rs_r64_s1998_07120841",
+        "logo_val_probs": "results/pwodeepseek_rs_r64_s1998_07120841/val_probs.csv",
+        "logo_test_probs": "results/pwodeepseek_rs_r64_s1998_07120841/test_probs.csv"
+      },
+      "GLM": {
+        "raw_generation_data": "dataset/sota_fakes_glm.csv",
+        "assembled_data": "dataset/modern_reviews_glm.csv",
+        "matched_split_run": "results/xglm_rs_r64_s7_07120621",
+        "matched_val_probs": "results/xglm_rs_r64_s7_07120621/val_probs.csv",
+        "matched_test_probs": "results/xglm_rs_r64_s7_07120621/test_probs.csv",
+        "logo_pooled_data": "dataset/pooled_wo_glm.csv",
+        "logo_neural_run": "results/pwoglm_rs_r64_s1998_07120910",
+        "logo_val_probs": "results/pwoglm_rs_r64_s1998_07120910/val_probs.csv",
+        "logo_test_probs": "results/pwoglm_rs_r64_s1998_07120910/test_probs.csv"
+      }
     }
   },
-  "pairwise": [
+  "validation": {
+    "mapping_rule": "Normalize in raw CSV order and retain the first nonempty, case-insensitively unique, non-OR-colliding generated text, matching build_modern_dataset.py.",
+    "retained_mapping": {
+      "LFM": {
+        "raw_cg_rows": 20216,
+        "retained_cg_rows": 20212,
+        "retained_unique_src_idx": 20212,
+        "total_discarded_rows": 4,
+        "discarded_empty": 0,
+        "discarded_normalized_duplicate_after_first": 4,
+        "within_cg_normalized_duplicate_groups": 4,
+        "discarded_normalized_cross_class": 0,
+        "all_discarded_rows_are_within_cg_normalized_duplicates": true
+      },
+      "DeepSeek": {
+        "raw_cg_rows": 20216,
+        "retained_cg_rows": 20212,
+        "retained_unique_src_idx": 20212,
+        "total_discarded_rows": 4,
+        "discarded_empty": 0,
+        "discarded_normalized_duplicate_after_first": 4,
+        "within_cg_normalized_duplicate_groups": 4,
+        "discarded_normalized_cross_class": 0,
+        "all_discarded_rows_are_within_cg_normalized_duplicates": true
+      },
+      "GLM": {
+        "raw_cg_rows": 20216,
+        "retained_cg_rows": 20208,
+        "retained_unique_src_idx": 20208,
+        "total_discarded_rows": 8,
+        "discarded_empty": 0,
+        "discarded_normalized_duplicate_after_first": 8,
+        "within_cg_normalized_duplicate_groups": 5,
+        "discarded_normalized_cross_class": 0,
+        "all_discarded_rows_are_within_cg_normalized_duplicates": true
+      }
+    },
+    "target_test_mapping": {
+      "LFM": {
+        "target_cg_test_rows": 2802,
+        "mapped_rows": 2802,
+        "unique_target_row_keys": 2802,
+        "unique_src_idx": 2802,
+        "unmapped_rows": 0,
+        "ambiguous_rows_after_first_retained_dedup": 0,
+        "one_to_one_verified": true
+      },
+      "DeepSeek": {
+        "target_cg_test_rows": 2802,
+        "mapped_rows": 2802,
+        "unique_target_row_keys": 2802,
+        "unique_src_idx": 2802,
+        "unmapped_rows": 0,
+        "ambiguous_rows_after_first_retained_dedup": 0,
+        "one_to_one_verified": true
+      },
+      "GLM": {
+        "target_cg_test_rows": 2819,
+        "mapped_rows": 2819,
+        "unique_target_row_keys": 2819,
+        "unique_src_idx": 2819,
+        "unmapped_rows": 0,
+        "ambiguous_rows_after_first_retained_dedup": 0,
+        "one_to_one_verified": true
+      }
+    },
+    "matched_actual_train_reconstruction": {
+      "GPT-2": {
+        "data_path": "dataset/modern_reviews_gpt2.csv",
+        "run_path": "results/xg_rs_r64_s7_07120504",
+        "config_path": "results/xg_rs_r64_s7_07120504/config.json",
+        "val_probs_path": "results/xg_rs_r64_s7_07120504/val_probs.csv",
+        "test_probs_path": "results/xg_rs_r64_s7_07120504/test_probs.csv",
+        "data_rows": 40380,
+        "val_rows_subtracted": 2422,
+        "test_rows_subtracted": 5654,
+        "actual_train_rows": 32304,
+        "actual_train_label_counts": {
+          "CG": 16218,
+          "OR": 16086
+        },
+        "config_data_path_verified": true,
+        "config_split_seed": 1998,
+        "config_protocol": "frozen-v1",
+        "saved_prediction_rows_with_nonunique_full_row_key": 0,
+        "saved_prediction_rows_one_to_one_verified": true,
+        "exact_multiset_subtraction_verified": true,
+        "exact_train_validation_test_multiset_identity_verified": true
+      },
+      "LFM": {
+        "data_path": "dataset/modern_reviews_lfm.csv",
+        "run_path": "results/xl_rs_r64_s7_07120532",
+        "config_path": "results/xl_rs_r64_s7_07120532/config.json",
+        "val_probs_path": "results/xl_rs_r64_s7_07120532/val_probs.csv",
+        "test_probs_path": "results/xl_rs_r64_s7_07120532/test_probs.csv",
+        "data_rows": 40424,
+        "val_rows_subtracted": 2425,
+        "test_rows_subtracted": 5660,
+        "actual_train_rows": 32339,
+        "actual_train_label_counts": {
+          "CG": 16172,
+          "OR": 16167
+        },
+        "config_data_path_verified": true,
+        "config_split_seed": 1998,
+        "config_protocol": "frozen-v1",
+        "saved_prediction_rows_with_nonunique_full_row_key": 0,
+        "saved_prediction_rows_one_to_one_verified": true,
+        "exact_multiset_subtraction_verified": true,
+        "exact_train_validation_test_multiset_identity_verified": true
+      },
+      "DeepSeek": {
+        "data_path": "dataset/modern_reviews_deepseek.csv",
+        "run_path": "results/xd_rs_r64_s7_07120556",
+        "config_path": "results/xd_rs_r64_s7_07120556/config.json",
+        "val_probs_path": "results/xd_rs_r64_s7_07120556/val_probs.csv",
+        "test_probs_path": "results/xd_rs_r64_s7_07120556/test_probs.csv",
+        "data_rows": 40424,
+        "val_rows_subtracted": 2425,
+        "test_rows_subtracted": 5660,
+        "actual_train_rows": 32339,
+        "actual_train_label_counts": {
+          "CG": 16172,
+          "OR": 16167
+        },
+        "config_data_path_verified": true,
+        "config_split_seed": 1998,
+        "config_protocol": "frozen-v1",
+        "saved_prediction_rows_with_nonunique_full_row_key": 0,
+        "saved_prediction_rows_one_to_one_verified": true,
+        "exact_multiset_subtraction_verified": true,
+        "exact_train_validation_test_multiset_identity_verified": true
+      },
+      "GLM": {
+        "data_path": "dataset/modern_reviews_glm.csv",
+        "run_path": "results/xglm_rs_r64_s7_07120621",
+        "config_path": "results/xglm_rs_r64_s7_07120621/config.json",
+        "val_probs_path": "results/xglm_rs_r64_s7_07120621/val_probs.csv",
+        "test_probs_path": "results/xglm_rs_r64_s7_07120621/test_probs.csv",
+        "data_rows": 40416,
+        "val_rows_subtracted": 2425,
+        "test_rows_subtracted": 5659,
+        "actual_train_rows": 32332,
+        "actual_train_label_counts": {
+          "CG": 16135,
+          "OR": 16197
+        },
+        "config_data_path_verified": true,
+        "config_split_seed": 1998,
+        "config_protocol": "frozen-v1",
+        "saved_prediction_rows_with_nonunique_full_row_key": 0,
+        "saved_prediction_rows_one_to_one_verified": true,
+        "exact_multiset_subtraction_verified": true,
+        "exact_train_validation_test_multiset_identity_verified": true
+      }
+    },
+    "logo_actual_train_reconstruction": {
+      "LFM": {
+        "data_path": "dataset/pooled_wo_lfm.csv",
+        "run_path": "results/pwolfm_rs_r64_s1998_07120820",
+        "config_path": "results/pwolfm_rs_r64_s1998_07120820/config.json",
+        "val_probs_path": "results/pwolfm_rs_r64_s1998_07120820/val_probs.csv",
+        "test_probs_path": "results/pwolfm_rs_r64_s1998_07120820/test_probs.csv",
+        "data_rows": 34554,
+        "val_rows_subtracted": 2073,
+        "test_rows_subtracted": 4838,
+        "actual_train_rows": 27643,
+        "actual_train_label_counts": {
+          "CG": 13754,
+          "OR": 13889
+        },
+        "config_data_path_verified": true,
+        "config_split_seed": 1998,
+        "config_protocol": "frozen-v1",
+        "saved_prediction_rows_with_nonunique_full_row_key": 0,
+        "saved_prediction_rows_one_to_one_verified": true,
+        "exact_multiset_subtraction_verified": true,
+        "exact_train_validation_test_multiset_identity_verified": true,
+        "data_sha256": "1e0d196cd5b47c9da4a34df09fe39ba0f52ddae9b9dd21a01cfe13be328e0e9d",
+        "config_data_sha256": "1e0d196cd5b47c9da4a34df09fe39ba0f52ddae9b9dd21a01cfe13be328e0e9d",
+        "config_sha256_verified": true,
+        "mapped_actual_train_cg_rows": 13754,
+        "unmapped_actual_train_cg_rows": 0,
+        "ambiguous_actual_train_cg_rows": 0,
+        "cg_row_mapping_verified": true
+      },
+      "DeepSeek": {
+        "data_path": "dataset/pooled_wo_deepseek.csv",
+        "run_path": "results/pwodeepseek_rs_r64_s1998_07120841",
+        "config_path": "results/pwodeepseek_rs_r64_s1998_07120841/config.json",
+        "val_probs_path": "results/pwodeepseek_rs_r64_s1998_07120841/val_probs.csv",
+        "test_probs_path": "results/pwodeepseek_rs_r64_s1998_07120841/test_probs.csv",
+        "data_rows": 34554,
+        "val_rows_subtracted": 2073,
+        "test_rows_subtracted": 4838,
+        "actual_train_rows": 27643,
+        "actual_train_label_counts": {
+          "CG": 13754,
+          "OR": 13889
+        },
+        "config_data_path_verified": true,
+        "config_split_seed": 1998,
+        "config_protocol": "frozen-v1",
+        "saved_prediction_rows_with_nonunique_full_row_key": 0,
+        "saved_prediction_rows_one_to_one_verified": true,
+        "exact_multiset_subtraction_verified": true,
+        "exact_train_validation_test_multiset_identity_verified": true,
+        "data_sha256": "ca55f25b931e196d904d6888dcffa728a0394d70608dc64cbfb8df4599082bf0",
+        "config_data_sha256": "ca55f25b931e196d904d6888dcffa728a0394d70608dc64cbfb8df4599082bf0",
+        "config_sha256_verified": true,
+        "mapped_actual_train_cg_rows": 13754,
+        "unmapped_actual_train_cg_rows": 0,
+        "ambiguous_actual_train_cg_rows": 0,
+        "cg_row_mapping_verified": true
+      },
+      "GLM": {
+        "data_path": "dataset/pooled_wo_glm.csv",
+        "run_path": "results/pwoglm_rs_r64_s1998_07120910",
+        "config_path": "results/pwoglm_rs_r64_s1998_07120910/config.json",
+        "val_probs_path": "results/pwoglm_rs_r64_s1998_07120910/val_probs.csv",
+        "test_probs_path": "results/pwoglm_rs_r64_s1998_07120910/test_probs.csv",
+        "data_rows": 33360,
+        "val_rows_subtracted": 2001,
+        "test_rows_subtracted": 4671,
+        "actual_train_rows": 26688,
+        "actual_train_label_counts": {
+          "CG": 13345,
+          "OR": 13343
+        },
+        "config_data_path_verified": true,
+        "config_split_seed": 1998,
+        "config_protocol": "frozen-v1",
+        "saved_prediction_rows_with_nonunique_full_row_key": 0,
+        "saved_prediction_rows_one_to_one_verified": true,
+        "exact_multiset_subtraction_verified": true,
+        "exact_train_validation_test_multiset_identity_verified": true,
+        "data_sha256": "31632d67222872eb9df27ed2faa6ea6c7ac84d7ac0301358aa041492ebbd4dd4",
+        "config_data_sha256": "31632d67222872eb9df27ed2faa6ea6c7ac84d7ac0301358aa041492ebbd4dd4",
+        "config_sha256_verified": true,
+        "mapped_actual_train_cg_rows": 13345,
+        "unmapped_actual_train_cg_rows": 0,
+        "ambiguous_actual_train_cg_rows": 0,
+        "cg_row_mapping_verified": true
+      }
+    },
+    "all_target_mappings_one_to_one": true,
+    "all_pooled_train_cg_rows_unambiguous": true,
+    "all_logo_data_sha256_verified_against_neural_run_config": true,
+    "all_modern_assembly_drops_are_within_cg_normalized_duplicates": true
+  },
+  "matched_split_exact_text_audit": {
+    "equality_semantics": {
+      "row_reconstruction": "Exact, case-sensitive equality of the four parsed CSV fields (category, rating, label, text); no normalization or trimming. Saved true/text fields are compared with assembled label/text_ fields. Duplicate rows are handled as multisets.",
+      "duplicate_and_overlap": "Exact, case-sensitive Python string equality of parsed text values only; no normalization, case folding, or whitespace or punctuation changes. Counts are numbers of unique literal text strings unless explicitly named as rows or occurrences."
+    },
+    "interpretation": "GPT-2, LFM, DeepSeek, and GLM each contain one repeated OR text pair and no repeated CG text. The two OR occurrences are both in the reconstructed training multiset for every dataset; all three pairwise train/validation/test exact-text intersections are zero.",
+    "datasets": {
+      "GPT-2": {
+        "data_path": "dataset/modern_reviews_gpt2.csv",
+        "run_path": "results/xg_rs_r64_s7_07120504",
+        "config_path": "results/xg_rs_r64_s7_07120504/config.json",
+        "val_probs_path": "results/xg_rs_r64_s7_07120504/val_probs.csv",
+        "test_probs_path": "results/xg_rs_r64_s7_07120504/test_probs.csv",
+        "split_sizes": {
+          "train": {
+            "rows": 32304,
+            "label_counts": {
+              "CG": 16218,
+              "OR": 16086
+            }
+          },
+          "validation": {
+            "rows": 2422,
+            "label_counts": {
+              "CG": 1227,
+              "OR": 1195
+            }
+          },
+          "test": {
+            "rows": 5654,
+            "label_counts": {
+              "CG": 2745,
+              "OR": 2909
+            }
+          }
+        },
+        "within_dataset_duplicate_groups_by_label": {
+          "OR": {
+            "rows": 20190,
+            "unique_exact_texts": 20189,
+            "duplicate_exact_text_groups": 1,
+            "rows_in_duplicate_groups": 2,
+            "excess_duplicate_rows": 1,
+            "groups": [
+              {
+                "text": "Got these to give to my 8 mth old chihuahua who was diagnosed with elbow dysplasia. She was limping for a short while but after taking these supplements for last few weeks the limp is less and less noticeable. I've given my other chihuahua a 1/2 dose every day as well for preventative care. They eat them up like treats and love them.",
+                "occurrences": 2,
+                "exact_composite_row_key_variants": 1,
+                "composite_row_keys": [
+                  {
+                    "category": "Pet_Supplies_5",
+                    "rating": "5.0",
+                    "label": "OR",
+                    "text": "Got these to give to my 8 mth old chihuahua who was diagnosed with elbow dysplasia. She was limping for a short while but after taking these supplements for last few weeks the limp is less and less noticeable. I've given my other chihuahua a 1/2 dose every day as well for preventative care. They eat them up like treats and love them.",
+                    "occurrences": 2
+                  }
+                ],
+                "occurrences_by_split": {
+                  "train": 2,
+                  "validation": 0,
+                  "test": 0
+                },
+                "all_occurrences_in_train": true
+              }
+            ]
+          },
+          "CG": {
+            "rows": 20190,
+            "unique_exact_texts": 20190,
+            "duplicate_exact_text_groups": 0,
+            "rows_in_duplicate_groups": 0,
+            "excess_duplicate_rows": 0,
+            "groups": []
+          }
+        },
+        "repeated_or_pair_summary": {
+          "exactly_one_repeated_or_pair": true,
+          "both_repeated_or_rows_are_in_train": true
+        },
+        "or_cg_exact_text_overlap_in_full_dataset": {
+          "unique_exact_texts": 0,
+          "texts": []
+        },
+        "exact_text_overlap_across_splits": {
+          "train__validation": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          },
+          "train__test": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          },
+          "validation__test": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          }
+        },
+        "train_validation_test_triple_exact_text_overlap": {
+          "unique_exact_texts_all_labels": 0,
+          "texts": []
+        },
+        "validation": {
+          "config_data_path_verified": true,
+          "config_split_seed": 1998,
+          "config_protocol": "frozen-v1",
+          "saved_prediction_rows_with_nonunique_full_row_key": 0,
+          "saved_prediction_rows_one_to_one_verified": true,
+          "exact_train_validation_test_multiset_identity_verified": true,
+          "exactly_one_repeated_or_pair_verified": true,
+          "both_repeated_or_rows_in_train_verified": true,
+          "all_cross_split_exact_text_overlaps_zero": true
+        }
+      },
+      "LFM": {
+        "data_path": "dataset/modern_reviews_lfm.csv",
+        "run_path": "results/xl_rs_r64_s7_07120532",
+        "config_path": "results/xl_rs_r64_s7_07120532/config.json",
+        "val_probs_path": "results/xl_rs_r64_s7_07120532/val_probs.csv",
+        "test_probs_path": "results/xl_rs_r64_s7_07120532/test_probs.csv",
+        "split_sizes": {
+          "train": {
+            "rows": 32339,
+            "label_counts": {
+              "CG": 16172,
+              "OR": 16167
+            }
+          },
+          "validation": {
+            "rows": 2425,
+            "label_counts": {
+              "CG": 1238,
+              "OR": 1187
+            }
+          },
+          "test": {
+            "rows": 5660,
+            "label_counts": {
+              "CG": 2802,
+              "OR": 2858
+            }
+          }
+        },
+        "within_dataset_duplicate_groups_by_label": {
+          "OR": {
+            "rows": 20212,
+            "unique_exact_texts": 20211,
+            "duplicate_exact_text_groups": 1,
+            "rows_in_duplicate_groups": 2,
+            "excess_duplicate_rows": 1,
+            "groups": [
+              {
+                "text": "Got these to give to my 8 mth old chihuahua who was diagnosed with elbow dysplasia. She was limping for a short while but after taking these supplements for last few weeks the limp is less and less noticeable. I've given my other chihuahua a 1/2 dose every day as well for preventative care. They eat them up like treats and love them.",
+                "occurrences": 2,
+                "exact_composite_row_key_variants": 1,
+                "composite_row_keys": [
+                  {
+                    "category": "Pet_Supplies_5",
+                    "rating": "5.0",
+                    "label": "OR",
+                    "text": "Got these to give to my 8 mth old chihuahua who was diagnosed with elbow dysplasia. She was limping for a short while but after taking these supplements for last few weeks the limp is less and less noticeable. I've given my other chihuahua a 1/2 dose every day as well for preventative care. They eat them up like treats and love them.",
+                    "occurrences": 2
+                  }
+                ],
+                "occurrences_by_split": {
+                  "train": 2,
+                  "validation": 0,
+                  "test": 0
+                },
+                "all_occurrences_in_train": true
+              }
+            ]
+          },
+          "CG": {
+            "rows": 20212,
+            "unique_exact_texts": 20212,
+            "duplicate_exact_text_groups": 0,
+            "rows_in_duplicate_groups": 0,
+            "excess_duplicate_rows": 0,
+            "groups": []
+          }
+        },
+        "repeated_or_pair_summary": {
+          "exactly_one_repeated_or_pair": true,
+          "both_repeated_or_rows_are_in_train": true
+        },
+        "or_cg_exact_text_overlap_in_full_dataset": {
+          "unique_exact_texts": 0,
+          "texts": []
+        },
+        "exact_text_overlap_across_splits": {
+          "train__validation": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          },
+          "train__test": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          },
+          "validation__test": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          }
+        },
+        "train_validation_test_triple_exact_text_overlap": {
+          "unique_exact_texts_all_labels": 0,
+          "texts": []
+        },
+        "validation": {
+          "config_data_path_verified": true,
+          "config_split_seed": 1998,
+          "config_protocol": "frozen-v1",
+          "saved_prediction_rows_with_nonunique_full_row_key": 0,
+          "saved_prediction_rows_one_to_one_verified": true,
+          "exact_train_validation_test_multiset_identity_verified": true,
+          "exactly_one_repeated_or_pair_verified": true,
+          "both_repeated_or_rows_in_train_verified": true,
+          "all_cross_split_exact_text_overlaps_zero": true
+        }
+      },
+      "DeepSeek": {
+        "data_path": "dataset/modern_reviews_deepseek.csv",
+        "run_path": "results/xd_rs_r64_s7_07120556",
+        "config_path": "results/xd_rs_r64_s7_07120556/config.json",
+        "val_probs_path": "results/xd_rs_r64_s7_07120556/val_probs.csv",
+        "test_probs_path": "results/xd_rs_r64_s7_07120556/test_probs.csv",
+        "split_sizes": {
+          "train": {
+            "rows": 32339,
+            "label_counts": {
+              "CG": 16172,
+              "OR": 16167
+            }
+          },
+          "validation": {
+            "rows": 2425,
+            "label_counts": {
+              "CG": 1238,
+              "OR": 1187
+            }
+          },
+          "test": {
+            "rows": 5660,
+            "label_counts": {
+              "CG": 2802,
+              "OR": 2858
+            }
+          }
+        },
+        "within_dataset_duplicate_groups_by_label": {
+          "OR": {
+            "rows": 20212,
+            "unique_exact_texts": 20211,
+            "duplicate_exact_text_groups": 1,
+            "rows_in_duplicate_groups": 2,
+            "excess_duplicate_rows": 1,
+            "groups": [
+              {
+                "text": "Got these to give to my 8 mth old chihuahua who was diagnosed with elbow dysplasia. She was limping for a short while but after taking these supplements for last few weeks the limp is less and less noticeable. I've given my other chihuahua a 1/2 dose every day as well for preventative care. They eat them up like treats and love them.",
+                "occurrences": 2,
+                "exact_composite_row_key_variants": 1,
+                "composite_row_keys": [
+                  {
+                    "category": "Pet_Supplies_5",
+                    "rating": "5.0",
+                    "label": "OR",
+                    "text": "Got these to give to my 8 mth old chihuahua who was diagnosed with elbow dysplasia. She was limping for a short while but after taking these supplements for last few weeks the limp is less and less noticeable. I've given my other chihuahua a 1/2 dose every day as well for preventative care. They eat them up like treats and love them.",
+                    "occurrences": 2
+                  }
+                ],
+                "occurrences_by_split": {
+                  "train": 2,
+                  "validation": 0,
+                  "test": 0
+                },
+                "all_occurrences_in_train": true
+              }
+            ]
+          },
+          "CG": {
+            "rows": 20212,
+            "unique_exact_texts": 20212,
+            "duplicate_exact_text_groups": 0,
+            "rows_in_duplicate_groups": 0,
+            "excess_duplicate_rows": 0,
+            "groups": []
+          }
+        },
+        "repeated_or_pair_summary": {
+          "exactly_one_repeated_or_pair": true,
+          "both_repeated_or_rows_are_in_train": true
+        },
+        "or_cg_exact_text_overlap_in_full_dataset": {
+          "unique_exact_texts": 0,
+          "texts": []
+        },
+        "exact_text_overlap_across_splits": {
+          "train__validation": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          },
+          "train__test": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          },
+          "validation__test": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          }
+        },
+        "train_validation_test_triple_exact_text_overlap": {
+          "unique_exact_texts_all_labels": 0,
+          "texts": []
+        },
+        "validation": {
+          "config_data_path_verified": true,
+          "config_split_seed": 1998,
+          "config_protocol": "frozen-v1",
+          "saved_prediction_rows_with_nonunique_full_row_key": 0,
+          "saved_prediction_rows_one_to_one_verified": true,
+          "exact_train_validation_test_multiset_identity_verified": true,
+          "exactly_one_repeated_or_pair_verified": true,
+          "both_repeated_or_rows_in_train_verified": true,
+          "all_cross_split_exact_text_overlaps_zero": true
+        }
+      },
+      "GLM": {
+        "data_path": "dataset/modern_reviews_glm.csv",
+        "run_path": "results/xglm_rs_r64_s7_07120621",
+        "config_path": "results/xglm_rs_r64_s7_07120621/config.json",
+        "val_probs_path": "results/xglm_rs_r64_s7_07120621/val_probs.csv",
+        "test_probs_path": "results/xglm_rs_r64_s7_07120621/test_probs.csv",
+        "split_sizes": {
+          "train": {
+            "rows": 32332,
+            "label_counts": {
+              "CG": 16135,
+              "OR": 16197
+            }
+          },
+          "validation": {
+            "rows": 2425,
+            "label_counts": {
+              "CG": 1254,
+              "OR": 1171
+            }
+          },
+          "test": {
+            "rows": 5659,
+            "label_counts": {
+              "CG": 2819,
+              "OR": 2840
+            }
+          }
+        },
+        "within_dataset_duplicate_groups_by_label": {
+          "OR": {
+            "rows": 20208,
+            "unique_exact_texts": 20207,
+            "duplicate_exact_text_groups": 1,
+            "rows_in_duplicate_groups": 2,
+            "excess_duplicate_rows": 1,
+            "groups": [
+              {
+                "text": "Got these to give to my 8 mth old chihuahua who was diagnosed with elbow dysplasia. She was limping for a short while but after taking these supplements for last few weeks the limp is less and less noticeable. I've given my other chihuahua a 1/2 dose every day as well for preventative care. They eat them up like treats and love them.",
+                "occurrences": 2,
+                "exact_composite_row_key_variants": 1,
+                "composite_row_keys": [
+                  {
+                    "category": "Pet_Supplies_5",
+                    "rating": "5.0",
+                    "label": "OR",
+                    "text": "Got these to give to my 8 mth old chihuahua who was diagnosed with elbow dysplasia. She was limping for a short while but after taking these supplements for last few weeks the limp is less and less noticeable. I've given my other chihuahua a 1/2 dose every day as well for preventative care. They eat them up like treats and love them.",
+                    "occurrences": 2
+                  }
+                ],
+                "occurrences_by_split": {
+                  "train": 2,
+                  "validation": 0,
+                  "test": 0
+                },
+                "all_occurrences_in_train": true
+              }
+            ]
+          },
+          "CG": {
+            "rows": 20208,
+            "unique_exact_texts": 20208,
+            "duplicate_exact_text_groups": 0,
+            "rows_in_duplicate_groups": 0,
+            "excess_duplicate_rows": 0,
+            "groups": []
+          }
+        },
+        "repeated_or_pair_summary": {
+          "exactly_one_repeated_or_pair": true,
+          "both_repeated_or_rows_are_in_train": true
+        },
+        "or_cg_exact_text_overlap_in_full_dataset": {
+          "unique_exact_texts": 0,
+          "texts": []
+        },
+        "exact_text_overlap_across_splits": {
+          "train__validation": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          },
+          "train__test": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          },
+          "validation__test": {
+            "unique_exact_texts_all_labels": 0,
+            "unique_exact_texts_by_label": {
+              "OR": 0,
+              "CG": 0
+            },
+            "overlapping_exact_texts_all_labels": [],
+            "unique_exact_composite_row_keys": 0
+          }
+        },
+        "train_validation_test_triple_exact_text_overlap": {
+          "unique_exact_texts_all_labels": 0,
+          "texts": []
+        },
+        "validation": {
+          "config_data_path_verified": true,
+          "config_split_seed": 1998,
+          "config_protocol": "frozen-v1",
+          "saved_prediction_rows_with_nonunique_full_row_key": 0,
+          "saved_prediction_rows_one_to_one_verified": true,
+          "exact_train_validation_test_multiset_identity_verified": true,
+          "exactly_one_repeated_or_pair_verified": true,
+          "both_repeated_or_rows_in_train_verified": true,
+          "all_cross_split_exact_text_overlaps_zero": true
+        }
+      }
+    },
+    "validation": {
+      "all_four_saved_prediction_mappings_one_to_one": true,
+      "all_four_split_multiset_identities_verified": true,
+      "all_four_have_exactly_one_repeated_or_pair": true,
+      "both_repeated_or_rows_in_training_for_all_four": true,
+      "all_four_have_zero_cross_split_exact_text_overlap": true
+    }
+  },
+  "pairwise_actual_train_source_overlap": [
     {
       "train_generator": "DeepSeek",
       "test_generator": "LFM",
       "overlap": 1955,
       "test_sources": 2802,
-      "fraction": 0.6977159172019985
+      "fraction": 0.6977159172019985,
+      "actual_train_cg_rows": 16172,
+      "actual_train_unique_sources": 16172,
+      "train_data_path": "dataset/modern_reviews_deepseek.csv",
+      "train_run_path": "results/xd_rs_r64_s7_07120556",
+      "test_data_path": "dataset/modern_reviews_lfm.csv",
+      "test_run_path": "results/xl_rs_r64_s7_07120532"
     },
     {
       "train_generator": "GLM",
       "test_generator": "LFM",
       "overlap": 2283,
       "test_sources": 2802,
-      "fraction": 0.8147751605995718
+      "fraction": 0.8147751605995718,
+      "actual_train_cg_rows": 16135,
+      "actual_train_unique_sources": 16135,
+      "train_data_path": "dataset/modern_reviews_glm.csv",
+      "train_run_path": "results/xglm_rs_r64_s7_07120621",
+      "test_data_path": "dataset/modern_reviews_lfm.csv",
+      "test_run_path": "results/xl_rs_r64_s7_07120532"
     },
     {
       "train_generator": "LFM",
       "test_generator": "DeepSeek",
-      "overlap": 1941,
+      "overlap": 1942,
       "test_sources": 2802,
-      "fraction": 0.6927194860813705
+      "fraction": 0.6930763740185582,
+      "actual_train_cg_rows": 16172,
+      "actual_train_unique_sources": 16172,
+      "train_data_path": "dataset/modern_reviews_lfm.csv",
+      "train_run_path": "results/xl_rs_r64_s7_07120532",
+      "test_data_path": "dataset/modern_reviews_deepseek.csv",
+      "test_run_path": "results/xd_rs_r64_s7_07120556"
     },
     {
       "train_generator": "GLM",
       "test_generator": "DeepSeek",
       "overlap": 2265,
       "test_sources": 2802,
-      "fraction": 0.8083511777301927
+      "fraction": 0.8083511777301927,
+      "actual_train_cg_rows": 16135,
+      "actual_train_unique_sources": 16135,
+      "train_data_path": "dataset/modern_reviews_glm.csv",
+      "train_run_path": "results/xglm_rs_r64_s7_07120621",
+      "test_data_path": "dataset/modern_reviews_deepseek.csv",
+      "test_run_path": "results/xd_rs_r64_s7_07120556"
     },
     {
       "train_generator": "LFM",
       "test_generator": "GLM",
-      "overlap": 2278,
+      "overlap": 2277,
       "test_sources": 2819,
-      "fraction": 0.808087974459028
+      "fraction": 0.8077332387371409,
+      "actual_train_cg_rows": 16172,
+      "actual_train_unique_sources": 16172,
+      "train_data_path": "dataset/modern_reviews_lfm.csv",
+      "train_run_path": "results/xl_rs_r64_s7_07120532",
+      "test_data_path": "dataset/modern_reviews_glm.csv",
+      "test_run_path": "results/xglm_rs_r64_s7_07120621"
     },
     {
       "train_generator": "DeepSeek",
       "test_generator": "GLM",
       "overlap": 2260,
       "test_sources": 2819,
-      "fraction": 0.8017027314650585
+      "fraction": 0.8017027314650585,
+      "actual_train_cg_rows": 16172,
+      "actual_train_unique_sources": 16172,
+      "train_data_path": "dataset/modern_reviews_deepseek.csv",
+      "train_run_path": "results/xd_rs_r64_s7_07120556",
+      "test_data_path": "dataset/modern_reviews_glm.csv",
+      "test_run_path": "results/xglm_rs_r64_s7_07120621"
     }
   ],
-  "pooled_other_generators": [
+  "per_target_actual_logo_training_support": [
     {
       "test_generator": "LFM",
-      "overlap": 2649,
-      "test_sources": 2802,
-      "fraction": 0.9453961456102784
+      "target_cg_test_rows": 2802,
+      "target_unique_sources": 2802,
+      "actual_logo_train_rows": 27643,
+      "actual_logo_train_or_rows": 13889,
+      "actual_logo_train_cg_rows": 13754,
+      "actual_logo_train_cg_rows_by_generator": {
+        "DeepSeek": 4597,
+        "GLM": 4562,
+        "GPT-2": 4595
+      },
+      "actual_logo_train_cg_rows_with_src_idx": 9159,
+      "actual_logo_train_unique_src_idx": 8125,
+      "direct_cg_source_overlap": {
+        "count": 1079,
+        "fraction": 0.3850820842255532
+      },
+      "exact_grounding_or_text_in_train": {
+        "count": 1910,
+        "fraction": 0.681655960028551
+      },
+      "support_partition": {
+        "both": {
+          "count": 764,
+          "fraction": 0.2726623840114204
+        },
+        "direct_cg_source_only": {
+          "count": 315,
+          "fraction": 0.11241970021413276
+        },
+        "exact_grounding_or_text_only": {
+          "count": 1146,
+          "fraction": 0.4089935760171306
+        },
+        "either": {
+          "count": 2225,
+          "fraction": 0.7940756602426838
+        },
+        "neither": {
+          "count": 577,
+          "fraction": 0.2059243397573162
+        }
+      },
+      "train_data_path": "dataset/pooled_wo_lfm.csv",
+      "train_run_path": "results/pwolfm_rs_r64_s1998_07120820",
+      "target_data_path": "dataset/modern_reviews_lfm.csv",
+      "target_test_run_path": "results/xl_rs_r64_s7_07120532"
     },
     {
       "test_generator": "DeepSeek",
-      "overlap": 2649,
-      "test_sources": 2802,
-      "fraction": 0.9453961456102784
+      "target_cg_test_rows": 2802,
+      "target_unique_sources": 2802,
+      "actual_logo_train_rows": 27643,
+      "actual_logo_train_or_rows": 13889,
+      "actual_logo_train_cg_rows": 13754,
+      "actual_logo_train_cg_rows_by_generator": {
+        "GLM": 4562,
+        "GPT-2": 4595,
+        "LFM": 4597
+      },
+      "actual_logo_train_cg_rows_with_src_idx": 9159,
+      "actual_logo_train_unique_src_idx": 8156,
+      "direct_cg_source_overlap": {
+        "count": 1088,
+        "fraction": 0.3882940756602427
+      },
+      "exact_grounding_or_text_in_train": {
+        "count": 1932,
+        "fraction": 0.6895074946466809
+      },
+      "support_partition": {
+        "both": {
+          "count": 770,
+          "fraction": 0.27480371163454675
+        },
+        "direct_cg_source_only": {
+          "count": 318,
+          "fraction": 0.11349036402569593
+        },
+        "exact_grounding_or_text_only": {
+          "count": 1162,
+          "fraction": 0.4147037830121342
+        },
+        "either": {
+          "count": 2250,
+          "fraction": 0.8029978586723768
+        },
+        "neither": {
+          "count": 552,
+          "fraction": 0.19700214132762311
+        }
+      },
+      "train_data_path": "dataset/pooled_wo_deepseek.csv",
+      "train_run_path": "results/pwodeepseek_rs_r64_s1998_07120841",
+      "target_data_path": "dataset/modern_reviews_deepseek.csv",
+      "target_test_run_path": "results/xd_rs_r64_s7_07120556"
     },
     {
       "test_generator": "GLM",
-      "overlap": 2657,
-      "test_sources": 2819,
-      "fraction": 0.9428875487761617
+      "target_cg_test_rows": 2819,
+      "target_unique_sources": 2819,
+      "actual_logo_train_rows": 26688,
+      "actual_logo_train_or_rows": 13343,
+      "actual_logo_train_cg_rows": 13345,
+      "actual_logo_train_cg_rows_by_generator": {
+        "DeepSeek": 4431,
+        "GPT-2": 4479,
+        "LFM": 4435
+      },
+      "actual_logo_train_cg_rows_with_src_idx": 8866,
+      "actual_logo_train_unique_src_idx": 7861,
+      "direct_cg_source_overlap": {
+        "count": 1100,
+        "fraction": 0.3902092940759134
+      },
+      "exact_grounding_or_text_in_train": {
+        "count": 1861,
+        "fraction": 0.6601631784320681
+      },
+      "support_partition": {
+        "both": {
+          "count": 732,
+          "fraction": 0.25966654842142606
+        },
+        "direct_cg_source_only": {
+          "count": 368,
+          "fraction": 0.1305427456544874
+        },
+        "exact_grounding_or_text_only": {
+          "count": 1129,
+          "fraction": 0.40049663001064206
+        },
+        "either": {
+          "count": 2229,
+          "fraction": 0.7907059240865555
+        },
+        "neither": {
+          "count": 590,
+          "fraction": 0.20929407591344448
+        }
+      },
+      "train_data_path": "dataset/pooled_wo_glm.csv",
+      "train_run_path": "results/pwoglm_rs_r64_s1998_07120910",
+      "target_data_path": "dataset/modern_reviews_glm.csv",
+      "target_test_run_path": "results/xglm_rs_r64_s7_07120621"
     }
-  ]
+  ],
+  "non_training_upper_bound_candidate_pool": {
+    "label": "NOT ACTUAL LOGO TRAINING; PRE-SUBSAMPLING UPPER BOUND",
+    "values": [
+      {
+        "test_generator": "LFM",
+        "candidate_modern_generators": [
+          "DeepSeek",
+          "GLM"
+        ],
+        "overlap": 2649,
+        "test_sources": 2802,
+        "fraction": 0.9453961456102784
+      },
+      {
+        "test_generator": "DeepSeek",
+        "candidate_modern_generators": [
+          "LFM",
+          "GLM"
+        ],
+        "overlap": 2649,
+        "test_sources": 2802,
+        "fraction": 0.9453961456102784
+      },
+      {
+        "test_generator": "GLM",
+        "candidate_modern_generators": [
+          "LFM",
+          "DeepSeek"
+        ],
+        "overlap": 2657,
+        "test_sources": 2819,
+        "fraction": 0.9425328130542746
+      }
+    ]
+  }
 }

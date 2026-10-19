@@ -32,7 +32,9 @@ Each cell averages three training seeds: 1998, 7, and 42.
 - GPT-2 and the modern generators form nearly disjoint detection domains.
 
 This supports a **transferable signal among the tested modern review datasets**.
-It does not establish a universal detector for arbitrary AI-generated text.
+It does not establish a universal detector for arbitrary AI-generated text: on
+independently collected review corpora the same detectors fail (see
+[External corpora](#external-corpora)).
 
 ## Generator-held-out evaluation
 
@@ -52,11 +54,62 @@ recall at approximately 2% human false-positive rate**. Neither Rs-QLoRA nor
 TF-IDF transfers successfully to held-out GPT-2.
 
 This is a generator holdout under shared grounded-source support, not a joint
-generator-and-prompt-source OOD test. Pairwise modern source-ID overlap is
-69.3–81.5%, and pooled LOGO overlap is 94.3–94.5%. The direction asymmetries
-remain informative because opposite directions have nearly equal overlap, but
-the absolute LOGO recall may not be attributed to generator-independent style
-alone. See [the source-overlap audit](results/source_overlap.json).
+generator-and-prompt-source OOD test. Pairwise modern source-ID overlap between
+one generator's training reviews and another's test reviews is 69.3–81.5%; in
+the LOGO training sets, 79.1–80.3% of held-out test reviews have their source
+review or a derivative of it in training. See
+[the source-overlap audit](results/source_overlap.json). The source-grouped
+evaluation below removes this overlap.
+
+## Source-grouped evaluation
+
+The three modern datasets were rebuilt on the 20,200 source reviews they share,
+and split once by **source group**: every original review and all of its
+generated derivatives are in the same partition (80/6/14, stratified by
+category and rating). No source review used in training appears in any test
+set. Every condition uses seeds 1998, 7, and 42.
+
+Directional CG recall (mean ± SD):
+
+| Train \ test | LFM | DeepSeek | GLM |
+|---|---:|---:|---:|
+| **LFM** | 99.67 ± 0.17% | 40.87 ± 18.30% | 31.42 ± 16.38% |
+| **DeepSeek** | 83.81 ± 1.03% | 99.71 ± 0.09% | 96.01 ± 0.51% |
+| **GLM** | 90.61 ± 4.10% | 97.38 ± 0.61% | 99.54 ± 0.12% |
+
+Leave-one-generator-out, trained on the two other modern generators with the
+same number of generated training reviews:
+
+| Held-out generator | CG recall | Human FPR |
+|---|---:|---:|
+| LFM | 95.24 ± 0.44% | 0.71% |
+| DeepSeek | 97.15 ± 0.64% | 0.45% |
+| GLM | 96.90 ± 0.77% | 0.74% |
+
+The strong transfer directions change by less than two points when source
+reviews are isolated, so they are not explained by shared sources. LFM-trained
+transfer is weaker and unstable across seeds. Pooling matches or exceeds the
+best single training generator for every target. Details:
+[`results/source_grouped_summary/`](results/source_grouped_summary/),
+datasets: [`dataset/source_grouped/`](dataset/source_grouped/).
+
+## External corpora
+
+The 18 source-grouped detectors were applied, without retraining, to three
+independently collected corpora:
+- MAiDE-up (Booking.com hotel reviews; GPT-4);
+- DetectAIRev (clothing, film, and tourist reviews; Llama, Mistral, Phi, Gemma);
+- the Yelp portion of MAGE (27 earlier language models).
+
+| Corpus | CG recall at 0.5 | ROC-AUC | Human FPR |
+|---|---:|---:|---:|
+| MAiDE-up | 1.4–10.9% | 54.1–69.2% | 0.17–0.60% |
+| DetectAIRev | 5.6–35.7% | 62.5–80.5% | 0.33–0.94% |
+| MAGE-Yelp | ≤ 0.16% | 45.4–49.6% | 0.11–0.24% |
+
+Detection **does not transfer** outside the study's generation framework. The
+detectors rarely flag human reviews, but they classify most externally generated
+reviews as human. See [`results/external_benchmark/`](results/external_benchmark/).
 
 ## Supporting findings
 
@@ -94,6 +147,22 @@ DeBERTa is the strongest matched-distribution baseline. The Rs-QLoRA result is
 primarily about efficient adaptation and cross-generator behavior, not a new
 peak in matched-test accuracy.
 
+The source-grouped DeepSeek partition repeats these comparisons with three seeds
+([`results/source_grouped_followup_summary/`](results/source_grouped_followup_summary/)):
+
+| Model | Accuracy | Peak allocated training memory |
+|---|---:|---:|
+| ModernBERT-large | 99.62 ± 0.11% | 15.6 GiB |
+| DeBERTa-v3-base | 99.58 ± 0.08% | 13.3 GiB |
+| Rs-QLoRA (rank 64) | 99.52 ± 0.09% | 2.05 GiB |
+| Standard QLoRA (rank 64) | 99.44 ± 0.04% | 2.05 GiB |
+| RoBERTa-base | 99.42 ± 0.25% | 8.1 GiB |
+
+Run on the same instance for each seed, Rs-QLoRA stopped after fewer optimizer
+steps than standard QLoRA in every pair, with similar accuracy. With the
+rank-stabilized multiplier held at α/√r = 16, ranks 16, 36, and 64 differ by
+only 0.10 points in accuracy.
+
 ## Evidence and model weights
 
 - [Paper-oriented findings](PAPER_FINDINGS.md)
@@ -104,6 +173,11 @@ peak in matched-test accuracy.
 - [Adapter experiment ledger](results/runs.csv)
 - [Transformer baseline ledger](results/baselines_transformer.csv)
 - [Adapter publication manifest](results/adapter_manifest.json)
+- [Source-grouped datasets and split manifest](dataset/source_grouped/)
+- [Source-grouped results](results/source_grouped_summary/) and
+  [per-job comparisons](results/source_grouped_followup_summary/)
+- [External-corpus evaluation](results/external_benchmark/)
+- [Analysis scripts that recompute every statistic](analysis/)
 - [23 verified adapters on Hugging Face](https://huggingface.co/KandirResearch/fake-review-rs-qlora-adapters)
 - [Revised manuscript and review-response map](paper/v2/)
 
@@ -185,6 +259,7 @@ dataset/   generator-specific and pooled evaluation datasets
 grids/     declarative training queues for modern, transfer, LOGO, and controls
 results/   ledgers, configs, metrics, histories, probabilities, structured output
 runs/      dataset builders, training, baselines, evaluation, and verification
+analysis/  recomputation of all reported statistics and figures from results/
 DATA_PROVENANCE.md  prompts, parameters, hashes, providers, and known unknowns
 ```
 
@@ -199,13 +274,16 @@ original reviewer response is in
 - Generator identity is confounded with prompting, sampling, and dataset
   provenance. The shared modern signal may include generation-pipeline effects.
 - The modern generators use a common grounded-review prompt template.
-- Neural LOGO currently uses one training seed per held-out generator.
-- Cross-generator datasets share many grounding-source IDs even when their
-  generated review texts differ: 69.3–81.5% pairwise and 94.3–94.5% in pooled
-  LOGO training.
+- The row-level four-domain LOGO uses one training seed per held-out
+  generator; the source-grouped LOGO uses three.
+- The row-level cross-generator datasets share grounding sources; the
+  source-grouped evaluation removes this overlap for the modern generators.
+- Detection does not transfer to independently collected review corpora.
 - Robustness to paraphrasing, adversarial rewriting, new model families, and
   future generators has not been established.
 
-The defensible conclusion is therefore narrow but useful: **within these
-datasets, modern generators share a detectable and transferable review-writing
-signal, while GPT-2-era generation occupies a separate detection domain.**
+The defensible conclusion is therefore narrow but useful: **within this
+generation framework, modern generators share a detectable and transferable
+review-writing signal that does not depend on shared source reviews, while
+GPT-2-era generation occupies a separate detection domain. The signal does not
+carry over to independently collected review corpora.**

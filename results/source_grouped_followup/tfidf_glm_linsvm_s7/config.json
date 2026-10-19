@@ -1,0 +1,22 @@
+{
+  "protocol": "source-grouped-followup-v1",
+  "job": {
+    "shard": 2,
+    "seed": 7,
+    "data": "dataset/source_grouped/pooled_wo_glm.csv",
+    "target": "glm",
+    "id": "tfidf_glm_linsvm_s7",
+    "kind": "tfidf",
+    "evaluation": "logo",
+    "estimator": "linsvm",
+    "word_features": 200000,
+    "char_features": 200000,
+    "min_df": 2,
+    "C": 0.5,
+    "max_iter": 5000
+  },
+  "plan_sha256": "b7c7444e4ccb5ca8196f4fedc596c3bfea3b622bb28f7ffe3b25a05275bdc8cc",
+  "source_manifest_sha256": "de78619f05026e71a86fac3f57d74f5af041183e8c07cd0e70b12884d64de6f9",
+  "training_data_sha256": "e2b4d54ae358ef3f381621e61511984ab40a03b10ecb665553279320f397d7be",
+  "target_data_sha256": "c6873cca274fd07da2d82c3e01e8dc5314e7946c59190e7d4df703b63de19a76"
+}

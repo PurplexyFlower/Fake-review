@@ -1,0 +1,23 @@
+{
+  "tag": "sgxglm",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 7,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/source_grouped/modern_reviews_glm.csv",
+  "predefined_splits": true,
+  "notes": "",
+  "run_id": "sgxglm_rs_r64_s7_10032026",
+  "split_seed": 1998,
+  "protocol": "source-grouped-contemporary-v1",
+  "split_counts": {
+    "train": 32320,
+    "validation": 2422,
+    "test": 5658
+  },
+  "bf16": true,
+  "data_sha256": "c6873cca274fd07da2d82c3e01e8dc5314e7946c59190e7d4df703b63de19a76"
+}

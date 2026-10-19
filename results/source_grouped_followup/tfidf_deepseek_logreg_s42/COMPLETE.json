@@ -1,0 +1,50 @@
+{
+  "config": {
+    "protocol": "source-grouped-followup-v1",
+    "job": {
+      "shard": 3,
+      "seed": 42,
+      "data": "dataset/source_grouped/modern_reviews_deepseek.csv",
+      "target": "deepseek",
+      "id": "tfidf_deepseek_logreg_s42",
+      "kind": "tfidf",
+      "evaluation": "matched",
+      "estimator": "logreg",
+      "word_features": 200000,
+      "char_features": 200000,
+      "min_df": 2,
+      "C": 4.0,
+      "max_iter": 2000
+    },
+    "plan_sha256": "b7c7444e4ccb5ca8196f4fedc596c3bfea3b622bb28f7ffe3b25a05275bdc8cc",
+    "source_manifest_sha256": "de78619f05026e71a86fac3f57d74f5af041183e8c07cd0e70b12884d64de6f9",
+    "training_data_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644",
+    "target_data_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644"
+  },
+  "files": {
+    "config.json": {
+      "bytes": 780,
+      "sha256": "738fe26edab354d4d7d772a1e16f567cfa186a608722420be184c8152bbbd105"
+    },
+    "metrics.json": {
+      "bytes": 1080,
+      "sha256": "65d2806825d900703094d25395055bba20f131536eeaccdde4ec89dfeef80aae"
+    },
+    "model.joblib": {
+      "bytes": 14066873,
+      "sha256": "8c5b6929385ebe2ac019abcaa3d3bb66d627c4329adbcded59cbb8c85efb0b4b"
+    },
+    "runtime_environment.json": {
+      "bytes": 633,
+      "sha256": "4bc94875a74bbb8dcbd815dd81eef8313d9c0a25baf5111b9d8da3aac9bb919b"
+    },
+    "test_probs.csv": {
+      "bytes": 2414627,
+      "sha256": "e9fca37f2d0daaadf8e449d49ea2a8facfb65b55cced0c574c0a41f92562471d"
+    },
+    "val_probs.csv": {
+      "bytes": 1005340,
+      "sha256": "438d9e9a6432ae660efa649b9dc33051e84708c093de19b9ff2cedcee22f244a"
+    }
+  }
+}

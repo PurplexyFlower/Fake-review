@@ -24,6 +24,7 @@ DATA = ROOT / "dataset" / "fake reviews dataset.csv"
 RESULTS = ROOT / "results"
 LEDGER = RESULTS / "runs.csv"
 SPLIT_SEED = 1998  # NEVER change: reproduces the paper's exact split
+SOURCE_GROUPED_BASE_REVISION = "10413c288cb9629acdf60b3e0229f3ba75efe413"
 
 LEDGER_COLS = [
     "run_id", "timestamp", "tag", "scaling", "rank", "alpha", "seed",
@@ -48,6 +49,11 @@ def parse_args():
                    help="LOCO mode: hold this category out as the test set")
     p.add_argument("--data", default=str(DATA),
                    help="dataset CSV (text_/label/category/rating); default = paper set")
+    p.add_argument(
+        "--predefined-splits",
+        action="store_true",
+        help="use the CSV's split=train/validation/test column without re-splitting",
+    )
     p.add_argument("--notes", default="")
     return p.parse_args()
 
@@ -79,9 +85,43 @@ def main():
     id2label = {0: "OR", 1: "CG"}
     label2id = {"OR": 0, "CG": 1}
 
-    # ---- Data: exact paper split (SPLIT_SEED fixed, independent of --seed) ----
+    # ---- Data: frozen row split or strict predefined source-group split ----
     full = load_dataset("csv", data_files=args.data)["train"]
-    if args.holdout_category:
+    if args.predefined_splits:
+        if args.holdout_category:
+            raise ValueError("--predefined-splits cannot be combined with --holdout-category")
+        if "split" not in full.column_names:
+            raise ValueError("--predefined-splits requires a CSV column named 'split'")
+        allowed_splits = {"train", "validation", "test"}
+        actual_splits = set(full.unique("split"))
+        if actual_splits != allowed_splits:
+            raise ValueError(
+                f"predefined split values must be exactly {sorted(allowed_splits)}, "
+                f"got {sorted(actual_splits)}"
+            )
+        train_ds = full.filter(lambda x: x["split"] == "train")
+        val_ds = full.filter(lambda x: x["split"] == "validation")
+        test_ds = full.filter(lambda x: x["split"] == "test")
+        for split_name, split_ds in (
+            ("train", train_ds), ("validation", val_ds), ("test", test_ds)
+        ):
+            if len(split_ds) == 0:
+                raise ValueError(f"predefined {split_name} partition is empty")
+            labels = set(split_ds.unique("label"))
+            if labels != {"OR", "CG"}:
+                raise ValueError(
+                    f"predefined {split_name} labels must be OR/CG, got {sorted(labels)}"
+                )
+        if "source_group" in full.column_names:
+            group_splits = {}
+            for group, split in zip(full["source_group"], full["split"]):
+                previous = group_splits.setdefault(str(group), split)
+                if previous != split:
+                    raise ValueError(
+                        f"source_group={group} crosses predefined splits: "
+                        f"{previous} and {split}"
+                    )
+    elif args.holdout_category:
         held = full.filter(lambda x: x["category"] == args.holdout_category)
         rest = full.filter(lambda x: x["category"] != args.holdout_category)
         sp = rest.train_test_split(test_size=0.1, seed=SPLIT_SEED)
@@ -97,6 +137,7 @@ def main():
         max_seq_length=512, dtype=None, num_labels=2,
         full_finetuning=False, id2label=id2label, label2id=label2id,
         load_in_4bit=True,
+        **({"revision": SOURCE_GROUPED_BASE_REVISION} if args.predefined_splits else {}),
     )
     model = FastModel.get_peft_model(
         model, r=args.rank,
@@ -107,6 +148,8 @@ def main():
         use_rslora=(args.scaling == "rs"),  # rs: alpha/sqrt(r); standard: alpha/r
         loftq_config=None, task_type="SEQ_CLS",
     )
+    if args.predefined_splits:
+        model.peft_config["default"].revision = SOURCE_GROUPED_BASE_REVISION
 
     def prep(ds):
         ds = ds.map(lambda b: tokenizer(b["text_"], truncation=True, max_length=512),
@@ -176,11 +219,26 @@ def main():
         with open(run_dir / f"{name}_probs.csv", "w", newline="",
                   encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["row", "true", "p_CG", "category", "rating", "text"])
+            provenance_columns = [
+                column for column in ("source_id", "source_group", "generator", "split")
+                if column in raw_ds.column_names
+            ]
+            w.writerow(
+                ["row", "true", "p_CG", "category", "rating", "text"]
+                + provenance_columns
+            )
             for i in range(len(labels)):
-                w.writerow([i, id2label[int(labels[i])], f"{p_cg[i]:.6f}",
-                            raw_ds["category"][i], raw_ds["rating"][i],
-                            raw_ds["text_"][i]])
+                w.writerow(
+                    [
+                        i,
+                        id2label[int(labels[i])],
+                        f"{p_cg[i]:.6f}",
+                        raw_ds["category"][i],
+                        raw_ds["rating"][i],
+                        raw_ds["text_"][i],
+                    ]
+                    + [raw_ds[column][i] for column in provenance_columns]
+                )
         preds = (p_cg >= 0.5).astype(int)
         return {
             "acc": accuracy_score(labels, preds),
@@ -206,10 +264,22 @@ def main():
         shutil.copy(state_src / "trainer_state.json", run_dir / "trainer_state.json")
     shutil.rmtree(ckpt_dir, ignore_errors=True)  # keep adapter, drop checkpoints
 
-    config = vars(args) | {"alpha": alpha, "run_id": run_id,
-                           "split_seed": SPLIT_SEED, "protocol": "frozen-v1",
-                           "bf16": is_bfloat16_supported(),
-                           "data_sha256": data_sha256}
+    split_counts = {
+        "train": len(train_ds), "validation": len(val_ds), "test": len(test_ds)
+    }
+    config = vars(args) | {
+        "alpha": alpha,
+        "run_id": run_id,
+        "split_seed": SPLIT_SEED,
+        "protocol": (
+            "source-grouped-contemporary-v1"
+            if args.predefined_splits
+            else "frozen-v1"
+        ),
+        "split_counts": split_counts,
+        "bf16": is_bfloat16_supported(),
+        "data_sha256": data_sha256,
+    }
     (run_dir / "config.json").write_text(json.dumps(config, indent=2))
     metrics = {"val": val_m, "test": test_m, "best_step": best_step,
                "train_runtime_s": runtime,

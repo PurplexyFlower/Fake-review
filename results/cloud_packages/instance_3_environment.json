@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "captured_at_utc": "2026-10-03T19:49:31.741402+00:00",
+  "instance_id": 3,
+  "provider_offer_id": null,
+  "grid": "grids/source_grouped/instance_3_full.txt",
+  "grid_sha256": "e2244cf61921fc7a63ebc87a22cdcca21aabc5faba06114af98380fc3eb6a128",
+  "source_grouped_manifest_sha256": "de78619f05026e71a86fac3f57d74f5af041183e8c07cd0e70b12884d64de6f9",
+  "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+  "platform": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39",
+  "cuda_visible_devices": "0",
+  "packages": {
+    "torch": "2.10.0+cu128",
+    "transformers": "4.56.2",
+    "peft": "0.19.1",
+    "bitsandbytes": "0.49.2",
+    "unsloth": "2026.6.3",
+    "unsloth_zoo": "2026.6.3",
+    "datasets": "4.3.0",
+    "accelerate": "1.15.0",
+    "trl": "0.22.2",
+    "pyarrow": "25.0.1",
+    "numpy": "2.5.3",
+    "scikit-learn": "1.9.1"
+  },
+  "nvidia_smi": "NVIDIA H100 80GB HBM3, GPU-dd013660-4904-6c59-f2a1-367dcd3d9a58, 595.71.05, 81559 MiB",
+  "git_commit": null,
+  "code_sha256": {
+    "runs/train_run.py": "69abeafa2a81432efa71002e580ad038f943ba1c3a12387896ae9d1f219c1c0a",
+    "runs/run_queue.py": "c5a34343f5cfb9c445eead18597fb00485b95b8af19979fb51cdb81178fe4e9b",
+    "runs/build_source_grouped_datasets.py": "d62e9c770597e828e4f988643e8a18ba064c4434571f7119a74b057e7cd8361f",
+    "runs/validate_source_grouped_plan.py": "753cf50cdbc8b51f178b134cd5ec184faa60473e9703db80411ea9b2bf68d597",
+    "runs/evaluate_source_grouped.py": "6eef54d231c1edb1c426f1aab414576b3317823a502cb34d235a85cbb22d9bfa",
+    "runs/source_grouped_common.py": "f911083872addea5954443457cc73ace614aba3c7d966802a0450b35828070ff",
+    "runs/package_source_grouped_results.py": "674eb33271bc89351a341e3ba83e2caf2d7adbc9a6af6fbc3a0eddd517922ec9",
+    "runs/capture_source_grouped_environment.py": "4dfb403d42b6fcfbf928aa40bf79f79cc681610ce790daba8f9b08206a6358f7"
+  }
+}

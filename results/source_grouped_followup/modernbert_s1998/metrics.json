@@ -1,0 +1,49 @@
+{
+  "resources": {
+    "train_runtime_s": 217.1881334441714,
+    "executed_steps": 2800,
+    "best_step": 2200,
+    "peak_allocated_gib": 15.617448329925537,
+    "peak_reserved_gib": 27.291015625,
+    "trainable_parameters": 395833346,
+    "total_parameters": 395833346,
+    "interrupted_resume": true,
+    "resume_from_global_step": 1600,
+    "train_runtime_scope": "resumed segment only; not uninterrupted full-run training time",
+    "resume_started_at_utc": "2026-10-08T06:29:54.929672+00:00"
+  },
+  "val": {
+    "n": 2422,
+    "n_OR": 1211,
+    "n_CG": 1211,
+    "TN": 1208,
+    "FP": 3,
+    "FN": 1,
+    "TP": 1210,
+    "accuracy": 0.9983484723369116,
+    "precision_CG": 0.9975267930750206,
+    "recall_CG": 0.9991742361684558,
+    "fpr_OR": 0.002477291494632535,
+    "f1_OR": 0.9983471074380166,
+    "f1_CG": 0.9983498349834984,
+    "roc_auc": 0.9999116957752395,
+    "average_precision": 0.9999087803689612
+  },
+  "test": {
+    "n": 5658,
+    "n_OR": 2829,
+    "n_CG": 2829,
+    "TN": 2821,
+    "FP": 8,
+    "FN": 9,
+    "TP": 2820,
+    "accuracy": 0.996995404736656,
+    "precision_CG": 0.9971711456859972,
+    "recall_CG": 0.9968186638388123,
+    "fpr_OR": 0.002827854365500177,
+    "f1_OR": 0.9969959356776815,
+    "f1_CG": 0.9969948736079194,
+    "roc_auc": 0.999960703420027,
+    "average_precision": 0.9999600626417962
+  }
+}

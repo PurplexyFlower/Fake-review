@@ -1,0 +1,23 @@
+[
+  {
+    "rank": 16,
+    "alpha": 64,
+    "saved_adapter_head_parameters": 8800000,
+    "peak_alloc_gib_mean": 1.7907641728719075,
+    "peak_alloc_gib_sd": 2.0057413170302528e-05
+  },
+  {
+    "rank": 36,
+    "alpha": 96,
+    "saved_adapter_head_parameters": 19797760,
+    "peak_alloc_gib_mean": 1.8982702891031902,
+    "peak_alloc_gib_sd": 0.00046363049601993956
+  },
+  {
+    "rank": 64,
+    "alpha": 128,
+    "saved_adapter_head_parameters": 35194624,
+    "peak_alloc_gib_mean": 2.051030000050863,
+    "peak_alloc_gib_sd": 0.0023273175753357076
+  }
+]

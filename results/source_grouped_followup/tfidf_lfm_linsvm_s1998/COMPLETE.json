@@ -1,0 +1,50 @@
+{
+  "config": {
+    "protocol": "source-grouped-followup-v1",
+    "job": {
+      "shard": 1,
+      "seed": 1998,
+      "data": "dataset/source_grouped/pooled_wo_lfm.csv",
+      "target": "lfm",
+      "id": "tfidf_lfm_linsvm_s1998",
+      "kind": "tfidf",
+      "evaluation": "logo",
+      "estimator": "linsvm",
+      "word_features": 200000,
+      "char_features": 200000,
+      "min_df": 2,
+      "C": 0.5,
+      "max_iter": 5000
+    },
+    "plan_sha256": "b7c7444e4ccb5ca8196f4fedc596c3bfea3b622bb28f7ffe3b25a05275bdc8cc",
+    "source_manifest_sha256": "de78619f05026e71a86fac3f57d74f5af041183e8c07cd0e70b12884d64de6f9",
+    "training_data_sha256": "54ec2b048b2f3b09d2bd9182839521279030fe7ebba8d8793d5bef9142600947",
+    "target_data_sha256": "3ba23e6ce003a52ac0d2fdd014480900e7875b8c4bed777965374ea9bf276c2d"
+  },
+  "files": {
+    "config.json": {
+      "bytes": 761,
+      "sha256": "2b35d5268df0004b146e9fb6264fa628db980bbaa06ab8ef6a5a0f8fe740655a"
+    },
+    "metrics.json": {
+      "bytes": 1099,
+      "sha256": "ec1a1e9da7dc4720a08690faca2ae56299d7dda34e18fd026290d097e7e540a9"
+    },
+    "model.joblib": {
+      "bytes": 14094597,
+      "sha256": "4c02211fd2e83dd3baded04e2b8655460be805342bf30b23cf62e9ecfcd681ea"
+    },
+    "runtime_environment.json": {
+      "bytes": 633,
+      "sha256": "6c220c0cb477184c9a2f36a1104d5191bcb56fcdc569ff9b06a9475f028dc2a5"
+    },
+    "test_probs.csv": {
+      "bytes": 2241681,
+      "sha256": "18b1fa358a23aaa29b770946800019140737b33ebdb6a79d162265699f02a57b"
+    },
+    "val_probs.csv": {
+      "bytes": 1020663,
+      "sha256": "fa5ce5e3711dc4e568b3eb8d1a0733c17ea976e9100ceb2df495db750318482e"
+    }
+  }
+}

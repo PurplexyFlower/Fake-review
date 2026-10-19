@@ -35,6 +35,10 @@ def grab(argline, flag, default=None):
     return m.group(1) if m else default
 
 
+def has_flag(argline, flag):
+    return f"--{flag}" in shlex.split(argline)
+
+
 def run_prefix(argline: str) -> str:
     """Mirror train_run.py's run_id prefix for dedup against the ledger."""
     tag, scaling, rank, seed = (grab(argline, "tag"), grab(argline, "scaling"),
@@ -93,8 +97,11 @@ def is_completed(argline, rows, require_adapter=False):
             "scheduler": grab(argline, "scheduler", "cosine_with_restarts"),
             "label_smoothing": float(grab(argline, "label-smoothing", 0.01)),
             "holdout_category": grab(argline, "holdout-category"),
+            "predefined_splits": has_flag(argline, "predefined-splits"),
         }
-        same_config = all(config.get(k) == v for k, v in expected.items())
+        # Legacy runs predate --predefined-splits; omission means False.
+        same_config = all(config.get(k, False if k == "predefined_splits" else None) == v
+                          for k, v in expected.items())
         if same_config and config.get("data_sha256") == expected_hash:
             return True
     return False

@@ -1,0 +1,166 @@
+{
+  "normalization": "HTML tags and leading template labels removed, then build_modern_dataset.normalize_text (both classes)",
+  "training_texts_checked": 80799,
+  "maideup_en": {
+    "filter_counts": {
+      "input": {
+        "OR": 1000,
+        "CG": 1000
+      },
+      "prefix_stripped": {
+        "OR": 2,
+        "CG": 1
+      },
+      "lt3_words": {
+        "OR": 4
+      },
+      "duplicate": {},
+      "cross_label": {},
+      "in_training": {},
+      "kept": {
+        "OR": 996,
+        "CG": 1000
+      }
+    },
+    "selection": "all English rows; text = Upside_Review + ' ' + Downside_Review",
+    "sha256": "500b24f04d9b5ef8cb4a21518077554068c0a6b26e5387eb79aa76da1347e75a",
+    "n": {
+      "OR": 996,
+      "CG": 1000
+    },
+    "generators": {
+      "human": 996,
+      "gpt-4": 1000
+    },
+    "mean_words": {
+      "OR": 48.594,
+      "CG": 55.452
+    }
+  },
+  "detectairev": {
+    "filter_counts": {
+      "input": {
+        "CG": 98192,
+        "OR": 37100
+      },
+      "prefix_stripped": {
+        "CG": 35539,
+        "OR": 5
+      },
+      "lt3_words": {
+        "CG": 1558,
+        "OR": 962
+      },
+      "duplicate": {
+        "CG": 3737,
+        "OR": 326
+      },
+      "cross_label": {
+        "CG": 6501,
+        "OR": 6443
+      },
+      "in_training": {},
+      "kept": {
+        "CG": 86396,
+        "OR": 29369
+      }
+    },
+    "selection": {
+      "excluded_domains": {
+        "Hotel": "human TripAdvisor text is lowercased with stop words removed (stop-word rate 0.009 vs 0.30-0.37 for generated text)"
+      },
+      "per_domain_per_class": 1500,
+      "sample_seed": 1998,
+      "sampled": {
+        "e-commerce clothing|human": 1500,
+        "e-commerce clothing|gemma": 375,
+        "e-commerce clothing|llama": 375,
+        "e-commerce clothing|mistral": 375,
+        "e-commerce clothing|phi": 375,
+        "movie (IMDb)|human": 1500,
+        "movie (IMDb)|gemma": 500,
+        "movie (IMDb)|llama": 500,
+        "movie (IMDb)|mistral": 500,
+        "tourist attraction|human": 1500,
+        "tourist attraction|llama": 500,
+        "tourist attraction|mistral": 500,
+        "tourist attraction|phi": 500
+      }
+    },
+    "sha256": "1348dfc859f6b18db8d6706f42bd71853789659b63271e5ebe87709084921d79",
+    "n": {
+      "OR": 4500,
+      "CG": 4500
+    },
+    "generators": {
+      "human": 4500,
+      "gemma": 875,
+      "llama": 1375,
+      "mistral": 1375,
+      "phi": 875
+    },
+    "mean_words": {
+      "OR": 107.261,
+      "CG": 53.978
+    }
+  },
+  "mage_yelp": {
+    "filter_counts": {
+      "input": {
+        "OR": 2652,
+        "CG": 2547
+      },
+      "prefix_stripped": {
+        "OR": 1
+      },
+      "lt3_words": {},
+      "duplicate": {},
+      "cross_label": {},
+      "in_training": {},
+      "kept": {
+        "OR": 2652,
+        "CG": 2547
+      }
+    },
+    "selection": "all Yelp rows of the MAGE test split (continuation prompts)",
+    "sha256": "796afebc7162aa4f22210466c54007a382953ea3b400b5680fbd1a708d40814d",
+    "n": {
+      "OR": 2652,
+      "CG": 2547
+    },
+    "generators": {
+      "human": 2652,
+      "gpt_j": 82,
+      "t0_3b": 99,
+      "GLM130B": 95,
+      "flan_t5_base": 98,
+      "opt_iml_max_1.3b": 99,
+      "opt_30b": 98,
+      "gpt_neox": 93,
+      "opt_350m": 92,
+      "opt_13b": 96,
+      "bloom_7b": 93,
+      "flan_t5_xl": 96,
+      "13B": 98,
+      "opt_iml_30b": 98,
+      "text-davinci-002": 99,
+      "65B": 98,
+      "opt_125m": 94,
+      "opt_6.7b": 97,
+      "30B": 98,
+      "7B": 96,
+      "opt_1.3b": 96,
+      "gpt-3.5-trubo": 99,
+      "t0_11b": 42,
+      "flan_t5_xxl": 98,
+      "opt_2.7b": 98,
+      "text-davinci-003": 97,
+      "flan_t5_large": 99,
+      "flan_t5_small": 99
+    },
+    "mean_words": {
+      "OR": 133.213,
+      "CG": 168.733
+    }
+  }
+}
