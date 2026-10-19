@@ -1,0 +1,660 @@
+{
+  "checked_at_utc": "2026-10-04T00:22:38.353506+00:00",
+  "training_runs": 27,
+  "prediction_evaluations": 45,
+  "independent_prediction_rows_checked": 254610,
+  "seed_sets_per_condition": [
+    7,
+    42,
+    1998
+  ],
+  "sample_sd_ddof": 1,
+  "all_source_test_rows_verified": true,
+  "all_source_overlap_zero": true,
+  "maximum_metric_error_from_9_decimal_probabilities": {
+    "accuracy": 0.0,
+    "precision_CG": 0.0,
+    "recall_CG": 0.0,
+    "fpr_OR": 0.0,
+    "f1_OR": 0.0,
+    "f1_CG": 0.0,
+    "roc_auc": 2.220446049250313e-16,
+    "pr_auc": 7.327471962526033e-15
+  },
+  "independently_checked_prevalence_points": 45045,
+  "old_ledger_unchanged_prefix": true,
+  "ledger_rows_after": 78,
+  "summary_sha256": "7a5d9433a771a06884ae8eb2067c8a886f4608d27a33011fd6893fba436a87fc",
+  "cases": [
+    {
+      "run_id": "sgxl_rs_r64_s1998_10031949",
+      "target": "lfm",
+      "protocol": "directional",
+      "seed": 1998,
+      "counts": {
+        "TN": 2826,
+        "FP": 3,
+        "FN": 11,
+        "TP": 2818
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxl_rs_r64_s1998_10031949",
+      "target": "deepseek",
+      "protocol": "directional",
+      "seed": 1998,
+      "counts": {
+        "TN": 2826,
+        "FP": 3,
+        "FN": 2043,
+        "TP": 786
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxl_rs_r64_s1998_10031949",
+      "target": "glm",
+      "protocol": "directional",
+      "seed": 1998,
+      "counts": {
+        "TN": 2826,
+        "FP": 3,
+        "FN": 2256,
+        "TP": 573
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxl_rs_r64_s7_10031948",
+      "target": "lfm",
+      "protocol": "directional",
+      "seed": 7,
+      "counts": {
+        "TN": 2826,
+        "FP": 3,
+        "FN": 13,
+        "TP": 2816
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxl_rs_r64_s7_10031948",
+      "target": "deepseek",
+      "protocol": "directional",
+      "seed": 7,
+      "counts": {
+        "TN": 2826,
+        "FP": 3,
+        "FN": 1894,
+        "TP": 935
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxl_rs_r64_s7_10031948",
+      "target": "glm",
+      "protocol": "directional",
+      "seed": 7,
+      "counts": {
+        "TN": 2826,
+        "FP": 3,
+        "FN": 2156,
+        "TP": 673
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxl_rs_r64_s42_10031949",
+      "target": "lfm",
+      "protocol": "directional",
+      "seed": 42,
+      "counts": {
+        "TN": 2822,
+        "FP": 7,
+        "FN": 4,
+        "TP": 2825
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxl_rs_r64_s42_10031949",
+      "target": "deepseek",
+      "protocol": "directional",
+      "seed": 42,
+      "counts": {
+        "TN": 2822,
+        "FP": 7,
+        "FN": 1081,
+        "TP": 1748
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxl_rs_r64_s42_10031949",
+      "target": "glm",
+      "protocol": "directional",
+      "seed": 42,
+      "counts": {
+        "TN": 2822,
+        "FP": 7,
+        "FN": 1408,
+        "TP": 1421
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxd_rs_r64_s1998_10032008",
+      "target": "lfm",
+      "protocol": "directional",
+      "seed": 1998,
+      "counts": {
+        "TN": 2810,
+        "FP": 19,
+        "FN": 436,
+        "TP": 2393
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxd_rs_r64_s1998_10032008",
+      "target": "deepseek",
+      "protocol": "directional",
+      "seed": 1998,
+      "counts": {
+        "TN": 2810,
+        "FP": 19,
+        "FN": 8,
+        "TP": 2821
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxd_rs_r64_s1998_10032008",
+      "target": "glm",
+      "protocol": "directional",
+      "seed": 1998,
+      "counts": {
+        "TN": 2810,
+        "FP": 19,
+        "FN": 101,
+        "TP": 2728
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxd_rs_r64_s7_10032009",
+      "target": "lfm",
+      "protocol": "directional",
+      "seed": 7,
+      "counts": {
+        "TN": 2813,
+        "FP": 16,
+        "FN": 491,
+        "TP": 2338
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxd_rs_r64_s7_10032009",
+      "target": "deepseek",
+      "protocol": "directional",
+      "seed": 7,
+      "counts": {
+        "TN": 2813,
+        "FP": 16,
+        "FN": 6,
+        "TP": 2823
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxd_rs_r64_s7_10032009",
+      "target": "glm",
+      "protocol": "directional",
+      "seed": 7,
+      "counts": {
+        "TN": 2813,
+        "FP": 16,
+        "FN": 129,
+        "TP": 2700
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxd_rs_r64_s42_10032009",
+      "target": "lfm",
+      "protocol": "directional",
+      "seed": 42,
+      "counts": {
+        "TN": 2813,
+        "FP": 16,
+        "FN": 447,
+        "TP": 2382
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxd_rs_r64_s42_10032009",
+      "target": "deepseek",
+      "protocol": "directional",
+      "seed": 42,
+      "counts": {
+        "TN": 2813,
+        "FP": 16,
+        "FN": 11,
+        "TP": 2818
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxd_rs_r64_s42_10032009",
+      "target": "glm",
+      "protocol": "directional",
+      "seed": 42,
+      "counts": {
+        "TN": 2813,
+        "FP": 16,
+        "FN": 109,
+        "TP": 2720
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxglm_rs_r64_s1998_10032041",
+      "target": "lfm",
+      "protocol": "directional",
+      "seed": 1998,
+      "counts": {
+        "TN": 2817,
+        "FP": 12,
+        "FN": 209,
+        "TP": 2620
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxglm_rs_r64_s1998_10032041",
+      "target": "deepseek",
+      "protocol": "directional",
+      "seed": 1998,
+      "counts": {
+        "TN": 2817,
+        "FP": 12,
+        "FN": 63,
+        "TP": 2766
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxglm_rs_r64_s1998_10032041",
+      "target": "glm",
+      "protocol": "directional",
+      "seed": 1998,
+      "counts": {
+        "TN": 2817,
+        "FP": 12,
+        "FN": 9,
+        "TP": 2820
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxglm_rs_r64_s7_10032026",
+      "target": "lfm",
+      "protocol": "directional",
+      "seed": 7,
+      "counts": {
+        "TN": 2816,
+        "FP": 13,
+        "FN": 189,
+        "TP": 2640
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxglm_rs_r64_s7_10032026",
+      "target": "deepseek",
+      "protocol": "directional",
+      "seed": 7,
+      "counts": {
+        "TN": 2816,
+        "FP": 13,
+        "FN": 65,
+        "TP": 2764
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxglm_rs_r64_s7_10032026",
+      "target": "glm",
+      "protocol": "directional",
+      "seed": 7,
+      "counts": {
+        "TN": 2816,
+        "FP": 13,
+        "FN": 15,
+        "TP": 2814
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxglm_rs_r64_s42_10032038",
+      "target": "lfm",
+      "protocol": "directional",
+      "seed": 42,
+      "counts": {
+        "TN": 2824,
+        "FP": 5,
+        "FN": 399,
+        "TP": 2430
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxglm_rs_r64_s42_10032038",
+      "target": "deepseek",
+      "protocol": "directional",
+      "seed": 42,
+      "counts": {
+        "TN": 2824,
+        "FP": 5,
+        "FN": 94,
+        "TP": 2735
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgxglm_rs_r64_s42_10032038",
+      "target": "glm",
+      "protocol": "directional",
+      "seed": 42,
+      "counts": {
+        "TN": 2824,
+        "FP": 5,
+        "FN": 15,
+        "TP": 2814
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgpwolfm_rs_r64_s1998_10032105",
+      "target": "lfm",
+      "protocol": "logo",
+      "seed": 1998,
+      "counts": {
+        "TN": 2812,
+        "FP": 17,
+        "FN": 121,
+        "TP": 2708
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgpwolfm_rs_r64_s7_10032050",
+      "target": "lfm",
+      "protocol": "logo",
+      "seed": 7,
+      "counts": {
+        "TN": 2808,
+        "FP": 21,
+        "FN": 138,
+        "TP": 2691
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgpwolfm_rs_r64_s42_10032059",
+      "target": "lfm",
+      "protocol": "logo",
+      "seed": 42,
+      "counts": {
+        "TN": 2807,
+        "FP": 22,
+        "FN": 145,
+        "TP": 2684
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgpwodeepseek_rs_r64_s1998_10032125",
+      "target": "deepseek",
+      "protocol": "logo",
+      "seed": 1998,
+      "counts": {
+        "TN": 2817,
+        "FP": 12,
+        "FN": 101,
+        "TP": 2728
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgpwodeepseek_rs_r64_s7_10032126",
+      "target": "deepseek",
+      "protocol": "logo",
+      "seed": 7,
+      "counts": {
+        "TN": 2817,
+        "FP": 12,
+        "FN": 75,
+        "TP": 2754
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgpwodeepseek_rs_r64_s42_10032128",
+      "target": "deepseek",
+      "protocol": "logo",
+      "seed": 42,
+      "counts": {
+        "TN": 2815,
+        "FP": 14,
+        "FN": 66,
+        "TP": 2763
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgpwoglm_rs_r64_s1998_10032153",
+      "target": "glm",
+      "protocol": "logo",
+      "seed": 1998,
+      "counts": {
+        "TN": 2818,
+        "FP": 11,
+        "FN": 111,
+        "TP": 2718
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgpwoglm_rs_r64_s7_10032146",
+      "target": "glm",
+      "protocol": "logo",
+      "seed": 7,
+      "counts": {
+        "TN": 2805,
+        "FP": 24,
+        "FN": 68,
+        "TP": 2761
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgpwoglm_rs_r64_s42_10032147",
+      "target": "glm",
+      "protocol": "logo",
+      "seed": 42,
+      "counts": {
+        "TN": 2801,
+        "FP": 28,
+        "FN": 84,
+        "TP": 2745
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgfr_rs_r16_s1998_10032231",
+      "target": "deepseek",
+      "protocol": "fixed_scale_rank",
+      "seed": 1998,
+      "counts": {
+        "TN": 2816,
+        "FP": 13,
+        "FN": 14,
+        "TP": 2815
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgfr_rs_r16_s7_10032205",
+      "target": "deepseek",
+      "protocol": "fixed_scale_rank",
+      "seed": 7,
+      "counts": {
+        "TN": 2811,
+        "FP": 18,
+        "FN": 10,
+        "TP": 2819
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgfr_rs_r16_s42_10032202",
+      "target": "deepseek",
+      "protocol": "fixed_scale_rank",
+      "seed": 42,
+      "counts": {
+        "TN": 2813,
+        "FP": 16,
+        "FN": 16,
+        "TP": 2813
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgfr_rs_r36_s1998_10032221",
+      "target": "deepseek",
+      "protocol": "fixed_scale_rank",
+      "seed": 1998,
+      "counts": {
+        "TN": 2816,
+        "FP": 13,
+        "FN": 10,
+        "TP": 2819
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgfr_rs_r36_s7_10032255",
+      "target": "deepseek",
+      "protocol": "fixed_scale_rank",
+      "seed": 7,
+      "counts": {
+        "TN": 2812,
+        "FP": 17,
+        "FN": 7,
+        "TP": 2822
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgfr_rs_r36_s42_10032230",
+      "target": "deepseek",
+      "protocol": "fixed_scale_rank",
+      "seed": 42,
+      "counts": {
+        "TN": 2817,
+        "FP": 12,
+        "FN": 14,
+        "TP": 2815
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgfr_rs_r64_s1998_10032252",
+      "target": "deepseek",
+      "protocol": "fixed_scale_rank",
+      "seed": 1998,
+      "counts": {
+        "TN": 2821,
+        "FP": 8,
+        "FN": 12,
+        "TP": 2817
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgfr_rs_r64_s7_10032242",
+      "target": "deepseek",
+      "protocol": "fixed_scale_rank",
+      "seed": 7,
+      "counts": {
+        "TN": 2812,
+        "FP": 17,
+        "FN": 5,
+        "TP": 2824
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    },
+    {
+      "run_id": "sgfr_rs_r64_s42_10032325",
+      "target": "deepseek",
+      "protocol": "fixed_scale_rank",
+      "seed": 42,
+      "counts": {
+        "TN": 2809,
+        "FP": 20,
+        "FN": 8,
+        "TP": 2821
+      },
+      "n": 5658,
+      "zero_source_overlap": true
+    }
+  ]
+}

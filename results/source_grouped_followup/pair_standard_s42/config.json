@@ -1,0 +1,21 @@
+{
+  "protocol": "source-grouped-followup-v1",
+  "job": {
+    "shard": 3,
+    "seed": 42,
+    "data": "dataset/source_grouped/modern_reviews_deepseek.csv",
+    "target": "deepseek",
+    "id": "pair_standard_s42",
+    "kind": "adapter",
+    "tag": "sgrebpair",
+    "scaling": "standard",
+    "rank": 64,
+    "alpha": 128,
+    "scheduler": "cosine_with_restarts",
+    "label_smoothing": 0.01
+  },
+  "plan_sha256": "b7c7444e4ccb5ca8196f4fedc596c3bfea3b622bb28f7ffe3b25a05275bdc8cc",
+  "source_manifest_sha256": "de78619f05026e71a86fac3f57d74f5af041183e8c07cd0e70b12884d64de6f9",
+  "training_data_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644",
+  "target_data_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644"
+}

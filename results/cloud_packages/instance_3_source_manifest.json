@@ -1,0 +1,583 @@
+{
+  "schema_version": 1,
+  "protocol": "source-grouped-contemporary-v1",
+  "split_seed": 1998,
+  "split_fractions": {
+    "train": 0.8,
+    "validation": 0.06,
+    "test": 0.14
+  },
+  "scope": [
+    "lfm",
+    "deepseek",
+    "glm"
+  ],
+  "source_universe": "intersection of retained source ids across all three generators",
+  "source_group_rule": "original src_idx, with exact normalized duplicate OR texts merged for splitting",
+  "retention": {
+    "lfm": {
+      "raw_cg_rows": 20216,
+      "retained_cg_rows": 20212,
+      "unique_source_ids": 20212,
+      "dropped_empty": 0,
+      "dropped_duplicate": 4,
+      "dropped_cross_class": 0,
+      "assembled_mapping_verified": true
+    },
+    "deepseek": {
+      "raw_cg_rows": 20216,
+      "retained_cg_rows": 20212,
+      "unique_source_ids": 20212,
+      "dropped_empty": 0,
+      "dropped_duplicate": 4,
+      "dropped_cross_class": 0,
+      "assembled_mapping_verified": true
+    },
+    "glm": {
+      "raw_cg_rows": 20216,
+      "retained_cg_rows": 20208,
+      "unique_source_ids": 20208,
+      "dropped_empty": 0,
+      "dropped_duplicate": 8,
+      "dropped_cross_class": 0,
+      "assembled_mapping_verified": true
+    }
+  },
+  "split": {
+    "unique_source_ids": 20200,
+    "unique_source_groups": 20199,
+    "exact_duplicate_groups": 1,
+    "source_counts": {
+      "test": 2829,
+      "train": 16160,
+      "validation": 1211
+    },
+    "group_counts": {
+      "test": 2829,
+      "train": 16159,
+      "validation": 1211
+    },
+    "strata": {
+      "Books_5|1.0": {
+        "groups": 77,
+        "train": 61,
+        "validation": 5,
+        "test": 11
+      },
+      "Books_5|2.0": {
+        "groups": 97,
+        "train": 77,
+        "validation": 6,
+        "test": 14
+      },
+      "Books_5|3.0": {
+        "groups": 229,
+        "train": 183,
+        "validation": 14,
+        "test": 32
+      },
+      "Books_5|4.0": {
+        "groups": 496,
+        "train": 397,
+        "validation": 30,
+        "test": 69
+      },
+      "Books_5|5.0": {
+        "groups": 1286,
+        "train": 1029,
+        "validation": 77,
+        "test": 180
+      },
+      "Clothing_Shoes_and_Jewelry_5|1.0": {
+        "groups": 96,
+        "train": 77,
+        "validation": 6,
+        "test": 13
+      },
+      "Clothing_Shoes_and_Jewelry_5|2.0": {
+        "groups": 132,
+        "train": 106,
+        "validation": 8,
+        "test": 18
+      },
+      "Clothing_Shoes_and_Jewelry_5|3.0": {
+        "groups": 206,
+        "train": 165,
+        "validation": 12,
+        "test": 29
+      },
+      "Clothing_Shoes_and_Jewelry_5|4.0": {
+        "groups": 422,
+        "train": 338,
+        "validation": 25,
+        "test": 59
+      },
+      "Clothing_Shoes_and_Jewelry_5|5.0": {
+        "groups": 1068,
+        "train": 854,
+        "validation": 64,
+        "test": 150
+      },
+      "Electronics_5|1.0": {
+        "groups": 162,
+        "train": 129,
+        "validation": 10,
+        "test": 23
+      },
+      "Electronics_5|2.0": {
+        "groups": 108,
+        "train": 87,
+        "validation": 6,
+        "test": 15
+      },
+      "Electronics_5|3.0": {
+        "groups": 173,
+        "train": 139,
+        "validation": 10,
+        "test": 24
+      },
+      "Electronics_5|4.0": {
+        "groups": 377,
+        "train": 301,
+        "validation": 23,
+        "test": 53
+      },
+      "Electronics_5|5.0": {
+        "groups": 1172,
+        "train": 938,
+        "validation": 70,
+        "test": 164
+      },
+      "Home_and_Kitchen_5|1.0": {
+        "groups": 137,
+        "train": 110,
+        "validation": 8,
+        "test": 19
+      },
+      "Home_and_Kitchen_5|2.0": {
+        "groups": 99,
+        "train": 79,
+        "validation": 6,
+        "test": 14
+      },
+      "Home_and_Kitchen_5|3.0": {
+        "groups": 164,
+        "train": 131,
+        "validation": 10,
+        "test": 23
+      },
+      "Home_and_Kitchen_5|4.0": {
+        "groups": 366,
+        "train": 293,
+        "validation": 22,
+        "test": 51
+      },
+      "Home_and_Kitchen_5|5.0": {
+        "groups": 1260,
+        "train": 1008,
+        "validation": 76,
+        "test": 176
+      },
+      "Kindle_Store_5|1.0": {
+        "groups": 47,
+        "train": 37,
+        "validation": 3,
+        "test": 7
+      },
+      "Kindle_Store_5|2.0": {
+        "groups": 76,
+        "train": 60,
+        "validation": 5,
+        "test": 11
+      },
+      "Kindle_Store_5|3.0": {
+        "groups": 211,
+        "train": 168,
+        "validation": 13,
+        "test": 30
+      },
+      "Kindle_Store_5|4.0": {
+        "groups": 597,
+        "train": 477,
+        "validation": 36,
+        "test": 84
+      },
+      "Kindle_Store_5|5.0": {
+        "groups": 1433,
+        "train": 1146,
+        "validation": 86,
+        "test": 201
+      },
+      "Movies_and_TV_5|1.0": {
+        "groups": 120,
+        "train": 96,
+        "validation": 7,
+        "test": 17
+      },
+      "Movies_and_TV_5|2.0": {
+        "groups": 111,
+        "train": 88,
+        "validation": 7,
+        "test": 16
+      },
+      "Movies_and_TV_5|3.0": {
+        "groups": 184,
+        "train": 147,
+        "validation": 11,
+        "test": 26
+      },
+      "Movies_and_TV_5|4.0": {
+        "groups": 389,
+        "train": 312,
+        "validation": 23,
+        "test": 54
+      },
+      "Movies_and_TV_5|5.0": {
+        "groups": 989,
+        "train": 792,
+        "validation": 59,
+        "test": 138
+      },
+      "Pet_Supplies_5|1.0": {
+        "groups": 154,
+        "train": 123,
+        "validation": 9,
+        "test": 22
+      },
+      "Pet_Supplies_5|2.0": {
+        "groups": 117,
+        "train": 94,
+        "validation": 7,
+        "test": 16
+      },
+      "Pet_Supplies_5|3.0": {
+        "groups": 194,
+        "train": 155,
+        "validation": 12,
+        "test": 27
+      },
+      "Pet_Supplies_5|4.0": {
+        "groups": 341,
+        "train": 273,
+        "validation": 20,
+        "test": 48
+      },
+      "Pet_Supplies_5|5.0": {
+        "groups": 1319,
+        "train": 1055,
+        "validation": 79,
+        "test": 185
+      },
+      "Sports_and_Outdoors_5|1.0": {
+        "groups": 105,
+        "train": 84,
+        "validation": 6,
+        "test": 15
+      },
+      "Sports_and_Outdoors_5|2.0": {
+        "groups": 94,
+        "train": 75,
+        "validation": 6,
+        "test": 13
+      },
+      "Sports_and_Outdoors_5|3.0": {
+        "groups": 152,
+        "train": 122,
+        "validation": 9,
+        "test": 21
+      },
+      "Sports_and_Outdoors_5|4.0": {
+        "groups": 369,
+        "train": 295,
+        "validation": 22,
+        "test": 52
+      },
+      "Sports_and_Outdoors_5|5.0": {
+        "groups": 1251,
+        "train": 1001,
+        "validation": 75,
+        "test": 175
+      },
+      "Tools_and_Home_Improvement_5|1.0": {
+        "groups": 103,
+        "train": 83,
+        "validation": 6,
+        "test": 14
+      },
+      "Tools_and_Home_Improvement_5|2.0": {
+        "groups": 101,
+        "train": 81,
+        "validation": 6,
+        "test": 14
+      },
+      "Tools_and_Home_Improvement_5|3.0": {
+        "groups": 146,
+        "train": 117,
+        "validation": 9,
+        "test": 20
+      },
+      "Tools_and_Home_Improvement_5|4.0": {
+        "groups": 332,
+        "train": 266,
+        "validation": 20,
+        "test": 46
+      },
+      "Tools_and_Home_Improvement_5|5.0": {
+        "groups": 1241,
+        "train": 993,
+        "validation": 74,
+        "test": 174
+      },
+      "Toys_and_Games_5|1.0": {
+        "groups": 90,
+        "train": 72,
+        "validation": 5,
+        "test": 13
+      },
+      "Toys_and_Games_5|2.0": {
+        "groups": 70,
+        "train": 56,
+        "validation": 4,
+        "test": 10
+      },
+      "Toys_and_Games_5|3.0": {
+        "groups": 175,
+        "train": 140,
+        "validation": 10,
+        "test": 25
+      },
+      "Toys_and_Games_5|4.0": {
+        "groups": 352,
+        "train": 282,
+        "validation": 21,
+        "test": 49
+      },
+      "Toys_and_Games_5|5.0": {
+        "groups": 1209,
+        "train": 967,
+        "validation": 73,
+        "test": 169
+      }
+    }
+  },
+  "input_sha256": {
+    "dataset/fake reviews dataset.csv": "ea03422988824bc917b5f7217e3867e27b597c647d5261adfae73cd7a85e1e1a",
+    "dataset/modern_reviews_deepseek.csv": "c21b3a596101d488954058f56d72f35512a34dac1526ef8cbbd3d307fb005783",
+    "dataset/modern_reviews_glm.csv": "1519dedd45a8bd2d04c12a201ad488b7c6a919122f2d9bc86d69955f49a2ae41",
+    "dataset/modern_reviews_lfm.csv": "6a0f516f0fee535f3c3fc31fc613dba484684e9f44f89db36b57655382c201e7",
+    "dataset/sota_fakes.csv": "8bfe7eb10be6f815eabdf0e8169b35adac1db7c5e1df540b9ef7fd641b2a6270",
+    "dataset/sota_fakes_deepseek.csv": "a47568d219a38f5cc16207269d9d855ae370405fd703ae5c7d27e2131a019cc1",
+    "dataset/sota_fakes_glm.csv": "4d1b96580a2718e0602fe633a6c6b593da24880030772a87ec5c620c09048664"
+  },
+  "artifacts": {
+    "matched_lfm": {
+      "path": "dataset/source_grouped/modern_reviews_lfm.csv",
+      "rows": 40400,
+      "sha256": "3ba23e6ce003a52ac0d2fdd014480900e7875b8c4bed777965374ea9bf276c2d",
+      "label_counts": {
+        "CG": 20200,
+        "OR": 20200
+      },
+      "split_label_counts": {
+        "train": {
+          "CG": 16160,
+          "OR": 16160
+        },
+        "validation": {
+          "CG": 1211,
+          "OR": 1211
+        },
+        "test": {
+          "CG": 2829,
+          "OR": 2829
+        }
+      },
+      "source_groups_crossing_splits": 0
+    },
+    "matched_deepseek": {
+      "path": "dataset/source_grouped/modern_reviews_deepseek.csv",
+      "rows": 40400,
+      "sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644",
+      "label_counts": {
+        "CG": 20200,
+        "OR": 20200
+      },
+      "split_label_counts": {
+        "train": {
+          "CG": 16160,
+          "OR": 16160
+        },
+        "validation": {
+          "CG": 1211,
+          "OR": 1211
+        },
+        "test": {
+          "CG": 2829,
+          "OR": 2829
+        }
+      },
+      "source_groups_crossing_splits": 0
+    },
+    "matched_glm": {
+      "path": "dataset/source_grouped/modern_reviews_glm.csv",
+      "rows": 40400,
+      "sha256": "c6873cca274fd07da2d82c3e01e8dc5314e7946c59190e7d4df703b63de19a76",
+      "label_counts": {
+        "CG": 20200,
+        "OR": 20200
+      },
+      "split_label_counts": {
+        "train": {
+          "CG": 16160,
+          "OR": 16160
+        },
+        "validation": {
+          "CG": 1211,
+          "OR": 1211
+        },
+        "test": {
+          "CG": 2829,
+          "OR": 2829
+        }
+      },
+      "source_groups_crossing_splits": 0
+    },
+    "logo_wo_lfm": {
+      "path": "dataset/source_grouped/pooled_wo_lfm.csv",
+      "rows": 40400,
+      "sha256": "54ec2b048b2f3b09d2bd9182839521279030fe7ebba8d8793d5bef9142600947",
+      "label_counts": {
+        "CG": 20200,
+        "OR": 20200
+      },
+      "split_label_counts": {
+        "train": {
+          "CG": 16160,
+          "OR": 16160
+        },
+        "validation": {
+          "CG": 1211,
+          "OR": 1211
+        },
+        "test": {
+          "CG": 2829,
+          "OR": 2829
+        }
+      },
+      "source_groups_crossing_splits": 0,
+      "held_out_generator": "lfm",
+      "training_generators": [
+        "deepseek",
+        "glm"
+      ],
+      "cg_selection_counts": {
+        "train": {
+          "deepseek": 8080,
+          "glm": 8080
+        },
+        "validation": {
+          "deepseek": 606,
+          "glm": 605
+        },
+        "test": {
+          "deepseek": 1415,
+          "glm": 1414
+        }
+      }
+    },
+    "logo_wo_deepseek": {
+      "path": "dataset/source_grouped/pooled_wo_deepseek.csv",
+      "rows": 40400,
+      "sha256": "45e7ba880523ee1bc5fa6a3a9ca0814cb36af657167ac8bcaaa44b8b0bbf020b",
+      "label_counts": {
+        "CG": 20200,
+        "OR": 20200
+      },
+      "split_label_counts": {
+        "train": {
+          "CG": 16160,
+          "OR": 16160
+        },
+        "validation": {
+          "CG": 1211,
+          "OR": 1211
+        },
+        "test": {
+          "CG": 2829,
+          "OR": 2829
+        }
+      },
+      "source_groups_crossing_splits": 0,
+      "held_out_generator": "deepseek",
+      "training_generators": [
+        "glm",
+        "lfm"
+      ],
+      "cg_selection_counts": {
+        "train": {
+          "glm": 8080,
+          "lfm": 8080
+        },
+        "validation": {
+          "glm": 606,
+          "lfm": 605
+        },
+        "test": {
+          "glm": 1415,
+          "lfm": 1414
+        }
+      }
+    },
+    "logo_wo_glm": {
+      "path": "dataset/source_grouped/pooled_wo_glm.csv",
+      "rows": 40400,
+      "sha256": "e2b4d54ae358ef3f381621e61511984ab40a03b10ecb665553279320f397d7be",
+      "label_counts": {
+        "CG": 20200,
+        "OR": 20200
+      },
+      "split_label_counts": {
+        "train": {
+          "CG": 16160,
+          "OR": 16160
+        },
+        "validation": {
+          "CG": 1211,
+          "OR": 1211
+        },
+        "test": {
+          "CG": 2829,
+          "OR": 2829
+        }
+      },
+      "source_groups_crossing_splits": 0,
+      "held_out_generator": "glm",
+      "training_generators": [
+        "deepseek",
+        "lfm"
+      ],
+      "cg_selection_counts": {
+        "train": {
+          "deepseek": 8080,
+          "lfm": 8080
+        },
+        "validation": {
+          "deepseek": 606,
+          "lfm": 605
+        },
+        "test": {
+          "deepseek": 1415,
+          "lfm": 1414
+        }
+      }
+    }
+  },
+  "validation": {
+    "all_assembled_cg_mappings_verified": true,
+    "all_outputs_label_balanced_within_split": true,
+    "source_groups_crossing_partitions": 0,
+    "directional_train_to_any_test_source_group_overlap": 0,
+    "logo_train_to_held_out_test_source_group_overlap": 0,
+    "held_out_generator_rows_in_logo_training_files": 0
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "protocol": "directional",
+  "run_id": "sgxl_rs_r64_s7_10031948",
+  "tag": "sgxl",
+  "seed": 7,
+  "train_generator": "lfm",
+  "held_out_generator": null,
+  "rank": 64,
+  "alpha": 128,
+  "effective_rs_scale": 16.0,
+  "training_data": "dataset/source_grouped/modern_reviews_lfm.csv",
+  "training_data_sha256": "3ba23e6ce003a52ac0d2fdd014480900e7875b8c4bed777965374ea9bf276c2d",
+  "threshold": 0.5,
+  "targets": {
+    "lfm": {
+      "dataset": "dataset/source_grouped/modern_reviews_lfm.csv",
+      "dataset_sha256": "3ba23e6ce003a52ac0d2fdd014480900e7875b8c4bed777965374ea9bf276c2d",
+      "probabilities": "source_grouped_eval_lfm.csv",
+      "source_isolation": {
+        "training_source_groups": 16159,
+        "target_test_source_groups": 2829,
+        "overlapping_source_groups": 0
+      },
+      "metrics": {
+        "n": 5658,
+        "n_OR": 2829,
+        "n_CG": 2829,
+        "accuracy": 0.9971721456344999,
+        "precision_CG": 0.9989357928343384,
+        "recall_CG": 0.9954047366560622,
+        "f1_OR": 0.9971771347918137,
+        "f1_CG": 0.9971671388101983,
+        "fpr_OR": 0.0010604453870625664,
+        "roc_auc": 0.9993923711656316,
+        "pr_auc": 0.9996191533393062
+      }
+    },
+    "deepseek": {
+      "dataset": "dataset/source_grouped/modern_reviews_deepseek.csv",
+      "dataset_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644",
+      "probabilities": "source_grouped_eval_deepseek.csv",
+      "source_isolation": {
+        "training_source_groups": 16159,
+        "target_test_source_groups": 2829,
+        "overlapping_source_groups": 0
+      },
+      "metrics": {
+        "n": 5658,
+        "n_OR": 2829,
+        "n_CG": 2829,
+        "accuracy": 0.6647225167903853,
+        "precision_CG": 0.9968017057569296,
+        "recall_CG": 0.33050547896783317,
+        "f1_OR": 0.7487084382037356,
+        "f1_CG": 0.4964162463498805,
+        "fpr_OR": 0.0010604453870625664,
+        "roc_auc": 0.8812566683922177,
+        "pr_auc": 0.9112456272203793
+      }
+    },
+    "glm": {
+      "dataset": "dataset/source_grouped/modern_reviews_glm.csv",
+      "dataset_sha256": "c6873cca274fd07da2d82c3e01e8dc5314e7946c59190e7d4df703b63de19a76",
+      "probabilities": "source_grouped_eval_glm.csv",
+      "source_isolation": {
+        "training_source_groups": 16159,
+        "target_test_source_groups": 2829,
+        "overlapping_source_groups": 0
+      },
+      "metrics": {
+        "n": 5658,
+        "n_OR": 2829,
+        "n_CG": 2829,
+        "accuracy": 0.6184164015553199,
+        "precision_CG": 0.9955621301775148,
+        "recall_CG": 0.23789324849770238,
+        "f1_OR": 0.7235949302266035,
+        "f1_CG": 0.3840228245363766,
+        "fpr_OR": 0.0010604453870625664,
+        "roc_auc": 0.8304716176858848,
+        "pr_auc": 0.8673244531798224
+      }
+    }
+  }
+}

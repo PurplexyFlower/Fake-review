@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "protocol": "logo",
+  "run_id": "sgpwolfm_rs_r64_s42_10032059",
+  "tag": "sgpwolfm",
+  "seed": 42,
+  "train_generator": null,
+  "held_out_generator": "lfm",
+  "rank": 64,
+  "alpha": 128,
+  "effective_rs_scale": 16.0,
+  "training_data": "dataset/source_grouped/pooled_wo_lfm.csv",
+  "training_data_sha256": "54ec2b048b2f3b09d2bd9182839521279030fe7ebba8d8793d5bef9142600947",
+  "threshold": 0.5,
+  "targets": {
+    "lfm": {
+      "dataset": "dataset/source_grouped/modern_reviews_lfm.csv",
+      "dataset_sha256": "3ba23e6ce003a52ac0d2fdd014480900e7875b8c4bed777965374ea9bf276c2d",
+      "probabilities": "source_grouped_eval_lfm.csv",
+      "source_isolation": {
+        "training_source_groups": 16159,
+        "target_test_source_groups": 2829,
+        "overlapping_source_groups": 0
+      },
+      "metrics": {
+        "n": 5658,
+        "n_OR": 2829,
+        "n_CG": 2829,
+        "accuracy": 0.9704842700600919,
+        "precision_CG": 0.991869918699187,
+        "recall_CG": 0.9487451396253093,
+        "f1_OR": 0.9711122643141326,
+        "f1_CG": 0.9698283649503162,
+        "fpr_OR": 0.007776599505125486,
+        "roc_auc": 0.9948066664492549,
+        "pr_auc": 0.9929707304145123
+      }
+    }
+  }
+}

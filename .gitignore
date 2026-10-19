@@ -39,3 +39,6 @@ results/*.log
 *_sanity_*.csv
 dataset/control_or_permutation_*.csv
 dataset/control_or_permutation_*.meta.json
+
+# --- generated analysis figures ---
+analysis/figures/

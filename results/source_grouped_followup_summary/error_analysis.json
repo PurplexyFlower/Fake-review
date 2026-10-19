@@ -1,0 +1,515 @@
+{
+  "job_id": "pair_rs_s1998",
+  "n": 5658,
+  "threshold": 0.5,
+  "length_definition": "Whitespace-separated words in canonical review text, not model tokenizer tokens",
+  "analysis_scope": "Descriptive matched DeepSeek test, one explicitly selected seed; no causal length effect",
+  "by_length": [
+    {
+      "bin_words": "0-50",
+      "n_OR": 1543,
+      "n_CG": 1601,
+      "FP": 23,
+      "FN": 6,
+      "fpr_OR": 0.014906027219701879,
+      "fnr_CG": 0.0037476577139287947
+    },
+    {
+      "bin_words": "51-100",
+      "n_OR": 613,
+      "n_CG": 587,
+      "FP": 1,
+      "FN": 0,
+      "fpr_OR": 0.0016313213703099511,
+      "fnr_CG": 0.0
+    },
+    {
+      "bin_words": "101-150",
+      "n_OR": 272,
+      "n_CG": 641,
+      "FP": 0,
+      "FN": 0,
+      "fpr_OR": 0.0,
+      "fnr_CG": 0.0
+    },
+    {
+      "bin_words": "151-200",
+      "n_OR": 161,
+      "n_CG": 0,
+      "FP": 0,
+      "FN": 0,
+      "fpr_OR": 0.0,
+      "fnr_CG": null
+    },
+    {
+      "bin_words": "201+",
+      "n_OR": 240,
+      "n_CG": 0,
+      "FP": 0,
+      "FN": 0,
+      "fpr_OR": 0.0,
+      "fnr_CG": null
+    }
+  ],
+  "errors": [
+    {
+      "source_id": "23906",
+      "source_group": "23906",
+      "category": "Kindle_Store_5",
+      "rating": "3.0",
+      "true": "CG",
+      "predicted": "OR",
+      "p_CG": 0.365230292082,
+      "max_softmax_confidence": 0.634769707918,
+      "words": 16
+    },
+    {
+      "source_id": "4770",
+      "source_group": "4770",
+      "category": "Sports_and_Outdoors_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.983214497566,
+      "max_softmax_confidence": 0.983214497566,
+      "words": 18
+    },
+    {
+      "source_id": "37935",
+      "source_group": "37935",
+      "category": "Clothing_Shoes_and_Jewelry_5",
+      "rating": "3.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.523420393467,
+      "max_softmax_confidence": 0.523420393467,
+      "words": 24
+    },
+    {
+      "source_id": "28465",
+      "source_group": "28465",
+      "category": "Books_5",
+      "rating": "5.0",
+      "true": "CG",
+      "predicted": "OR",
+      "p_CG": 0.024609928951,
+      "max_softmax_confidence": 0.975390071049,
+      "words": 11
+    },
+    {
+      "source_id": "23737",
+      "source_group": "23737",
+      "category": "Kindle_Store_5",
+      "rating": "5.0",
+      "true": "CG",
+      "predicted": "OR",
+      "p_CG": 0.243642449379,
+      "max_softmax_confidence": 0.756357550621,
+      "words": 11
+    },
+    {
+      "source_id": "20093",
+      "source_group": "20093",
+      "category": "Pet_Supplies_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.993202507496,
+      "max_softmax_confidence": 0.993202507496,
+      "words": 15
+    },
+    {
+      "source_id": "36811",
+      "source_group": "36811",
+      "category": "Clothing_Shoes_and_Jewelry_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.980728805065,
+      "max_softmax_confidence": 0.980728805065,
+      "words": 8
+    },
+    {
+      "source_id": "33503",
+      "source_group": "33503",
+      "category": "Toys_and_Games_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.998042941093,
+      "max_softmax_confidence": 0.998042941093,
+      "words": 17
+    },
+    {
+      "source_id": "15832",
+      "source_group": "15832",
+      "category": "Tools_and_Home_Improvement_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.928668022156,
+      "max_softmax_confidence": 0.928668022156,
+      "words": 12
+    },
+    {
+      "source_id": "774",
+      "source_group": "774",
+      "category": "Home_and_Kitchen_5",
+      "rating": "4.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.84389513731,
+      "max_softmax_confidence": 0.84389513731,
+      "words": 17
+    },
+    {
+      "source_id": "4114",
+      "source_group": "4114",
+      "category": "Sports_and_Outdoors_5",
+      "rating": "3.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.727975428104,
+      "max_softmax_confidence": 0.727975428104,
+      "words": 10
+    },
+    {
+      "source_id": "8942",
+      "source_group": "8942",
+      "category": "Electronics_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.907312273979,
+      "max_softmax_confidence": 0.907312273979,
+      "words": 21
+    },
+    {
+      "source_id": "24391",
+      "source_group": "24391",
+      "category": "Kindle_Store_5",
+      "rating": "3.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.770464777946,
+      "max_softmax_confidence": 0.770464777946,
+      "words": 22
+    },
+    {
+      "source_id": "24302",
+      "source_group": "24302",
+      "category": "Kindle_Store_5",
+      "rating": "4.0",
+      "true": "CG",
+      "predicted": "OR",
+      "p_CG": 0.309023708105,
+      "max_softmax_confidence": 0.690976291895,
+      "words": 21
+    },
+    {
+      "source_id": "33830",
+      "source_group": "33830",
+      "category": "Toys_and_Games_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.88602656126,
+      "max_softmax_confidence": 0.88602656126,
+      "words": 22
+    },
+    {
+      "source_id": "9320",
+      "source_group": "9320",
+      "category": "Electronics_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.986929178238,
+      "max_softmax_confidence": 0.986929178238,
+      "words": 29
+    },
+    {
+      "source_id": "15980",
+      "source_group": "15980",
+      "category": "Tools_and_Home_Improvement_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.680878579617,
+      "max_softmax_confidence": 0.680878579617,
+      "words": 14
+    },
+    {
+      "source_id": "19794",
+      "source_group": "19794",
+      "category": "Pet_Supplies_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.609524190426,
+      "max_softmax_confidence": 0.609524190426,
+      "words": 13
+    },
+    {
+      "source_id": "36808",
+      "source_group": "36808",
+      "category": "Clothing_Shoes_and_Jewelry_5",
+      "rating": "4.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.924823641777,
+      "max_softmax_confidence": 0.924823641777,
+      "words": 11
+    },
+    {
+      "source_id": "4381",
+      "source_group": "4381",
+      "category": "Sports_and_Outdoors_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.992823123932,
+      "max_softmax_confidence": 0.992823123932,
+      "words": 13
+    },
+    {
+      "source_id": "38700",
+      "source_group": "38700",
+      "category": "Clothing_Shoes_and_Jewelry_5",
+      "rating": "1.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.967655658722,
+      "max_softmax_confidence": 0.967655658722,
+      "words": 38
+    },
+    {
+      "source_id": "37939",
+      "source_group": "37939",
+      "category": "Clothing_Shoes_and_Jewelry_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.923039197922,
+      "max_softmax_confidence": 0.923039197922,
+      "words": 24
+    },
+    {
+      "source_id": "20289",
+      "source_group": "20289",
+      "category": "Pet_Supplies_5",
+      "rating": "3.0",
+      "true": "CG",
+      "predicted": "OR",
+      "p_CG": 0.209469690919,
+      "max_softmax_confidence": 0.790530309081,
+      "words": 16
+    },
+    {
+      "source_id": "20444",
+      "source_group": "20444",
+      "category": "Pet_Supplies_5",
+      "rating": "4.0",
+      "true": "CG",
+      "predicted": "OR",
+      "p_CG": 0.268941432238,
+      "max_softmax_confidence": 0.7310585677620001,
+      "words": 16
+    },
+    {
+      "source_id": "33518",
+      "source_group": "33518",
+      "category": "Toys_and_Games_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.981453418732,
+      "max_softmax_confidence": 0.981453418732,
+      "words": 18
+    },
+    {
+      "source_id": "160",
+      "source_group": "160",
+      "category": "Home_and_Kitchen_5",
+      "rating": "1.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.963230550289,
+      "max_softmax_confidence": 0.963230550289,
+      "words": 10
+    },
+    {
+      "source_id": "35135",
+      "source_group": "35135",
+      "category": "Toys_and_Games_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.980728805065,
+      "max_softmax_confidence": 0.980728805065,
+      "words": 52
+    },
+    {
+      "source_id": "4233",
+      "source_group": "4233",
+      "category": "Sports_and_Outdoors_5",
+      "rating": "1.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.92386752367,
+      "max_softmax_confidence": 0.92386752367,
+      "words": 11
+    },
+    {
+      "source_id": "15643",
+      "source_group": "15643",
+      "category": "Tools_and_Home_Improvement_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.941223442554,
+      "max_softmax_confidence": 0.941223442554,
+      "words": 10
+    },
+    {
+      "source_id": "2323",
+      "source_group": "2323",
+      "category": "Home_and_Kitchen_5",
+      "rating": "5.0",
+      "true": "OR",
+      "predicted": "CG",
+      "p_CG": 0.984396457672,
+      "max_softmax_confidence": 0.984396457672,
+      "words": 46
+    }
+  ],
+  "confidence_definition": "Maximum softmax class probability max(p_CG, 1-p_CG), not a calibration estimate",
+  "confidence": {
+    "correct": {
+      "n": 5628,
+      "mean": 0.9935756987155048,
+      "sample_sd": 0.017835012291285875,
+      "count_at_least_0p9": 5603
+    },
+    "incorrect": {
+      "n": 30,
+      "mean": 0.8660869204128,
+      "sample_sd": 0.13788416391568292,
+      "count_at_least_0p9": 18
+    }
+  },
+  "by_category": {
+    "Books_5": {
+      "n": 612,
+      "n_OR": 306,
+      "n_CG": 306,
+      "FP": 0,
+      "FN": 1,
+      "errors": 1,
+      "error_rate": 0.0016339869281045752,
+      "fpr_OR": 0.0,
+      "fnr_CG": 0.0032679738562091504
+    },
+    "Clothing_Shoes_and_Jewelry_5": {
+      "n": 538,
+      "n_OR": 269,
+      "n_CG": 269,
+      "FP": 5,
+      "FN": 0,
+      "errors": 5,
+      "error_rate": 0.00929368029739777,
+      "fpr_OR": 0.01858736059479554,
+      "fnr_CG": 0.0
+    },
+    "Electronics_5": {
+      "n": 558,
+      "n_OR": 279,
+      "n_CG": 279,
+      "FP": 2,
+      "FN": 0,
+      "errors": 2,
+      "error_rate": 0.0035842293906810036,
+      "fpr_OR": 0.007168458781362007,
+      "fnr_CG": 0.0
+    },
+    "Home_and_Kitchen_5": {
+      "n": 566,
+      "n_OR": 283,
+      "n_CG": 283,
+      "FP": 3,
+      "FN": 0,
+      "errors": 3,
+      "error_rate": 0.00530035335689046,
+      "fpr_OR": 0.01060070671378092,
+      "fnr_CG": 0.0
+    },
+    "Kindle_Store_5": {
+      "n": 666,
+      "n_OR": 333,
+      "n_CG": 333,
+      "FP": 1,
+      "FN": 3,
+      "errors": 4,
+      "error_rate": 0.006006006006006006,
+      "fpr_OR": 0.003003003003003003,
+      "fnr_CG": 0.009009009009009009
+    },
+    "Movies_and_TV_5": {
+      "n": 502,
+      "n_OR": 251,
+      "n_CG": 251,
+      "FP": 0,
+      "FN": 0,
+      "errors": 0,
+      "error_rate": 0.0,
+      "fpr_OR": 0.0,
+      "fnr_CG": 0.0
+    },
+    "Pet_Supplies_5": {
+      "n": 596,
+      "n_OR": 298,
+      "n_CG": 298,
+      "FP": 2,
+      "FN": 2,
+      "errors": 4,
+      "error_rate": 0.006711409395973154,
+      "fpr_OR": 0.006711409395973154,
+      "fnr_CG": 0.006711409395973154
+    },
+    "Sports_and_Outdoors_5": {
+      "n": 552,
+      "n_OR": 276,
+      "n_CG": 276,
+      "FP": 4,
+      "FN": 0,
+      "errors": 4,
+      "error_rate": 0.007246376811594203,
+      "fpr_OR": 0.014492753623188406,
+      "fnr_CG": 0.0
+    },
+    "Tools_and_Home_Improvement_5": {
+      "n": 536,
+      "n_OR": 268,
+      "n_CG": 268,
+      "FP": 3,
+      "FN": 0,
+      "errors": 3,
+      "error_rate": 0.005597014925373134,
+      "fpr_OR": 0.011194029850746268,
+      "fnr_CG": 0.0
+    },
+    "Toys_and_Games_5": {
+      "n": 532,
+      "n_OR": 266,
+      "n_CG": 266,
+      "FP": 4,
+      "FN": 0,
+      "errors": 4,
+      "error_rate": 0.007518796992481203,
+      "fpr_OR": 0.015037593984962405,
+      "fnr_CG": 0.0
+    }
+  },
+  "FP": 24,
+  "FN": 6
+}

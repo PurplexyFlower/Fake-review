@@ -1,0 +1,23 @@
+{
+  "tag": "sgpwolfm",
+  "scaling": "rs",
+  "rank": 64,
+  "alpha": 128,
+  "seed": 1998,
+  "scheduler": "cosine_with_restarts",
+  "label_smoothing": 0.01,
+  "holdout_category": null,
+  "data": "dataset/source_grouped/pooled_wo_lfm.csv",
+  "predefined_splits": true,
+  "notes": "",
+  "run_id": "sgpwolfm_rs_r64_s1998_10032105",
+  "split_seed": 1998,
+  "protocol": "source-grouped-contemporary-v1",
+  "split_counts": {
+    "train": 32320,
+    "validation": 2422,
+    "test": 5658
+  },
+  "bf16": true,
+  "data_sha256": "54ec2b048b2f3b09d2bd9182839521279030fe7ebba8d8793d5bef9142600947"
+}

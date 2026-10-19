@@ -1,0 +1,101 @@
+{
+  "config": {
+    "protocol": "source-grouped-followup-v1",
+    "job": {
+      "shard": 2,
+      "seed": 7,
+      "data": "dataset/source_grouped/modern_reviews_deepseek.csv",
+      "target": "deepseek",
+      "id": "linear_s7",
+      "kind": "adapter",
+      "tag": "sgreblinear",
+      "scaling": "rs",
+      "rank": 64,
+      "alpha": 128,
+      "scheduler": "linear",
+      "label_smoothing": 0.01
+    },
+    "plan_sha256": "b7c7444e4ccb5ca8196f4fedc596c3bfea3b622bb28f7ffe3b25a05275bdc8cc",
+    "source_manifest_sha256": "de78619f05026e71a86fac3f57d74f5af041183e8c07cd0e70b12884d64de6f9",
+    "training_data_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644",
+    "target_data_sha256": "f29897e0b693b168e324fe5090708bf89951db6413fff0b05563a6f050baf644"
+  },
+  "files": {
+    "adapter/README.md": {
+      "bytes": 5226,
+      "sha256": "3b6e64f703b462d2b083d6e14b18a75c06bdefa4c6923ca448e018392b06246e"
+    },
+    "adapter/adapter_config.json": {
+      "bytes": 1340,
+      "sha256": "3aa06ec492700541e053d76993f37026bd3ebc64522400f6cef0dba10b1ce6eb"
+    },
+    "adapter/adapter_model.safetensors": {
+      "bytes": 140819632,
+      "sha256": "8cd00a21651548227305196cf9f374213fe4466de86389ca3ed0ad2db1f30139"
+    },
+    "adapter/added_tokens.json": {
+      "bytes": 632,
+      "sha256": "a32bc0d990603eb93fd389dc164fe6fbfc442db2ab3a65e4a99a249433ab11f6"
+    },
+    "adapter/chat_template.jinja": {
+      "bytes": 2507,
+      "sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f"
+    },
+    "adapter/merges.txt": {
+      "bytes": 1671853,
+      "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+    },
+    "adapter/special_tokens_map.json": {
+      "bytes": 499,
+      "sha256": "8c8752b0d30549fb854ffee2d43b787c0053f507dfde7e0ccb6d1b42a8ae75ec"
+    },
+    "adapter/tokenizer.json": {
+      "bytes": 11422086,
+      "sha256": "fab42efe8d17406525a9154b728cf9e957629a8ed7ce997770efdd71128c6a1a"
+    },
+    "adapter/tokenizer_config.json": {
+      "bytes": 4891,
+      "sha256": "a9c41a1007bb1036aa9e977ec3399d54e509f0bcb7b02a1c1665599d2d798f07"
+    },
+    "adapter/vocab.json": {
+      "bytes": 2776833,
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    },
+    "config.json": {
+      "bytes": 735,
+      "sha256": "ebd0de7c9582f848fdd2de61e9bf2cc9ed8f4663afcad035b932c016a8727976"
+    },
+    "log_history.json": {
+      "bytes": 20994,
+      "sha256": "f86469674de9a7e359805dc5c5ed6eb8b88c9567695742c7ebe63b9578ece201"
+    },
+    "metrics.json": {
+      "bytes": 1232,
+      "sha256": "df28087b0dd77b1452d38595ed38731532f7eb2bd911e9e605fdd278db3b331f"
+    },
+    "runtime_environment.json": {
+      "bytes": 632,
+      "sha256": "4fd45353d4fae7e160c84cb40c6368f9edfd319b69df0d5b278630fd66701501"
+    },
+    "test_probs.csv": {
+      "bytes": 2414627,
+      "sha256": "fcb6874ef6b3c29f326a9afec4b66663370f430da92c65a7426d18ccfc00f560"
+    },
+    "trainer_state.json": {
+      "bytes": 14489,
+      "sha256": "a20a3ada8615fca33a3f51d1e51211da65d8dc3fcada77f6bb38b843eeda3ca3"
+    },
+    "training_config.json": {
+      "bytes": 580,
+      "sha256": "f8603707254c9920baa7dc79fe795c835ec2469400021672623ae3595e141293"
+    },
+    "training_metrics.json": {
+      "bytes": 525,
+      "sha256": "728fc1d4c83fb1a5eab05ef6d42f3c9cf4d2ae249d8656c23f76ce58dd26ae70"
+    },
+    "val_probs.csv": {
+      "bytes": 1005340,
+      "sha256": "e67499a96789ea40b7cdddeac4c62c332ac6594c6fc7dfe527745a5da06305b9"
+    }
+  }
+}

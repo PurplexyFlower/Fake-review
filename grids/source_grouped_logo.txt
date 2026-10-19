@@ -1,0 +1,11 @@
+# Strict contemporary LOGO: train on the other two modern generators and test
+# the held-out generator on source groups absent from training.
+--tag sgpwolfm --scaling rs --rank 64 --seed 1998 --data dataset/source_grouped/pooled_wo_lfm.csv --predefined-splits
+--tag sgpwolfm --scaling rs --rank 64 --seed 7 --data dataset/source_grouped/pooled_wo_lfm.csv --predefined-splits
+--tag sgpwolfm --scaling rs --rank 64 --seed 42 --data dataset/source_grouped/pooled_wo_lfm.csv --predefined-splits
+--tag sgpwodeepseek --scaling rs --rank 64 --seed 1998 --data dataset/source_grouped/pooled_wo_deepseek.csv --predefined-splits
+--tag sgpwodeepseek --scaling rs --rank 64 --seed 7 --data dataset/source_grouped/pooled_wo_deepseek.csv --predefined-splits
+--tag sgpwodeepseek --scaling rs --rank 64 --seed 42 --data dataset/source_grouped/pooled_wo_deepseek.csv --predefined-splits
+--tag sgpwoglm --scaling rs --rank 64 --seed 1998 --data dataset/source_grouped/pooled_wo_glm.csv --predefined-splits
+--tag sgpwoglm --scaling rs --rank 64 --seed 7 --data dataset/source_grouped/pooled_wo_glm.csv --predefined-splits
+--tag sgpwoglm --scaling rs --rank 64 --seed 42 --data dataset/source_grouped/pooled_wo_glm.csv --predefined-splits

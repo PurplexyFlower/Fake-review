@@ -1,0 +1,11 @@
+# Strict contemporary source-grouped directional matrix.
+# The CSV split column is frozen once across LFM, DeepSeek, and GLM.
+--tag sgxl --scaling rs --rank 64 --seed 1998 --data dataset/source_grouped/modern_reviews_lfm.csv --predefined-splits
+--tag sgxl --scaling rs --rank 64 --seed 7 --data dataset/source_grouped/modern_reviews_lfm.csv --predefined-splits
+--tag sgxl --scaling rs --rank 64 --seed 42 --data dataset/source_grouped/modern_reviews_lfm.csv --predefined-splits
+--tag sgxd --scaling rs --rank 64 --seed 1998 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgxd --scaling rs --rank 64 --seed 7 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgxd --scaling rs --rank 64 --seed 42 --data dataset/source_grouped/modern_reviews_deepseek.csv --predefined-splits
+--tag sgxglm --scaling rs --rank 64 --seed 1998 --data dataset/source_grouped/modern_reviews_glm.csv --predefined-splits
+--tag sgxglm --scaling rs --rank 64 --seed 7 --data dataset/source_grouped/modern_reviews_glm.csv --predefined-splits
+--tag sgxglm --scaling rs --rank 64 --seed 42 --data dataset/source_grouped/modern_reviews_glm.csv --predefined-splits
